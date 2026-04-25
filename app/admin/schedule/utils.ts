@@ -1,4 +1,4 @@
-import { ScheduleEvent } from "@/generated/prisma/browser";
+import { ScheduleEvent } from "@/generated/prisma/client";
 
 function hasTimeOverlap(a: ScheduleEvent, b: ScheduleEvent) {
   return a.startTime < b.endTime && b.startTime < a.endTime;

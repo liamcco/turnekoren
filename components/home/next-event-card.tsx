@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ScheduleEvent } from "@/generated/prisma/browser";
+import { ScheduleEvent } from "@/generated/prisma/client";
 import { TRIP_LOCALE } from "@/lib/constants";
 
 interface NextEventCardProps {

@@ -1,4 +1,4 @@
-import { getContactData } from "./admin-data";
+import { getContactData } from "./actions";
 import { ContactEditor } from "./ContactsEditor";
 
 export default async function AdminContactsEditor() {

@@ -1,5 +1,5 @@
 import { LinkEditor } from "./link-editor";
-import { getLinkData } from "./admin-data";
+import { getLinkData } from "./actions";
 
 export default async function AdminLinksEditor() {
   const links = await getLinkData();

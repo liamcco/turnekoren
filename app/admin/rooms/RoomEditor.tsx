@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { Copy, Pencil, Plus, Trash2 } from "lucide-react";
-import { Participant, Room, Stay } from "@/generated/prisma/browser";
+import { Participant, Room, Stay } from "@/generated/prisma/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {

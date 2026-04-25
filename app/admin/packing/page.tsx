@@ -1,4 +1,4 @@
-import { getPackingItemData } from "./admin-data";
+import { getPackingItemData } from "./actions";
 import { PackingItemEditor } from "./PackingEditor";
 
 export default async function AdminPackingEditor() {

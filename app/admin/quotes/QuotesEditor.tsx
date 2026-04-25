@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useActionState, useState } from "react";
 import { Pencil, Plus, Trash2, X } from "lucide-react";
-import { Quote } from "@/generated/prisma/browser";
+import { Quote } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Card,

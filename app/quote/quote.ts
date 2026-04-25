@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { prisma } from "@/lib/prisma";
 import { TRIP_TIMEZONE } from "@/lib/constants";
-import { Quote } from "@/generated/prisma/browser";
+import { Quote } from "@/generated/prisma/client";
 
 export async function getDailyQuote(): Promise<Quote | null> {
   const quotes = await prisma.quote.findMany({

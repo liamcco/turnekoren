@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleListItem } from "@/components/home/schedule-list-item";
-import { ScheduleEvent } from "@/generated/prisma/browser";
+import { ScheduleEvent } from "@/generated/prisma/client";
 
 interface HomeScheduleCardProps {
   currentEventId: number | null;
@@ -23,11 +23,11 @@ export function HomeScheduleCard({ currentEventId, events }: HomeScheduleCardPro
           <ScheduleListItem event={event} isCurrent={currentEventId === event.id} key={event.id} />
         ))}
 
-        {events.length === 0 ? (
+        {events.length === 0 && (
           <p className="text-sm text-muted-foreground">
             No schedule entries yet. Add them in the admin portal.
           </p>
-        ) : null}
+        )}
       </CardContent>
     </Card>
   );

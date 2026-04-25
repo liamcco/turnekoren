@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { ScheduleEvent } from "@/generated/prisma/browser";
+import { ScheduleEvent } from "@/generated/prisma/client";
 
 export interface ScheduleSnapshot {
   now: Date;

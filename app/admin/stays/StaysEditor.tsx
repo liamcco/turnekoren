@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Dispatch, SetStateAction, useActionState, useCallback, useEffect, useState } from "react";
 import { ExternalLink, Pencil, Plus, Trash2 } from "lucide-react";
-import { Room, Stay } from "@/generated/prisma/browser";
+import { Room, Stay } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Card,

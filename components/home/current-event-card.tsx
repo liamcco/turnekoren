@@ -1,7 +1,7 @@
 import type { ScheduleSnapshot } from "@/app/home-data";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScheduleEvent } from "@/generated/prisma/browser";
+import { ScheduleEvent } from "@/generated/prisma/client";
 import { TRIP_LOCALE } from "@/lib/constants";
 import { formatNow } from "@/lib/formatting";
 

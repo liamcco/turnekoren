@@ -1,4 +1,4 @@
-import { Room, Stay } from "@/generated/prisma/browser";
+import { Room, Stay } from "@/generated/prisma/client";
 import { Participant } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
