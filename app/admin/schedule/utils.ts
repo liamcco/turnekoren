@@ -1,5 +1,13 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 
+function getEventEffectiveEnd(event: ScheduleEvent) {
+  return event.endTime ?? event.startTime;
+}
+
+function getEventDisplayEnd(event: ScheduleEvent) {
+  return event.endTime ?? new Date(event.startTime.getTime() + 15 * 60_000);
+}
+
 export function isValidDayKey(value: string | undefined): value is string {
   return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
@@ -12,7 +20,7 @@ export function wouldExceedMaxOverlaps({
 }: {
   events: ScheduleEvent[];
   startTime: Date;
-  endTime: Date;
+  endTime: Date | null;
   ignoredEventId?: number;
 }) {
   const proposedEvent = {
@@ -22,7 +30,7 @@ export function wouldExceedMaxOverlaps({
     endTime,
     location: "",
     notes: null,
-  } satisfies ScheduleEvent;
+  } as ScheduleEvent;
 
   const relevantEvents = events.filter((event) => event.id !== ignoredEventId);
   const overlappingEvents = relevantEvents.filter((event) =>
@@ -51,13 +59,14 @@ export function getEventDayKeys(event: ScheduleEvent) {
   let cursor = new Date(event.startTime);
   cursor.setHours(0, 0, 0, 0);
 
-  const lastDay = new Date(event.endTime);
+  const lastDay = new Date(getEventEffectiveEnd(event));
   lastDay.setHours(0, 0, 0, 0);
 
   while (cursor <= lastDay) {
     const dayKey = formatDateKey(cursor);
 
-    if (event.startTime <= getDayEnd(dayKey) && event.endTime >= getDayStart(dayKey)) {
+    const eventEnd = getEventEffectiveEnd(event);
+    if (event.startTime <= getDayEnd(dayKey) && eventEnd >= getDayStart(dayKey)) {
       dayKeys.push(dayKey);
     }
 
@@ -141,5 +150,8 @@ export function addHours(date: Date, hours: number) {
 }
 
 export function hasTimeOverlap(a: ScheduleEvent, b: ScheduleEvent) {
-  return a.startTime < b.endTime && b.startTime < a.endTime;
+  const aEnd = a.endTime ?? new Date(a.startTime.getTime() + 15 * 60_000);
+  const bEnd = b.endTime ?? new Date(b.startTime.getTime() + 15 * 60_000);
+
+  return a.startTime < bEnd && b.startTime < aEnd;
 }

@@ -9,6 +9,12 @@ export interface ScheduleSnapshot {
   upcomingEvents: ScheduleEvent[];
 }
 
+const MEETUP_DURATION_MS = 15 * 60_000;
+
+function getEventDisplayEnd(event: ScheduleEvent) {
+  return event.endTime ?? new Date(event.startTime.getTime() + MEETUP_DURATION_MS);
+}
+
 export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
   const events = await prisma.scheduleEvent.findMany({
     orderBy: { startTime: "asc" },
@@ -17,7 +23,7 @@ export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
   const now = new Date();
 
   const currentEvent = events.find(
-    (event) => event.startTime <= now && event.endTime > now
+    (event) => event.startTime <= now && getEventDisplayEnd(event) > now
   ) ?? null;
 
   const nextEvent = events.find((event) => event.startTime > now) ?? null;
@@ -36,6 +42,6 @@ export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
     currentEvent,
     nextEvent,
     todayEvents,
-    upcomingEvents: events.filter((event) => event.endTime > now).slice(0, 5),
+    upcomingEvents: events.filter((event) => getEventDisplayEnd(event) > now).slice(0, 5),
   };
 }

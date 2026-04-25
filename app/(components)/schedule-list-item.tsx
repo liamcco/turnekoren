@@ -11,7 +11,10 @@ interface ScheduleListItemProps {
 
 export function ScheduleListItem({ event, isCurrent }: ScheduleListItemProps) {
     const startTime = event.startTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
-    const endTime = event.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
+    const isMeetup = event.endTime === null;
+    const endTime = event.endTime
+      ? event.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" })
+      : null;
 
   return (
     <div
@@ -24,7 +27,7 @@ export function ScheduleListItem({ event, isCurrent }: ScheduleListItemProps) {
         <div className="flex items-center gap-2">
           <Clock3 className="size-4" />
           <span>
-            `${startTime}-${endTime}`
+            {isMeetup ? `${startTime}` : `${startTime}-${endTime}`}
           </span>
         </div>
       </div>
@@ -32,6 +35,7 @@ export function ScheduleListItem({ event, isCurrent }: ScheduleListItemProps) {
         <h3 className="font-medium">{event.title}</h3>
         <p className="text-sm text-muted-foreground">
           {event.location}
+          {isMeetup ? " · Meetup" : ""}
           {event.notes ? ` · ${event.notes}` : ""}
         </p>
       </div>

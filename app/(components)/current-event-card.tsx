@@ -12,7 +12,10 @@ interface CurrentEventCardProps {
 
 export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
   const startTime = currentEvent?.startTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
-  const endTime = currentEvent?.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
+  const isMeetup = currentEvent?.endTime === null;
+  const endTime = currentEvent?.endTime
+    ? currentEvent.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" })
+    : null;
   return (
     <Card className="border-none bg-linear-to-br from-primary via-primary to-[oklch(0.58_0.18_28)] text-primary-foreground shadow-lg">
       <CardHeader>
@@ -24,7 +27,9 @@ export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
         </CardTitle>
         <CardDescription className="text-primary-foreground/80">
           {currentEvent
-            ? `${startTime}-${endTime} · ${currentEvent.location}`
+            ? isMeetup
+              ? `${startTime} · ${currentEvent.location} · Meetup`
+              : `${startTime}-${endTime} · ${currentEvent.location}`
             : "The schedule is currently between activities."}
         </CardDescription>
       </CardHeader>

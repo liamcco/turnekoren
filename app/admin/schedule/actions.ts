@@ -23,22 +23,32 @@ const initialErrorState: ScheduleEventActionState = {
 function getEventFormData(formData: FormData) {
   const title = getStringValue(formData, "title");
   const startTime = getRequiredDateValue(formData, "startTime");
-  const endTime = getRequiredDateValue(formData, "endTime");
+  const endTimeValue = formData.get("endTime");
+  const endTime = endTimeValue ? new Date(endTimeValue.toString()) : null;
   const location = getStringValue(formData, "location");
   const notes = getStringValue(formData, "notes");
 
-  if (!title || !startTime || !endTime || !location) {
+  if (!title || !startTime || !location) {
     return {
       ok: false as const,
-      message: "Title, start time, end time and location are required.",
+      message: "Title, start time and location are required.",
     };
   }
 
-  if (endTime <= startTime) {
-    return {
-      ok: false as const,
-      message: "End time must be after start time.",
-    };
+  if (endTime !== null) {
+    if (Number.isNaN(endTime.getTime())) {
+      return {
+        ok: false as const,
+        message: "Invalid end time.",
+      };
+    }
+
+    if (endTime <= startTime) {
+      return {
+        ok: false as const,
+        message: "End time must be after start time.",
+      };
+    }
   }
 
   return {

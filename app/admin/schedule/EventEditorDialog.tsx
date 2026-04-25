@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -69,6 +70,7 @@ export function EventEditorDialog({
 
   const defaultStartTime = event?.startTime ?? new Date(`${selectedDay}T09:00:00`);
   const defaultEndTime = event?.endTime ?? new Date(`${selectedDay}T10:00:00`);
+  const defaultIsMeetup = event?.endTime === null;
 
   const [startTimeValue, setStartTimeValue] = useState(
     toDateTimeLocalValue(defaultStartTime)
@@ -76,13 +78,16 @@ export function EventEditorDialog({
   const [endTimeValue, setEndTimeValue] = useState(
     toDateTimeLocalValue(defaultEndTime)
   );
+  const [isMeetup, setIsMeetup] = useState(defaultIsMeetup);
 
   const proposedStartTime = new Date(startTimeValue);
-  const proposedEndTime = new Date(endTimeValue);
+  const proposedEndTime = isMeetup ? null : new Date(endTimeValue);
   const hasValidDraftTimes =
     !Number.isNaN(proposedStartTime.getTime()) &&
-    !Number.isNaN(proposedEndTime.getTime()) &&
-    proposedEndTime > proposedStartTime;
+    (isMeetup ||
+      (proposedEndTime !== null &&
+        !Number.isNaN(proposedEndTime.getTime()) &&
+        proposedEndTime > proposedStartTime));
   const exceedsOverlapLimit =
     hasValidDraftTimes &&
     wouldExceedMaxOverlaps({
@@ -106,40 +111,46 @@ export function EventEditorDialog({
 
         <form action={formAction} className="grid gap-4">
           {!isCreating ? <input name="id" type="hidden" value={event.id} /> : null}
+          {isMeetup ? <input name="endTime" type="hidden" value="" /> : null}
 
-          <div className="grid gap-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              name="title"
-              defaultValue={event?.title ?? ""}
-              required
-            />
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="grid gap-2">
-              <Label htmlFor="startTime">Start</Label>
-              <Input
-                id="startTime"
-                name="startTime"
-                value={startTimeValue}
-                onChange={(nextEvent) => setStartTimeValue(nextEvent.target.value)}
-                required
-                type="datetime-local"
+          <div className="grid gap-4">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="isMeetup"
+                checked={isMeetup}
+                onCheckedChange={(checked: boolean) => setIsMeetup(checked === true)}
               />
+              <Label htmlFor="isMeetup" className="cursor-pointer">
+                Meetup / point in time
+              </Label>
             </div>
 
-            <div className="grid gap-2">
-              <Label htmlFor="endTime">End</Label>
-              <Input
-                id="endTime"
-                name="endTime"
-                value={endTimeValue}
-                onChange={(nextEvent) => setEndTimeValue(nextEvent.target.value)}
-                required
-                type="datetime-local"
-              />
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-2">
+                <Label htmlFor="startTime">Start</Label>
+                <Input
+                  id="startTime"
+                  name="startTime"
+                  value={startTimeValue}
+                  onChange={(nextEvent) => setStartTimeValue(nextEvent.target.value)}
+                  required
+                  type="datetime-local"
+                />
+              </div>
+
+              {!isMeetup ? (
+                <div className="grid gap-2">
+                  <Label htmlFor="endTime">End</Label>
+                  <Input
+                    id="endTime"
+                    name="endTime"
+                    value={endTimeValue}
+                    onChange={(nextEvent) => setEndTimeValue(nextEvent.target.value)}
+                    required
+                    type="datetime-local"
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
 

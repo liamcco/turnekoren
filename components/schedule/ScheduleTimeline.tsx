@@ -1,6 +1,6 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 import { useMemo } from "react";
-import { getDayStart, getDayEnd, getTimelineStartHour, hasTimeOverlap, getMinutesFromDayStart, formatTime } from "../../app/admin/schedule/utils";
+import { getDayStart, getDayEnd, getTimelineStartHour, getMinutesFromDayStart, formatTime } from "../../app/admin/schedule/utils";
 
 type EventColumn = 0 | 1;
 
@@ -8,6 +8,8 @@ type PositionedScheduleEvent = ScheduleEvent & {
   column: EventColumn;
   top: number;
   height: number;
+  isPointInTime: boolean;
+  displayEndTime: Date;
   hasOverlap: boolean;
   hasTooManyOverlaps: boolean;
 };
@@ -15,6 +17,21 @@ type PositionedScheduleEvent = ScheduleEvent & {
 const HOUR_HEIGHT = 72;
 const MIN_EVENT_HEIGHT = 44;
 const MAX_OVERLAPPING_EVENTS = 2;
+
+const POINT_IN_TIME_EVENT_DURATION_MINUTES = 15;
+const POINT_IN_TIME_EVENT_HEIGHT = 36;
+
+function getEventEndTime(event: ScheduleEvent) {
+  return event.endTime ?? event.startTime;
+}
+
+function getEventDisplayEndTime(event: ScheduleEvent) {
+  return event.endTime ?? new Date(event.startTime.getTime() + POINT_IN_TIME_EVENT_DURATION_MINUTES * 60_000);
+}
+
+function hasScheduleOverlap(a: ScheduleEvent, b: ScheduleEvent) {
+  return a.startTime < getEventDisplayEndTime(b) && b.startTime < getEventDisplayEndTime(a);
+}
 
 function positionEvents(events: ScheduleEvent[], selectedDay: string): PositionedScheduleEvent[] {
   const dayStart = getDayStart(selectedDay);
@@ -28,7 +45,7 @@ function positionEvents(events: ScheduleEvent[], selectedDay: string): Positione
 
   for (const event of sortedEvents) {
     const previousOverlappingEvents = positionedEvents.filter((previousEvent) =>
-      hasTimeOverlap(previousEvent, event)
+      hasScheduleOverlap(previousEvent, event)
     );
     const usedColumns = previousOverlappingEvents.map(
       (previousEvent) => previousEvent.column
@@ -37,11 +54,13 @@ function positionEvents(events: ScheduleEvent[], selectedDay: string): Positione
 
     const hasTooManyOverlaps = previousOverlappingEvents.length >= MAX_OVERLAPPING_EVENTS;
     const hasOverlap = sortedEvents.some(
-      (otherEvent) => otherEvent.id !== event.id && hasTimeOverlap(otherEvent, event)
+      (otherEvent) => otherEvent.id !== event.id && hasScheduleOverlap(otherEvent, event)
     );
+    const isPointInTime = event.endTime === null;
+    const displayEndTime = getEventDisplayEndTime(event);
 
     const visibleStartTime = event.startTime < dayStart ? dayStart : event.startTime;
-    const visibleEndTime = event.endTime > dayEnd ? dayEnd : event.endTime;
+    const visibleEndTime = displayEndTime > dayEnd ? dayEnd : displayEndTime;
     const startMinutes = getMinutesFromDayStart(visibleStartTime);
     const endMinutes = getMinutesFromDayStart(visibleEndTime);
     const durationMinutes = Math.max(endMinutes - startMinutes, 15);
@@ -50,7 +69,11 @@ function positionEvents(events: ScheduleEvent[], selectedDay: string): Positione
       ...event,
       column,
       top: ((startMinutes - timelineStartMinutes) / 60) * HOUR_HEIGHT,
-      height: Math.max((durationMinutes / 60) * HOUR_HEIGHT, MIN_EVENT_HEIGHT),
+      height: isPointInTime
+        ? POINT_IN_TIME_EVENT_HEIGHT
+        : Math.max((durationMinutes / 60) * HOUR_HEIGHT, MIN_EVENT_HEIGHT),
+      isPointInTime,
+      displayEndTime,
       hasOverlap,
       hasTooManyOverlaps,
     });
@@ -107,7 +130,9 @@ export function ScheduleTimeline({
             className={
               event.hasTooManyOverlaps
                 ? "absolute rounded-md border border-destructive bg-destructive/10 p-2 text-left shadow-sm transition hover:bg-destructive/20"
-                : "absolute rounded-md border bg-card p-2 text-left shadow-sm transition hover:bg-accent"
+                : event.isPointInTime
+                  ? "absolute rounded-full border bg-card px-3 py-2 text-left shadow-sm transition hover:bg-accent"
+                  : "absolute rounded-md border bg-card p-2 text-left shadow-sm transition hover:bg-accent"
             }
             onClick={() => onSelectEvent(event)}
             style={{
@@ -127,7 +152,9 @@ export function ScheduleTimeline({
               {event.location}
             </div>
             <div className="hidden truncate text-xs text-muted-foreground md:block">
-              {formatTime(event.startTime)}-{formatTime(event.endTime)}
+              {event.isPointInTime
+                ? formatTime(event.startTime)
+                : `${formatTime(event.startTime)}-${formatTime(event.displayEndTime)}`}
               {event.location ? ` • ${event.location}` : ""}
             </div>
             {event.hasTooManyOverlaps ? (
