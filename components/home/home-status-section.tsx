@@ -1,0 +1,18 @@
+import { CurrentEventCard } from "@/components/home/current-event-card";
+import { NextEventCard } from "@/components/home/next-event-card";
+import { ScheduleEvent } from "@/generated/prisma/browser";
+
+interface HomeStatusSectionProps {
+  currentEvent: ScheduleEvent | null;
+  nextEvent: ScheduleEvent | null;
+  now: Date;
+}
+
+export function HomeStatusSection({ currentEvent, nextEvent, now }: HomeStatusSectionProps) {
+  return (
+    <section className="grid gap-4 md:grid-cols-2">
+      <CurrentEventCard currentEvent={currentEvent} now={now} />
+      <NextEventCard nextEvent={nextEvent} />
+    </section>
+  );
+}

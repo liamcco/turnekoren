@@ -1,7 +1,12 @@
 node_modules
 .next
+generated
+.env
+.env-file
 data
+tsconfig.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+next-env.d.ts

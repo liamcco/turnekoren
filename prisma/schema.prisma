@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ScheduleEvent {
+  id        Int      @id @default(autoincrement())
+  title     String
+  startTime DateTime @map("start_time")
+  endTime   DateTime @map("end_time")
+  location  String
+  notes     String?
+
+  @@map("events")
+}
+
+model Stay {
+  id        Int      @id @default(autoincrement())
+  name      String
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+  notes     String?
+  rooms     Room[]
+
+  @@map("stays")
+}
+
+model Room {
+  id           Int           @id @default(autoincrement())
+  name         String
+  stayId       Int?           @map("stay_id")
+  stay         Stay?          @relation(fields: [stayId], references: [id], onDelete: Cascade)
+  participants Participant[]
+  notes        String?
+
+  @@map("rooms")
+}
+
+model Contact {
+  id    Int     @id @default(autoincrement())
+  name  String
+  role  String
+  phone String
+
+  @@map("contacts")
+}
+
+model Participant {
+  id     Int     @id @default(autoincrement())
+  name   String
+  choir  String
+  voice  String
+  mobile String?
+  rooms Room[]
+
+  @@map("participants")
+}
+
+model PackingItem {
+  id       Int     @id @default(autoincrement())
+  label    String
+  category String
+  notes    String?
+
+  @@map("packing_items")
+}
+
+model Quote {
+  id          Int     @id @default(autoincrement())
+  text        String
+  translation String
+  context     String?
+
+  @@map("quotes")
+}
+
+model Place {
+  id          Int     @id @default(autoincrement())
+  name        String
+  address     String?
+  description String?
+  url         String
+
+  @@map("places")
+}
+
+model UsefulLink {
+  id          Int     @id @default(autoincrement())
+  title       String
+  url         String
+  description String?
+
+  @@map("useful_links")
+}
