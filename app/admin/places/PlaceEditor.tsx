@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Quote } from "@/generated/prisma/client";
+import { Place } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,17 +11,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  QuoteActionState,
+  PlaceActionState,
 } from "./actions";
-import { QuoteCard } from "./QuoteCard";
-import { CreateQuoteDialog } from "./CreateQuoteDialog";
+import { EditPlaceForm } from "./EditPlaceForm";
+import { CreatePlaceDialog } from "./CreatePlaceDialog";
 
-export const initialState: QuoteActionState = {
+export const initialState: PlaceActionState = {
   ok: false,
   message: "",
 };
 
-export function ActionMessage({ state }: { state: QuoteActionState }) {
+export function ActionMessage({ state }: { state: PlaceActionState }) {
   if (!state.message) {
     return null;
   }
@@ -33,17 +33,16 @@ export function ActionMessage({ state }: { state: QuoteActionState }) {
   );
 }
 
-export function QuoteEditor({ initialQuotes }: { initialQuotes: Quote[] }) {
-  const [editingQuoteId, setEditingQuoteId] = useState<number | null>(null);
+export function PlaceEditor({ places }: { places: Place[] }) {
+  const [editingPlaceId, setEditingPlaceId] = useState<number | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const quotes = initialQuotes;
 
   return (
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Quotes</h2>
-          <p className="text-sm text-muted-foreground">Create and edit quotes for the trip hub.</p>
+          <h2 className="text-lg font-semibold">Places</h2>
+          <p className="text-sm text-muted-foreground">Create and edit useful places for the trip hub.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -51,26 +50,26 @@ export function QuoteEditor({ initialQuotes }: { initialQuotes: Quote[] }) {
         </Button>
       </div>
 
-      <CreateQuoteDialog
+      <CreatePlaceDialog
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
       />
 
-      <div className="grid max-w-5xl gap-4 lg:grid-cols-2">
-        {quotes.length === 0 ? (
+      <div className="grid max-w-5xl gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        {places.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No quotes yet</CardTitle>
-              <CardDescription>Create the first quote above.</CardDescription>
+              <CardTitle>No places yet</CardTitle>
+              <CardDescription>Create the first place above.</CardDescription>
             </CardHeader>
           </Card>
         ) : (
-          quotes.map((quote) => (
-            <QuoteCard
-              key={quote.id}
-              quote={quote}
-              editingQuoteId={editingQuoteId}
-              setEditingQuoteId={setEditingQuoteId}
+          places.map((place) => (
+            <EditPlaceForm
+              key={place.id}
+              place={place}
+              editingPlaceId={editingPlaceId}
+              setEditingPlaceId={setEditingPlaceId}
             />
           ))
         )}

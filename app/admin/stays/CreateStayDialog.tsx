@@ -1,22 +1,21 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { createPackingItemAction } from "./actions";
-import { ActionMessage, initialState } from "./PackingEditor";
+import { createStayAction } from "./actions";
+import { initialState, ActionMessage } from "./StaysEditor";
 import { Label } from "@/components/ui/label";
 
-export function CreatePackingItemDialog({
+export function CreateStayDialog({
   open,
   onOpenChange,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+
   const router = useRouter();
   const [state, setState] = useState(initialState);
   const [isPending, startTransition] = useTransition();
@@ -25,14 +24,14 @@ export function CreatePackingItemDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create packing item</DialogTitle>
-          <DialogDescription>Add something people should remember to pack.</DialogDescription>
+          <DialogTitle>Create stay</DialogTitle>
+          <DialogDescription>Add an accommodation period to the trip.</DialogDescription>
         </DialogHeader>
 
         <form
           action={(formData) =>
             startTransition(async () => {
-              const nextState = await createPackingItemAction(initialState, formData);
+              const nextState = await createStayAction(initialState, formData);
               setState(nextState);
 
               if (!nextState.ok) {
@@ -46,13 +45,20 @@ export function CreatePackingItemDialog({
           className="grid gap-4"
         >
           <div className="grid gap-2">
-            <Label htmlFor="new-label">Label</Label>
-            <Input id="new-label" name="label" placeholder="Passport" required />
+            <Label htmlFor="new-name">Name</Label>
+            <Input id="new-name" name="name" placeholder="Hotel / cabin / hostel" required />
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="new-category">Category</Label>
-            <Input id="new-category" name="category" placeholder="Documents" required />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="new-start-date">Start date</Label>
+              <Input id="new-start-date" name="startDate" required type="date" />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="new-end-date">End date</Label>
+              <Input id="new-end-date" name="endDate" required type="date" />
+            </div>
           </div>
 
           <div className="grid gap-2">

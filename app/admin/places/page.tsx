@@ -1,5 +1,5 @@
-import { PlaceEditor } from "./place-editor";
-import { getPlaces } from "./admin-data";
+import { PlaceEditor } from "./PlaceEditor";
+import { getPlaces } from "./actions";
 
 export default async function AdminPlacesEditor() {
   const places = await getPlaces();

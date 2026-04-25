@@ -1,15 +1,13 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
-import { createLinkAction } from "./actions";
-import { ActionMessage, initialState } from "./LinkEditor";
+import { createPlaceAction } from "./actions";
+import { ActionMessage, initialState } from "./PlaceEditor";
 import { Label } from "@/components/ui/label";
 
-export function CreateLinkDialog({
+export function CreatePlaceDialog({
   open,
   onOpenChange,
 }: {
@@ -17,7 +15,7 @@ export function CreateLinkDialog({
   onOpenChange: (open: boolean) => void;
 }) {
   const [state, formAction, isPending] = useActionState(
-    createLinkAction,
+    createPlaceAction,
     initialState
   );
 
@@ -25,14 +23,14 @@ export function CreateLinkDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create link</DialogTitle>
-          <DialogDescription>Add a useful link to the trip hub.</DialogDescription>
+          <DialogTitle>Create place</DialogTitle>
+          <DialogDescription>Add a place to the trip hub.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-title">Title</Label>
-            <Input id="new-title" name="title" placeholder="Google Maps" required />
+            <Label htmlFor="new-name">Name</Label>
+            <Input id="new-name" name="name" placeholder="Google Maps" required />
           </div>
 
           <div className="grid gap-2">
@@ -43,6 +41,15 @@ export function CreateLinkDialog({
               placeholder="https://example.com"
               required
               type="url"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="new-address">Address</Label>
+            <Input
+              id="new-address"
+              name="address"
+              placeholder="Optional address"
             />
           </div>
 

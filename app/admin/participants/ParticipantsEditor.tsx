@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import {
   ParticipantActionState,
-} from "./admin-data";
+} from "./actions";
 import { ParticipantCard } from "./ParticipantCard";
 import { CreateParticipantDialog } from "./CreateParticipantDialog";
 

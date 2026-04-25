@@ -1,4 +1,4 @@
-import { getQuoteData } from "./admin-data";
+import { getQuoteData } from "./actions";
 import { QuoteEditor } from "./QuotesEditor";
 
 export default async function AdminQuotesEditor() {

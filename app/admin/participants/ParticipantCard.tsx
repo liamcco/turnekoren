@@ -6,8 +6,8 @@ import { Participant } from "@/generated/prisma/client";
 import { Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState, useTransition } from "react";
-import { deleteParticipantAction, updateParticipantAction } from "./admin-data";
-import { initialState, participantTableColumns, ActionMessage } from "./ParticipantsEditor";
+import { deleteParticipantAction, updateParticipantAction } from "./actions";
+import { participantTableColumns, ActionMessage, initialState } from "./ParticipantsEditor";
 import { Label } from "@/components/ui/label";
 import { ChoirSelect, VoiceSelect } from "./Selectors";
 

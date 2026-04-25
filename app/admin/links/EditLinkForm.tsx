@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useActionState } from "react";
 import { updateLinkAction, deleteLinkAction } from "./actions";
 import { UsefulLink } from "@/generated/prisma/client";
 import { Label } from "@/components/ui/label";
-import { ActionMessage, initialState } from "./link-editor";
+import { ActionMessage, initialState } from "./LinkEditor";
 
 export function EditLinkForm({
   link,

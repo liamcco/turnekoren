@@ -1,4 +1,4 @@
-import { getParticipantData } from "./admin-data";
+import { getParticipantData } from "./actions";
 import { ParticipantEditor } from "./ParticipantsEditor";
 
 export default async function AdminParticipantsEditor() {

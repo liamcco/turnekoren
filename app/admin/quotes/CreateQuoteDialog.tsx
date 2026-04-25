@@ -2,57 +2,43 @@
 
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
-import { createLinkAction } from "./actions";
-import { ActionMessage, initialState } from "./LinkEditor";
+import { createQuoteAction } from "./actions";
+import { ActionMessage, initialState } from "./QuotesEditor";
 import { Label } from "@/components/ui/label";
 
-export function CreateLinkDialog({
+export function CreateQuoteDialog({
   open,
   onOpenChange,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const [state, formAction, isPending] = useActionState(
-    createLinkAction,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState(createQuoteAction, initialState);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create link</DialogTitle>
-          <DialogDescription>Add a useful link to the trip hub.</DialogDescription>
+          <DialogTitle>Create quote</DialogTitle>
+          <DialogDescription>Add a quote and optional context.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-title">Title</Label>
-            <Input id="new-title" name="title" placeholder="Google Maps" required />
+            <Label htmlFor="new-text">Quote</Label>
+            <Textarea id="new-text" name="text" placeholder="Original quote" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-url">URL</Label>
-            <Input
-              id="new-url"
-              name="url"
-              placeholder="https://example.com"
-              required
-              type="url"
-            />
+            <Label htmlFor="new-translation">Translation</Label>
+            <Textarea id="new-translation" name="translation" placeholder="Translation" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-description">Description</Label>
-            <Textarea
-              id="new-description"
-              name="description"
-              placeholder="Optional description"
-            />
+            <Label htmlFor="new-context">Context</Label>
+            <Textarea id="new-context" name="context" placeholder="Optional context" />
           </div>
 
           <ActionMessage state={state} />

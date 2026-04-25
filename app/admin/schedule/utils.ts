@@ -1,9 +1,5 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 
-function hasTimeOverlap(a: ScheduleEvent, b: ScheduleEvent) {
-  return a.startTime < b.endTime && b.startTime < a.endTime;
-}
-
 export function isValidDayKey(value: string | undefined): value is string {
   return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
@@ -36,21 +32,21 @@ export function wouldExceedMaxOverlaps({
   return overlappingEvents.length >= 2;
 }
 
-function addDays(date: Date, days: number) {
+export function addDays(date: Date, days: number) {
   const nextDate = new Date(date);
   nextDate.setDate(nextDate.getDate() + days);
   return nextDate;
 }
 
-function getDayStart(dayKey: string) {
+export function getDayStart(dayKey: string) {
   return new Date(`${dayKey}T00:00:00`);
 }
 
-function getDayEnd(dayKey: string) {
+export function getDayEnd(dayKey: string) {
   return new Date(`${dayKey}T23:59:59.999`);
 }
 
-function getEventDayKeys(event: ScheduleEvent) {
+export function getEventDayKeys(event: ScheduleEvent) {
   const dayKeys: string[] = [];
   let cursor = new Date(event.startTime);
   cursor.setHours(0, 0, 0, 0);
@@ -103,4 +99,47 @@ export function getInitialSelectedDay(events: ScheduleEvent[]) {
   }
 
   return days.at(-1) ?? todayKey;
+}
+
+export function formatFullDayLabel(dayKey: string) {
+  return new Intl.DateTimeFormat("en", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(`${dayKey}T00:00:00`));
+}
+
+export function formatTime(date: Date) {
+  return new Intl.DateTimeFormat("en", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
+}
+
+export function toDateTimeLocalValue(value: Date) {
+  const offset = value.getTimezoneOffset();
+  const localDate = new Date(value.getTime() - offset * 60_000);
+  return localDate.toISOString().slice(0, 16);
+}
+
+export function getMinutesFromDayStart(date: Date) {
+  return date.getHours() * 60 + date.getMinutes();
+}
+
+export function getTimelineStartHour(events: ScheduleEvent[], selectedDay: string) {
+  const dayStart = getDayStart(selectedDay);
+  const hasEventsBeforeEight = events.some((event) => event.startTime < addHours(dayStart, 8));
+
+  return hasEventsBeforeEight ? 0 : 8;
+}
+
+export function addHours(date: Date, hours: number) {
+  const nextDate = new Date(date);
+  nextDate.setHours(nextDate.getHours() + hours);
+  return nextDate;
+}
+
+export function hasTimeOverlap(a: ScheduleEvent, b: ScheduleEvent) {
+  return a.startTime < b.endTime && b.startTime < a.endTime;
 }

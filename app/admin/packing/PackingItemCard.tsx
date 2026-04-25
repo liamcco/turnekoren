@@ -1,4 +1,4 @@
-"use effect"
+"use client"
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { deletePackingItemAction, updatePackingItemAction } from "./actions";
-import { initialState, ActionMessage } from "./PackingEditor";
+import { ActionMessage, initialState } from "./PackingEditor";
 import { Label } from "@/components/ui/label";
 
 export function PackingItemCard({

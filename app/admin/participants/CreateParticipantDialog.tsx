@@ -1,10 +1,12 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { createParticipantAction } from "./admin-data";
-import { initialState, ActionMessage } from "./ParticipantsEditor";
+import { createParticipantAction } from "./actions";
+import { ActionMessage, initialState } from "./ParticipantsEditor";
 import { Label } from "@/components/ui/label";
 import { ChoirSelect, VoiceSelect } from "./Selectors";
 

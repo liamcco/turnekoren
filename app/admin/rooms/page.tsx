@@ -1,4 +1,4 @@
-import { getRoomEditorData } from "./admin-data";
+import { getRoomEditorData } from "./actions";
 import { RoomEditor } from "./RoomEditor";
 
 interface AdminRoomsPageProps {

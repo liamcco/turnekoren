@@ -1,4 +1,4 @@
-import { LinkEditor } from "./link-editor";
+import { LinkEditor } from "./LinkEditor";
 import { getLinkData } from "./actions";
 
 export default async function AdminLinksEditor() {

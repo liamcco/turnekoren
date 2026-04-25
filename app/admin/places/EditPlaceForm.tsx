@@ -1,127 +1,15 @@
-"use client";
-
-import { Dispatch, SetStateAction, useActionState, useState } from "react";
-import { Pencil, Plus, Trash2, X } from "lucide-react";
-import { Place } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  createPlaceAction,
-  deletePlaceAction,
-  PlaceActionState,
-  updatePlaceAction,
-} from "./admin-data";
+import { Place } from "@/generated/prisma/client";
+import { Pencil, Trash2, X } from "lucide-react";
+import { Dispatch, SetStateAction, useActionState } from "react";
+import { updatePlaceAction, deletePlaceAction } from "./actions";
+import { ActionMessage, initialState } from "./PlaceEditor";
+import { Label } from "@/components/ui/label";
 
-const initialState: PlaceActionState = {
-  ok: false,
-  message: "",
-};
-
-function ActionMessage({ state }: { state: PlaceActionState }) {
-  if (!state.message) {
-    return null;
-  }
-
-  return (
-    <p className={state.ok ? "text-sm text-green-600" : "text-sm text-destructive"}>
-      {state.message}
-    </p>
-  );
-}
-
-function CreatePlaceDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const [state, formAction, isPending] = useActionState(
-    createPlaceAction,
-    initialState
-  );
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create place</DialogTitle>
-          <DialogDescription>Add a place to the trip hub.</DialogDescription>
-        </DialogHeader>
-
-        <form action={formAction} className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="new-name">Name</Label>
-            <Input id="new-name" name="name" placeholder="Google Maps" required />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="new-url">URL</Label>
-            <Input
-              id="new-url"
-              name="url"
-              placeholder="https://example.com"
-              required
-              type="url"
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="new-address">Address</Label>
-            <Input
-              id="new-address"
-              name="address"
-              placeholder="Optional address"
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="new-description">Description</Label>
-            <Textarea
-              id="new-description"
-              name="description"
-              placeholder="Optional description"
-            />
-          </div>
-
-          <ActionMessage state={state} />
-
-          <div className="flex justify-end gap-2">
-            <Button
-              disabled={isPending}
-              onClick={() => onOpenChange(false)}
-              type="button"
-              variant="outline"
-            >
-              Cancel
-            </Button>
-            <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function EditPlaceForm({
+export function EditPlaceForm({
   place: place,
   editingPlaceId,
   setEditingPlaceId,
@@ -275,50 +163,5 @@ function EditPlaceForm({
         </form>
       </CardContent>
     </Card>
-  );
-}
-
-export function PlaceEditor({ places }: { places: Place[] }) {
-  const [editingPlaceId, setEditingPlaceId] = useState<number | null>(null);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-
-  return (
-    <div className="grid gap-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold">Places</h2>
-          <p className="text-sm text-muted-foreground">Create and edit useful places for the trip hub.</p>
-        </div>
-
-        <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
-          <Plus className="size-4" />
-        </Button>
-      </div>
-
-      <CreatePlaceDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-      />
-
-      <div className="grid max-w-5xl gap-4 lg:grid-cols-2 xl:grid-cols-3">
-        {places.length === 0 ? (
-          <Card>
-            <CardHeader>
-              <CardTitle>No places yet</CardTitle>
-              <CardDescription>Create the first place above.</CardDescription>
-            </CardHeader>
-          </Card>
-        ) : (
-          places.map((place) => (
-            <EditPlaceForm
-              key={place.id}
-              place={place}
-              editingPlaceId={editingPlaceId}
-              setEditingPlaceId={setEditingPlaceId}
-            />
-          ))
-        )}
-      </div>
-    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { getScheduleData } from "./admin-data";
+import { getScheduleData } from "./actions";
 import { ScheduleEditor } from "./ScheduleEditor";
 import { getInitialSelectedDay, isValidDayKey } from "./utils";
 
