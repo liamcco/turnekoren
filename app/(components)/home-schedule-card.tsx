@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScheduleListItem } from "@/components/home/schedule-list-item";
+import { ScheduleListItem } from "@/app/(components)/schedule-list-item";
 import { ScheduleEvent } from "@/generated/prisma/client";
 
 interface HomeScheduleCardProps {

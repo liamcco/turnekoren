@@ -1,4 +1,4 @@
-import { HomePage as HomePageContent } from "@/components/home/home-page";
+import { HomePage as HomePageContent } from "@/app/(components)/home-page";
 import { getScheduleSnapshot } from "@/app/home-data";
 
 export const dynamic = "force-dynamic";

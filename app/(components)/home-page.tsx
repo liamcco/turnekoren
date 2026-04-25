@@ -1,7 +1,7 @@
 import type { ScheduleSnapshot } from "@/app/home-data";
-import { HomeHero } from "@/components/home/home-hero";
-import { HomeScheduleCard } from "@/components/home/home-schedule-card";
-import { HomeStatusSection } from "@/components/home/home-status-section";
+import { HomeHero } from "@/app/(components)/home-hero";
+import { HomeScheduleCard } from "@/app/(components)/home-schedule-card";
+import { HomeStatusSection } from "@/app/(components)/home-status-section";
 
 interface HomePageProps {
   snapshot: ScheduleSnapshot;

@@ -1,5 +1,5 @@
-import { CurrentEventCard } from "@/components/home/current-event-card";
-import { NextEventCard } from "@/components/home/next-event-card";
+import { CurrentEventCard } from "@/app/(components)/current-event-card";
+import { NextEventCard } from "@/app/(components)/next-event-card";
 import { ScheduleEvent } from "@/generated/prisma/client";
 
 interface HomeStatusSectionProps {

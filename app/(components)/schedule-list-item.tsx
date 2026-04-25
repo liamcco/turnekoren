@@ -1,6 +1,5 @@
 import { Clock3 } from "lucide-react"
 import { Badge } from "@/components/ui/badge";
-import { formatTime } from "@/lib/formatting";
 import { cn } from "@/lib/utils";
 import { ScheduleEvent } from "@/generated/prisma/client";
 import { TRIP_LOCALE } from "@/lib/constants";
