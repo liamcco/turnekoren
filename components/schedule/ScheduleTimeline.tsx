@@ -1,7 +1,20 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 import { useMemo } from "react";
-import { PositionedScheduleEvent, EventColumn, MAX_OVERLAPPING_EVENTS, HOUR_HEIGHT, MIN_EVENT_HEIGHT } from "./ScheduleEditor";
-import { getDayStart, getDayEnd, getTimelineStartHour, hasTimeOverlap, getMinutesFromDayStart, formatTime } from "./utils";
+import { getDayStart, getDayEnd, getTimelineStartHour, hasTimeOverlap, getMinutesFromDayStart, formatTime } from "../../app/admin/schedule/utils";
+
+type EventColumn = 0 | 1;
+
+type PositionedScheduleEvent = ScheduleEvent & {
+  column: EventColumn;
+  top: number;
+  height: number;
+  hasOverlap: boolean;
+  hasTooManyOverlaps: boolean;
+};
+
+const HOUR_HEIGHT = 72;
+const MIN_EVENT_HEIGHT = 44;
+const MAX_OVERLAPPING_EVENTS = 2;
 
 function positionEvents(events: ScheduleEvent[], selectedDay: string): PositionedScheduleEvent[] {
   const dayStart = getDayStart(selectedDay);

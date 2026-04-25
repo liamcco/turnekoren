@@ -1,9 +1,11 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Backpack,
+  CalendarDays,
   Coins,
   ContactRound,
   Hotel,
+  Link,
   MessageSquareQuote
 } from "lucide-react";
 
@@ -45,4 +47,16 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "What to bring before you leave",
     icon: Backpack,
   },
+  {
+    href: "/links",
+    title: "Användbart",
+    description: "Användbara länkar för resan",
+    icon: Link,
+  },
+  {
+    href: "/schedule",
+    title: "Schedule",
+    description: "View the trip schedule day by day",
+    icon: CalendarDays
+  }
 ];

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Plus } from "lucide-react";
+import { useActionState, useState } from "react";
+import { Plus, Upload } from "lucide-react";
 import { Participant } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  importParticipantsFromCsvAction,
   ParticipantActionState,
 } from "./actions";
 import { ParticipantCard } from "./ParticipantCard";
@@ -57,9 +67,66 @@ export function ActionMessage({ state }: { state: ParticipantActionState }) {
   );
 }
 
+function ImportParticipantsDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [state, formAction, isPending] = useActionState(
+    importParticipantsFromCsvAction,
+    initialState
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Import participants</DialogTitle>
+          <DialogDescription>
+            Upload a CSV file with the columns name, choir, voice and mobile.
+          </DialogDescription>
+        </DialogHeader>
+
+        <form action={formAction} className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="participants-file">CSV file</Label>
+            <Input
+              id="participants-file"
+              name="file"
+              type="file"
+              accept=".csv,text/csv"
+              required
+            />
+          </div>
+
+          <ActionMessage state={state} />
+
+          <div className="flex justify-end gap-2">
+            <Button
+              disabled={isPending}
+              onClick={() => onOpenChange(false)}
+              type="button"
+              variant="outline"
+            >
+              Cancel
+            </Button>
+            <Button disabled={isPending} type="submit">
+              <Upload className="size-4" />
+              {isPending ? "Importing..." : "Import"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function ParticipantEditor({ initialParticipants }: { initialParticipants: Participant[] }) {
   const [editingParticipantId, setEditingParticipantId] = useState<number | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const sortedParticipants = sortParticipants(initialParticipants, sortKey, sortDirection);
@@ -84,14 +151,35 @@ export function ParticipantEditor({ initialParticipants }: { initialParticipants
           <p className="text-sm text-muted-foreground">Create and edit the singers joining the trip.</p>
         </div>
 
-        <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
-          <Plus className="size-4" />
-        </Button>
+        <div className="flex shrink-0 gap-2">
+          <Button
+            aria-label="Import participants from CSV"
+            onClick={() => setIsImportDialogOpen(true)}
+            size="icon"
+            type="button"
+            variant="outline"
+          >
+            <Upload className="size-4" />
+          </Button>
+          <Button
+            aria-label="Create participant"
+            onClick={() => setIsCreateDialogOpen(true)}
+            size="icon"
+            type="button"
+          >
+            <Plus className="size-4" />
+          </Button>
+        </div>
       </div>
 
       <CreateParticipantDialog
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
+      />
+
+      <ImportParticipantsDialog
+        open={isImportDialogOpen}
+        onOpenChange={setIsImportDialogOpen}
       />
 
       <div className="grid w-full gap-2">

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getStringValue } from "@/lib/api";
+import { importParticipantsFromCsv } from "@/lib/import";
 
 export async function getParticipantData() {
   return prisma.participant.findMany({
@@ -155,5 +156,50 @@ export async function deleteParticipantAction(
     };
   } catch {
     return initialErrorState;
+  }
+}
+
+export async function importParticipantsFromCsvAction(
+  _previousState: ParticipantActionState,
+  formData: FormData
+): Promise<ParticipantActionState> {
+  const file = formData.get("file");
+
+  if (!(file instanceof File)) {
+    return {
+      ok: false,
+      message: "Choose a CSV file to upload.",
+    };
+  }
+
+  if (file.size === 0) {
+    return {
+      ok: false,
+      message: "The selected file is empty.",
+    };
+  }
+
+  try {
+    const csvContent = await file.text();
+    const result = await importParticipantsFromCsv(csvContent);
+
+    if (result.errors.length > 0) {
+      return {
+        ok: false,
+        message: result.errors.join(" "),
+      };
+    }
+
+    revalidatePath("/admin/participants");
+
+    return {
+      ok: true,
+      message: `Imported ${result.createdCount} participants.`,
+    };
+  } catch {
+    return {
+      ok: false,
+      message: "Could not import participants from the selected file.",
+    };
   }
 }

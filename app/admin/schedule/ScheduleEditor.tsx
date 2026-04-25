@@ -11,26 +11,12 @@ import {
 } from "./actions";
 import { formatDateKey, getInitialSelectedDay, groupEventsByDay } from "./utils";
 import { EventEditorDialog } from "./EventEditorDialog";
-import { ScheduleTimeline } from "./ScheduleTimeline";
+import { ScheduleTimeline } from "../../../components/schedule/ScheduleTimeline";
 import { DaySelector } from "./Selectors";
-
-export const HOUR_HEIGHT = 72;
-export const MIN_EVENT_HEIGHT = 44;
-export const MAX_OVERLAPPING_EVENTS = 2;
 
 export const initialActionState: ScheduleEventActionState = {
   ok: false,
   message: "",
-};
-
-export type EventColumn = 0 | 1;
-
-export type PositionedScheduleEvent = ScheduleEvent & {
-  column: EventColumn;
-  top: number;
-  height: number;
-  hasOverlap: boolean;
-  hasTooManyOverlaps: boolean;
 };
 
 interface ScheduleEditorProps {
