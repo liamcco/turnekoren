@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Contact } from "@/generated/prisma/client";
-import { Info, Pencil, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction, useActionState } from "react";
+import { Info, Loader2, Pencil, Trash2 } from "lucide-react";
+import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
 import { updateContactAction, deleteContactAction } from "./actions";
 import { ActionMessage, initialState } from "./ContactsEditor";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,12 @@ export function ContactRow({
   const isEditing = editingContactId === contact.id;
   const [updateState, updateAction, isUpdating] = useActionState(updateContactAction, initialState);
   const [deleteState, deleteAction, isDeleting] = useActionState(deleteContactAction, initialState);
+
+  useEffect(() => {
+    if (updateState.ok) {
+      setEditingContactId(null);
+    }
+  }, [updateState, setEditingContactId]);
 
   if (!isEditing) {
     return (
@@ -64,7 +70,11 @@ export function ContactRow({
               type="submit"
               variant="ghost"
             >
-              <Trash2 className="size-4 text-destructive" />
+              {isDeleting ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Trash2 className="size-4 text-destructive" />
+              )}
             </Button>
           </form>
         </div>
@@ -108,8 +118,9 @@ export function ContactRow({
         </div>
 
         <div className="flex gap-2 lg:justify-end">
-          <Button disabled={isUpdating} type="submit">
-            {isUpdating ? "Saving..." : "Save"}
+          <Button disabled={isUpdating} type="submit" className="relative">
+            <Loader2 className={`size-4 animate-spin absolute ${isUpdating ? "" : "hidden"}`} />
+            <span className={isUpdating ? "invisible" : ""}>Save</span>
           </Button>
           <Button
             disabled={isUpdating}
@@ -121,7 +132,7 @@ export function ContactRow({
           </Button>
         </div>
 
-        {updateState.message ? (
+        {updateState.message && !updateState.ok ? (
           <div className="lg:col-span-4">
             <ActionMessage state={updateState} />
           </div>
