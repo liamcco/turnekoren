@@ -20,7 +20,7 @@ interface QuoteEntry {
 }
 
 async function main() {
-  const filePath = join(process.cwd(), "quotes", "quotes.json");
+  const filePath = join(process.cwd(), "scripts", "quotes.json");
   const raw = readFileSync(filePath, "utf-8");
   const entries: QuoteEntry[] = JSON.parse(raw);
 
