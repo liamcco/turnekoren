@@ -5,15 +5,15 @@ import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const adminTabs = [
-  { value: "schedule", label: "Schedule", href: "/admin/schedule" },
-  { value: "participants", label: "Participants", href: "/admin/participants" },
-  { value: "rooms", label: "Rooms", href: "/admin/rooms" },
-  { value: "contacts", label: "Contacts", href: "/admin/contacts" },
-  { value: "packing", label: "Packing", href: "/admin/packing" },
-  { value: "quotes", label: "Quotes", href: "/admin/quotes" },
-  { value: "places", label: "Places", href: "/admin/places" },
-  { value: "links", label: "Links", href: "/admin/links" },
-  { value: "stays", label: "Stays", href: "/admin/stays" },
+  { value: "schedule", label: "Schedule", href: "/accesstonepal/schedule" },
+  { value: "participants", label: "Participants", href: "/accesstonepal/participants" },
+  { value: "rooms", label: "Rooms", href: "/accesstonepal/rooms" },
+  { value: "contacts", label: "Contacts", href: "/accesstonepal/contacts" },
+  { value: "packing", label: "Packing", href: "/accesstonepal/packing" },
+  { value: "quotes", label: "Quotes", href: "/accesstonepal/quotes" },
+  { value: "places", label: "Places", href: "/accesstonepal/places" },
+  { value: "links", label: "Links", href: "/accesstonepal/links" },
+  { value: "stays", label: "Stays", href: "/accesstonepal/stays" },
 ] as const;
 
 function getActiveTab(pathname: string) {

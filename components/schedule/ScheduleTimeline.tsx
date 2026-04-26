@@ -1,6 +1,6 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 import { useMemo } from "react";
-import { getDayStart, getDayEnd, getTimelineStartHour, getMinutesFromDayStart, formatTime } from "../../app/admin/schedule/utils";
+import { getDayStart, getDayEnd, getTimelineStartHour, getMinutesFromDayStart, formatTime } from "../../app/accesstonepal/schedule/utils";
 
 type EventColumn = 0 | 1;
 
