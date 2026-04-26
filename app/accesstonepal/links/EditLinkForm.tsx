@@ -46,7 +46,7 @@ export function EditLinkForm({
 
           <div className="flex shrink-0 items-center gap-1">
             <Button
-              aria-label={`Edit ${link.title}`}
+              aria-label={`Redigera ${link.title}`}
               onClick={() => setEditingLinkId(link.id)}
               size="icon"
               type="button"
@@ -58,7 +58,7 @@ export function EditLinkForm({
             <form action={deleteAction}>
               <input name="id" type="hidden" value={link.id} />
               <Button
-                aria-label={`Delete ${link.title}`}
+                aria-label={`Radera ${link.title}`}
                 disabled={isDeleting}
                 size="icon"
                 type="submit"
@@ -83,12 +83,12 @@ export function EditLinkForm({
     <Card>
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
-          <CardTitle>Edit link</CardTitle>
+          <CardTitle>Redigera länk</CardTitle>
           <CardDescription>{link.title}</CardDescription>
         </div>
 
         <Button
-          aria-label="Cancel editing"
+          aria-label="Avbryt redigering"
           disabled={isUpdating}
           onClick={() => setEditingLinkId(null)}
           size="icon"
@@ -104,7 +104,7 @@ export function EditLinkForm({
           <input name="id" type="hidden" value={link.id} />
 
           <div className="grid gap-2">
-            <Label htmlFor={`title-${link.id}`}>Title</Label>
+            <Label htmlFor={`title-${link.id}`}>Titel</Label>
             <Input
               id={`title-${link.id}`}
               name="title"
@@ -125,7 +125,7 @@ export function EditLinkForm({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor={`description-${link.id}`}>Description</Label>
+            <Label htmlFor={`description-${link.id}`}>Beskrivning</Label>
             <Textarea
               id={`description-${link.id}`}
               name="description"
@@ -135,7 +135,7 @@ export function EditLinkForm({
 
           <div className="flex flex-wrap items-center gap-3">
             <Button disabled={isUpdating} type="submit">
-              {isUpdating ? "Saving..." : "Save changes"}
+              {isUpdating ? "Sparar..." : "Spara ändringar"}
             </Button>
             <Button
               disabled={isUpdating}
@@ -143,7 +143,7 @@ export function EditLinkForm({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <ActionMessage state={updateState} />
           </div>

@@ -49,7 +49,7 @@ export function EditPlaceForm({
 
           <div className="flex shrink-0 items-center gap-1">
             <Button
-              aria-label={`Edit ${place.name}`}
+              aria-label={`Redigera ${place.name}`}
               onClick={() => setEditingPlaceId(place.id)}
               size="icon"
               type="button"
@@ -61,7 +61,7 @@ export function EditPlaceForm({
             <form action={deleteAction}>
               <input name="id" type="hidden" value={place.id} />
               <Button
-                aria-label={`Delete ${place.name}`}
+                aria-label={`Radera ${place.name}`}
                 disabled={isDeleting}
                 size="icon"
                 type="submit"
@@ -86,12 +86,12 @@ export function EditPlaceForm({
     <Card>
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
-          <CardTitle>Edit place</CardTitle>
+          <CardTitle>Redigera plats</CardTitle>
           <CardDescription>{place.name}</CardDescription>
         </div>
 
         <Button
-          aria-label="Cancel editing"
+          aria-label="Avbryt redigering"
           disabled={isUpdating}
           onClick={() => setEditingPlaceId(null)}
           size="icon"
@@ -107,7 +107,7 @@ export function EditPlaceForm({
           <input name="id" type="hidden" value={place.id} />
 
           <div className="grid gap-2">
-            <Label htmlFor={`title-${place.id}`}>Title</Label>
+            <Label htmlFor={`title-${place.id}`}>Titel</Label>
             <Input
               id={`title-${place.id}`}
               name="title"
@@ -128,17 +128,17 @@ export function EditPlaceForm({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor={`address-${place.id}`}>Address</Label>
+            <Label htmlFor={`address-${place.id}`}>Adress</Label>
             <Input
               id={`address-${place.id}`}
               name="address"
               defaultValue={place.address ?? ""}
-              placeholder="Optional address"
+              placeholder="Valfri adress"
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor={`description-${place.id}`}>Description</Label>
+            <Label htmlFor={`description-${place.id}`}>Beskrivning</Label>
             <Textarea
               id={`description-${place.id}`}
               name="description"
@@ -148,7 +148,7 @@ export function EditPlaceForm({
 
           <div className="flex flex-wrap items-center gap-3">
             <Button disabled={isUpdating} type="submit">
-              {isUpdating ? "Saving..." : "Save changes"}
+              {isUpdating ? "Sparar..." : "Spara ändringar"}
             </Button>
             <Button
               disabled={isUpdating}
@@ -156,7 +156,7 @@ export function EditPlaceForm({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <ActionMessage state={updateState} />
           </div>

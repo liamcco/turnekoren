@@ -16,8 +16,8 @@ export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeSched
         <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
           {dayLabel}
         </Badge>
-        <CardTitle>Live schedule</CardTitle>
-        <CardDescription>Current and upcoming items in the running order.</CardDescription>
+        <CardTitle>Aktuellt schema</CardTitle>
+        <CardDescription>Aktuella och kommande punkter i körordningen.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {events.map((event) => (
@@ -26,7 +26,7 @@ export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeSched
 
         {events.length === 0 && (
           <p className="text-sm text-muted-foreground">
-            No schedule entries yet. Add them in the admin portal.
+            Inga schemapunkter ännu. Lägg till dem i adminportalen.
           </p>
         )}
       </CardContent>

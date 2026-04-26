@@ -42,7 +42,7 @@ export function ContactRow({
 
         <div className="flex justify-end gap-1">
           <Button
-            aria-label={`Show details for ${contact.name}`}
+            aria-label={`Visa detaljer för ${contact.name}`}
             onClick={() => onShowInfo(contact)}
             size="icon"
             type="button"
@@ -52,7 +52,7 @@ export function ContactRow({
             <Info className="size-4" />
           </Button>
           <Button
-            aria-label={`Edit ${contact.name}`}
+            aria-label={`Redigera ${contact.name}`}
             onClick={() => setEditingContactId(contact.id)}
             size="icon"
             type="button"
@@ -64,7 +64,7 @@ export function ContactRow({
           <form action={deleteAction}>
             <input name="id" type="hidden" value={contact.id} />
             <Button
-              aria-label={`Delete ${contact.name}`}
+              aria-label={`Radera ${contact.name}`}
               disabled={isDeleting}
               size="icon"
               type="submit"
@@ -97,17 +97,17 @@ export function ContactRow({
         <input name="id" type="hidden" value={contact.id} />
 
         <div className="grid gap-2">
-          <Label htmlFor={`name-${contact.id}`}>Name</Label>
+          <Label htmlFor={`name-${contact.id}`}>Namn</Label>
           <Input id={`name-${contact.id}`} name="name" defaultValue={contact.name} required />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`role-${contact.id}`}>Role</Label>
+          <Label htmlFor={`role-${contact.id}`}>Roll</Label>
           <Input id={`role-${contact.id}`} name="role" defaultValue={contact.role} required />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`phone-${contact.id}`}>Phone</Label>
+          <Label htmlFor={`phone-${contact.id}`}>Telefon</Label>
           <Input
             id={`phone-${contact.id}`}
             name="phone"
@@ -120,7 +120,7 @@ export function ContactRow({
         <div className="flex gap-2 lg:justify-end">
           <Button disabled={isUpdating} type="submit" className="relative">
             <Loader2 className={`size-4 animate-spin absolute ${isUpdating ? "" : "hidden"}`} />
-            <span className={isUpdating ? "invisible" : ""}>Save</span>
+            <span className={isUpdating ? "invisible" : ""}>Spara</span>
           </Button>
           <Button
             disabled={isUpdating}
@@ -128,7 +128,7 @@ export function ContactRow({
             type="button"
             variant="outline"
           >
-            Cancel
+            Avbryt
           </Button>
         </div>
 

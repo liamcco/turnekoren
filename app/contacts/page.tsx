@@ -15,7 +15,7 @@ export default async function ContactsPage() {
 
   if(contacts.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">No contacts added yet. Use the admin page to add them.</p>
+      <p className="text-sm text-muted-foreground">Inga kontakter har lagts till ännu. Lägg till dem på adminsidan.</p>
     );
   }
 
@@ -28,7 +28,7 @@ export default async function ContactsPage() {
                 {contact.role}
               </Badge>
               <CardTitle>{contact.name}</CardTitle>
-              <CardDescription>Quick call or message access for the organising group.</CardDescription>
+              <CardDescription>Snabb åtkomst till samtal eller meddelanden för arrangörsgruppen.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
               {contact.phone ? (

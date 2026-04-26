@@ -46,7 +46,7 @@ export function getParticipantLabel(participant: Participant) {
 }
 
 export function getSelectedStayName(stays: Stay[], selectedStayId: number | null) {
-  return stays.find((stay) => stay.id === selectedStayId)?.name ?? "No stay selected";
+  return stays.find((stay) => stay.id === selectedStayId)?.name ?? "Inget boende valt";
 }
 
 export function getParticipantIdsInStayRooms(rooms: RoomWithParticipantsAndStay[]) {
@@ -82,13 +82,13 @@ export function RoomEditor({ data, stayId }: { data: RoomEditorData; stayId: str
         </div>
         <div className="flex flex-row items-start justify-between gap-4 space-y-0">
           <div>
-            <CardTitle>Rooms</CardTitle>
+            <CardTitle>Rum</CardTitle>
           </div>
 
           {selectedStayId ? (
             <div className="flex shrink-0 gap-2">
               <Button
-                aria-label="Copy rooms"
+                aria-label="Kopiera rum"
                 onClick={() => setIsCopyDialogOpen(true)}
                 size="icon"
                 type="button"
@@ -96,7 +96,7 @@ export function RoomEditor({ data, stayId }: { data: RoomEditorData; stayId: str
               >
                 <Copy className="size-4" />
               </Button>
-              <Button aria-label="Create room" onClick={() => setSelectedRoom(null)} size="icon" type="button">
+              <Button aria-label="Skapa rum" onClick={() => setSelectedRoom(null)} size="icon" type="button">
                 <Plus className="size-4" />
               </Button>
             </div>
@@ -115,9 +115,9 @@ export function RoomEditor({ data, stayId }: { data: RoomEditorData; stayId: str
           {selectedStayRooms.length === 0 ? (
             <Card>
               <CardHeader>
-                <CardTitle>No rooms yet</CardTitle>
+                <CardTitle>Inga rum ännu</CardTitle>
                 <CardDescription>
-                  Add a room or copy rooms from another stay.
+                  Lägg till ett rum eller kopiera rum från ett annat boende.
                 </CardDescription>
               </CardHeader>
             </Card>

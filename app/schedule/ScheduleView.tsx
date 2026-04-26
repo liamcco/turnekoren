@@ -37,9 +37,9 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
       <Card>
         <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
           <div>
-            <CardTitle>Schedule</CardTitle>
+            <CardTitle>Schema</CardTitle>
             <CardDescription>
-              View the trip schedule day by day.
+              Visa resans schema dag för dag.
             </CardDescription>
           </div>
         </CardHeader>

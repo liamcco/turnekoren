@@ -25,8 +25,8 @@ export function CreatePackingItemDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create packing item</DialogTitle>
-          <DialogDescription>Add something people should remember to pack.</DialogDescription>
+          <DialogTitle>Skapa packningssak</DialogTitle>
+          <DialogDescription>Lägg till något som deltagarna ska komma ihåg att packa.</DialogDescription>
         </DialogHeader>
 
         <form
@@ -46,18 +46,18 @@ export function CreatePackingItemDialog({
           className="grid gap-4"
         >
           <div className="grid gap-2">
-            <Label htmlFor="new-label">Label</Label>
-            <Input id="new-label" name="label" placeholder="Passport" required />
+            <Label htmlFor="new-label">Etikett</Label>
+            <Input id="new-label" name="label" placeholder="Pass" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-category">Category</Label>
-            <Input id="new-category" name="category" placeholder="Documents" required />
+            <Label htmlFor="new-category">Kategori</Label>
+            <Input id="new-category" name="category" placeholder="Dokument" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-notes">Notes</Label>
-            <Textarea id="new-notes" name="notes" placeholder="Optional notes" />
+            <Label htmlFor="new-notes">Anteckningar</Label>
+            <Textarea id="new-notes" name="notes" placeholder="Valfria anteckningar" />
           </div>
 
           <ActionMessage state={state} />
@@ -69,10 +69,10 @@ export function CreatePackingItemDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>
