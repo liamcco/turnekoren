@@ -118,8 +118,9 @@ export function ContactRow({
         </div>
 
         <div className="flex gap-2 lg:justify-end">
-          <Button disabled={isUpdating} type="submit">
-            {isUpdating ? <Loader2 className="size-4 animate-spin" /> : "Save"}
+          <Button disabled={isUpdating} type="submit" className="relative">
+            <Loader2 className={`size-4 animate-spin absolute ${isUpdating ? "" : "hidden"}`} />
+            <span className={isUpdating ? "invisible" : ""}>Save</span>
           </Button>
           <Button
             disabled={isUpdating}
