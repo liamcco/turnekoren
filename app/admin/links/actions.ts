@@ -47,7 +47,7 @@ export async function createLinkAction(
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/links");
 
     return {
       ok: true,
@@ -91,7 +91,7 @@ export async function updateLinkAction(
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/links");
 
     return {
       ok: true,
@@ -120,7 +120,7 @@ export async function deleteLinkAction(
       where: { id },
     });
 
-    revalidatePath("/");
+    revalidatePath("/links");
 
     return {
       ok: true,
