@@ -1,45 +1,45 @@
-import { DateTime } from "luxon";
-import { TRIP_TIMEZONE } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
+import { addFloatingDays, addFloatingHours, getCurrentFloatingDate } from "@/lib/floating-date";
 import { ContactCreateInput, PackingItemCreateInput, ParticipantCreateInput, PlaceCreateInput, QuoteCreateInput, RoomCreateInput, ScheduleEventCreateInput, StayCreateInput, UsefulLinkCreateInput } from "@/generated/prisma/models";
 
 function createSeedData() {
-  const base = DateTime.now().setZone(TRIP_TIMEZONE).startOf("day").plus({ days: 1 });
+  const base = addFloatingDays(getCurrentFloatingDate(), 1);
+  base.setUTCHours(0, 0, 0, 0);
 
   return {
     schedule: [
       {
         title: "Coach departs",
-        startTime: base.plus({ hours: 7, minutes: 30 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endTime: base.plus({ hours: 9 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startTime: new Date(addFloatingHours(base, 7).getTime() + 30 * 60_000),
+        endTime: addFloatingHours(base, 9),
         location: "Choir rehearsal room",
         notes: "Bring passport and packed lunch.",
       },
       {
         title: "Ferry check-in",
-        startTime: base.plus({ hours: 10, minutes: 15 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endTime: base.plus({ hours: 11 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startTime: new Date(addFloatingHours(base, 10).getTime() + 15 * 60_000),
+        endTime: addFloatingHours(base, 11),
         location: "Viking Line terminal",
         notes: "Meet in front of the main entrance.",
       },
       {
         title: "Warm-up on board",
-        startTime: base.plus({ hours: 14 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endTime: base.plus({ hours: 15 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startTime: addFloatingHours(base, 14),
+        endTime: addFloatingHours(base, 15),
         location: "Deck conference room",
         notes: "Light rehearsal only.",
       },
       {
         title: "Hotel arrival",
-        startTime: base.plus({ days: 1, hours: 9 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endTime: base.plus({ days: 1, hours: 10 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startTime: addFloatingHours(addFloatingDays(base, 1), 9),
+        endTime: addFloatingHours(addFloatingDays(base, 1), 10),
         location: "Hotel lobby",
         notes: "Pick up room cards from the organisers.",
       },
       {
         title: "Evening concert",
-        startTime: base.plus({ days: 1, hours: 18 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endTime: base.plus({ days: 1, hours: 20 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startTime: addFloatingHours(addFloatingDays(base, 1), 18),
+        endTime: addFloatingHours(addFloatingDays(base, 1), 20),
         location: "St. John's Church",
         notes: "Concert blacks and tour scarf.",
       },
@@ -47,8 +47,8 @@ function createSeedData() {
     stays: [
       {
         name: "Helsinki Hotel",
-        startDate: base.plus({ days: 1 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
-        endDate: base.plus({ days: 2 }).toISO({ suppressSeconds: true, includeOffset: false }) ?? "",
+        startDate: addFloatingDays(base, 1),
+        endDate: addFloatingDays(base, 2),
         notes: "Best hotel in Helsinki!"
       }
     ] as StayCreateInput[],

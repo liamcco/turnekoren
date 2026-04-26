@@ -13,6 +13,7 @@ import { formatDateKey, getInitialSelectedDay, groupEventsByDay } from "./utils"
 import { EventEditorDialog } from "./EventEditorDialog";
 import { ScheduleTimeline } from "../../../components/schedule/ScheduleTimeline";
 import { DaySelector } from "./Selectors";
+import { getCurrentFloatingDate } from "@/lib/floating-date";
 
 export const initialActionState: ScheduleEventActionState = {
   ok: false,
@@ -29,7 +30,7 @@ export function ScheduleEditor({ events, initialSelectedDay }: ScheduleEditorPro
   const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
   const days = useMemo(() => {
     const eventDays = Object.keys(eventsByDay).sort();
-    return eventDays.length > 0 ? eventDays : [formatDateKey(new Date())];
+    return eventDays.length > 0 ? eventDays : [formatDateKey(getCurrentFloatingDate())];
   }, [eventsByDay]);
 
   const [selectedDay, setSelectedDay] = useState(

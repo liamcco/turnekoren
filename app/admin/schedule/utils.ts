@@ -1,4 +1,16 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
+import {
+  addFloatingDays,
+  addFloatingHours,
+  formatFloatingDateKey,
+  formatFloatingDateTimeInput,
+  formatFloatingFullDayLabel,
+  formatFloatingTime,
+  getCurrentFloatingDate,
+  getFloatingDayEnd,
+  getFloatingDayStart,
+  getFloatingMinutesFromDayStart,
+} from "@/lib/floating-date";
 
 function getEventEffectiveEnd(event: ScheduleEvent) {
   return event.endTime ?? event.startTime;
@@ -41,26 +53,24 @@ export function wouldExceedMaxOverlaps({
 }
 
 export function addDays(date: Date, days: number) {
-  const nextDate = new Date(date);
-  nextDate.setDate(nextDate.getDate() + days);
-  return nextDate;
+  return addFloatingDays(date, days);
 }
 
 export function getDayStart(dayKey: string) {
-  return new Date(`${dayKey}T00:00:00`);
+  return getFloatingDayStart(dayKey) ?? new Date(NaN);
 }
 
 export function getDayEnd(dayKey: string) {
-  return new Date(`${dayKey}T23:59:59.999`);
+  return getFloatingDayEnd(dayKey) ?? new Date(NaN);
 }
 
 export function getEventDayKeys(event: ScheduleEvent) {
   const dayKeys: string[] = [];
   let cursor = new Date(event.startTime);
-  cursor.setHours(0, 0, 0, 0);
+  cursor.setUTCHours(0, 0, 0, 0);
 
   const lastDay = new Date(getEventEffectiveEnd(event));
-  lastDay.setHours(0, 0, 0, 0);
+  lastDay.setUTCHours(0, 0, 0, 0);
 
   while (cursor <= lastDay) {
     const dayKey = formatDateKey(cursor);
@@ -87,15 +97,11 @@ export function groupEventsByDay(events: ScheduleEvent[]) {
 }
 
 export function formatDateKey(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
+  return formatFloatingDateKey(date);
 }
 
 export function getInitialSelectedDay(events: ScheduleEvent[]) {
-  const todayKey = formatDateKey(new Date());
+  const todayKey = formatDateKey(getCurrentFloatingDate());
   const days = Object.keys(groupEventsByDay(events)).sort();
 
   if (days.includes(todayKey)) {
@@ -111,29 +117,19 @@ export function getInitialSelectedDay(events: ScheduleEvent[]) {
 }
 
 export function formatFullDayLabel(dayKey: string) {
-  return new Intl.DateTimeFormat("en", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(`${dayKey}T00:00:00`));
+  return formatFloatingFullDayLabel(dayKey);
 }
 
 export function formatTime(date: Date) {
-  return new Intl.DateTimeFormat("en", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).format(date);
+  return formatFloatingTime(date);
 }
 
 export function toDateTimeLocalValue(value: Date) {
-  const offset = value.getTimezoneOffset();
-  const localDate = new Date(value.getTime() - offset * 60_000);
-  return localDate.toISOString().slice(0, 16);
+  return formatFloatingDateTimeInput(value);
 }
 
 export function getMinutesFromDayStart(date: Date) {
-  return date.getHours() * 60 + date.getMinutes();
+  return getFloatingMinutesFromDayStart(date);
 }
 
 export function getTimelineStartHour(events: ScheduleEvent[], selectedDay: string) {
@@ -144,9 +140,7 @@ export function getTimelineStartHour(events: ScheduleEvent[], selectedDay: strin
 }
 
 export function addHours(date: Date, hours: number) {
-  const nextDate = new Date(date);
-  nextDate.setHours(nextDate.getHours() + hours);
-  return nextDate;
+  return addFloatingHours(date, hours);
 }
 
 export function hasTimeOverlap(a: ScheduleEvent, b: ScheduleEvent) {

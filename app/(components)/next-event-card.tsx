@@ -2,14 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ScheduleEvent } from "@/generated/prisma/client";
-import { TRIP_LOCALE } from "@/lib/constants";
+import { formatFloatingTime } from "@/lib/floating-date";
 
 interface NextEventCardProps {
   nextEvent: ScheduleEvent | null;
 }
 
 export function NextEventCard({ nextEvent }: NextEventCardProps) {
-  const startTime = nextEvent?.startTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
+  const startTime = nextEvent ? formatFloatingTime(nextEvent.startTime) : null;
 
   return (
     <Card className="bg-card/85">

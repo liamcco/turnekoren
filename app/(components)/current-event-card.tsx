@@ -2,7 +2,7 @@ import type { ScheduleSnapshot } from "@/app/home-data";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleEvent } from "@/generated/prisma/client";
-import { TRIP_LOCALE } from "@/lib/constants";
+import { formatFloatingTime } from "@/lib/floating-date";
 import { formatNow } from "@/lib/formatting";
 
 interface CurrentEventCardProps {
@@ -11,10 +11,10 @@ interface CurrentEventCardProps {
 }
 
 export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
-  const startTime = currentEvent?.startTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
+  const startTime = currentEvent ? formatFloatingTime(currentEvent.startTime) : null;
   const isMeetup = currentEvent?.endTime === null;
   const endTime = currentEvent?.endTime
-    ? currentEvent.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" })
+    ? formatFloatingTime(currentEvent.endTime)
     : null;
   return (
     <Card className="border-none bg-linear-to-br from-primary via-primary to-[oklch(0.58_0.18_28)] text-primary-foreground shadow-lg">

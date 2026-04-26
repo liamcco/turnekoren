@@ -13,6 +13,7 @@ import { createScheduleEventAction, updateScheduleEventAction, deleteScheduleEve
 import { initialActionState } from "./ScheduleEditor";
 import { formatDateKey, toDateTimeLocalValue, wouldExceedMaxOverlaps } from "./utils";
 import { Label } from "@/components/ui/label";
+import { parseFloatingDateTime } from "@/lib/floating-date";
 
 export function EventEditorDialog({
   event,
@@ -43,9 +44,13 @@ export function EventEditorDialog({
       }
 
       const formStartTimeValue = formData.get("startTime");
-      const nextDay =
+      const formStartTime =
         typeof formStartTimeValue === "string"
-          ? formatDateKey(new Date(formStartTimeValue))
+          ? parseFloatingDateTime(formStartTimeValue)
+          : null;
+      const nextDay =
+        formStartTime !== null
+          ? formatDateKey(formStartTime)
           : selectedDay;
 
       router.replace(`/admin/schedule?day=${nextDay}`, { scroll: false });
@@ -68,8 +73,8 @@ export function EventEditorDialog({
     });
   };
 
-  const defaultStartTime = event?.startTime ?? new Date(`${selectedDay}T09:00:00`);
-  const defaultEndTime = event?.endTime ?? new Date(`${selectedDay}T10:00:00`);
+  const defaultStartTime = event?.startTime ?? parseFloatingDateTime(`${selectedDay}T09:00`) ?? new Date(NaN);
+  const defaultEndTime = event?.endTime ?? parseFloatingDateTime(`${selectedDay}T10:00`) ?? new Date(NaN);
   const defaultIsMeetup = event?.endTime === null;
 
   const [startTimeValue, setStartTimeValue] = useState(
@@ -80,16 +85,16 @@ export function EventEditorDialog({
   );
   const [isMeetup, setIsMeetup] = useState(defaultIsMeetup);
 
-  const proposedStartTime = new Date(startTimeValue);
-  const proposedEndTime = isMeetup ? null : new Date(endTimeValue);
+  const proposedStartTime = parseFloatingDateTime(startTimeValue);
+  const proposedEndTime = isMeetup ? null : parseFloatingDateTime(endTimeValue);
   const hasValidDraftTimes =
-    !Number.isNaN(proposedStartTime.getTime()) &&
+    proposedStartTime !== null &&
     (isMeetup ||
       (proposedEndTime !== null &&
-        !Number.isNaN(proposedEndTime.getTime()) &&
         proposedEndTime > proposedStartTime));
   const exceedsOverlapLimit =
     hasValidDraftTimes &&
+    proposedStartTime !== null &&
     wouldExceedMaxOverlaps({
       events,
       startTime: proposedStartTime,

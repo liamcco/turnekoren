@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleTimeline } from "@/components/schedule/ScheduleTimeline";
 import { DaySelector } from "../admin/schedule/Selectors";
+import { getCurrentFloatingDate } from "@/lib/floating-date";
 
 interface ScheduleProps {
   events: ScheduleEvent[];
@@ -18,7 +19,7 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
   const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
   const days = useMemo(() => {
     const eventDays = Object.keys(eventsByDay).sort();
-    return eventDays.length > 0 ? eventDays : [formatDateKey(new Date())];
+    return eventDays.length > 0 ? eventDays : [formatDateKey(getCurrentFloatingDate())];
   }, [eventsByDay]);
 
   const [selectedDay, setSelectedDay] = useState(
