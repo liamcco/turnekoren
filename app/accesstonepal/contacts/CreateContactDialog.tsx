@@ -1,8 +1,10 @@
-"use clent"
+"use client"
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 import { useActionState } from "react";
 import { createContactAction } from "./actions";
 import { Label } from "@/components/ui/label";
@@ -16,6 +18,12 @@ export function CreateContactDialog({
   onOpenChange: (open: boolean) => void;
 }) {
   const [state, formAction, isPending] = useActionState(createContactAction, initialState);
+
+  useEffect(() => {
+    if (state.ok) {
+      onOpenChange(false);
+    }
+  }, [state, onOpenChange]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -53,7 +61,7 @@ export function CreateContactDialog({
               Cancel
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? <><Loader2 className="mr-2 size-4 animate-spin" />Creating...</> : "Create"}
             </Button>
           </div>
         </form>
