@@ -18,7 +18,6 @@ export function ThemeToggle() {
   return (
     <Button
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="rounded-full"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       size="sm"
       type="button"

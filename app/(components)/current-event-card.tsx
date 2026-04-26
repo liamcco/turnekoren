@@ -19,7 +19,7 @@ export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
   return (
     <Card className="border-none bg-primary text-primary-foreground shadow-lg">
       <CardHeader>
-        <Badge className="w-fit rounded-full bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20">
+        <Badge className="w-fit bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20">
           Right now
         </Badge>
         <CardTitle className="text-3xl md:text-4xl">

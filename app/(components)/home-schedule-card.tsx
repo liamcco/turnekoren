@@ -13,7 +13,7 @@ export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeSched
   return (
     <Card className="bg-card/85">
       <CardHeader>
-        <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
+        <Badge className="w-fit px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
           {dayLabel}
         </Badge>
         <CardTitle>Live schedule</CardTitle>
