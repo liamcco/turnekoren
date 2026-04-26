@@ -5,15 +5,16 @@ import { ScheduleEvent } from "@/generated/prisma/client";
 
 interface HomeScheduleCardProps {
   currentEventId: number | null;
+  dayLabel: "Today" | "Tomorrow";
   events: ScheduleEvent[];
 }
 
-export function HomeScheduleCard({ currentEventId, events }: HomeScheduleCardProps) {
+export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeScheduleCardProps) {
   return (
     <Card className="bg-card/85">
       <CardHeader>
         <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
-          Today
+          {dayLabel}
         </Badge>
         <CardTitle>Live schedule</CardTitle>
         <CardDescription>Current and upcoming items in the running order.</CardDescription>
