@@ -48,7 +48,7 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
 
   return (
     <section className="space-y-4">
-      <Card className="border-none bg-linear-to-br from-primary via-primary to-[oklch(0.58_0.18_28)] text-primary-foreground shadow-lg">
+      <Card className="border-none bg-primary text-primary-foreground shadow-lg">
         <CardHeader>
           <Badge className="w-fit rounded-full bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20">
             Live rate
