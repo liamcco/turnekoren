@@ -28,6 +28,8 @@ function getEventFormData(formData: FormData) {
   const location = getStringValue(formData, "location");
   const notes = getStringValue(formData, "notes");
 
+  console.log({ title, startTime, endTime, location, notes });
+
   if (!title || !startTime || !location) {
     return {
       ok: false as const,

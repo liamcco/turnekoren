@@ -125,6 +125,16 @@ export function EventEditorDialog({
               </Label>
             </div>
 
+            <div className="grid gap-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                name="title"
+                defaultValue={event?.title ?? ""}
+                required
+              />
+            </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="startTime">Start</Label>

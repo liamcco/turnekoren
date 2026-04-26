@@ -131,7 +131,7 @@ export function ScheduleTimeline({
               event.hasTooManyOverlaps
                 ? "absolute rounded-md border border-destructive bg-destructive/10 p-2 text-left shadow-sm transition hover:bg-destructive/20"
                 : event.isPointInTime
-                  ? "absolute rounded-full border bg-card px-3 py-2 text-left shadow-sm transition hover:bg-accent"
+                  ? "absolute flex items-center gap-2 overflow-hidden rounded-full border-2 border-primary bg-primary/10 px-3 py-2 text-left shadow-sm transition hover:bg-primary/20"
                   : "absolute rounded-md border bg-card p-2 text-left shadow-sm transition hover:bg-accent"
             }
             onClick={() => onSelectEvent(event)}
@@ -147,25 +147,41 @@ export function ScheduleTimeline({
             }}
             type="button"
           >
-            <div className="truncate text-sm font-medium">{event.title}</div>
-            <div className="truncate text-xs text-muted-foreground md:hidden">
-              {event.location}
-            </div>
-            <div className="hidden truncate text-xs text-muted-foreground md:block">
-              {event.isPointInTime
-                ? formatTime(event.startTime)
-                : `${formatTime(event.startTime)}-${formatTime(event.displayEndTime)}`}
-              {event.location ? ` • ${event.location}` : ""}
-            </div>
-            {event.hasTooManyOverlaps ? (
-              <div className="hidden text-xs text-destructive md:block">
-                More than two events overlap here.
-              </div>
-            ) : event.notes ? (
-              <div className="hidden line-clamp-2 text-xs text-muted-foreground md:block">
-                {event.notes}
-              </div>
-            ) : null}
+            {event.isPointInTime ? (
+              <>
+                <div className="shrink-0 text-xs font-medium text-muted-foreground">
+                  {formatTime(event.startTime)}
+                </div>
+                <div className="min-w-0 flex-1 truncate text-sm font-medium">
+                  {event.title}
+                </div>
+                {event.location ? (
+                  <div className="hidden shrink-0 truncate text-xs text-muted-foreground md:block">
+                    {event.location}
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <>
+                <div className="truncate text-sm font-medium">{event.title}</div>
+                <div className="truncate text-xs text-muted-foreground md:hidden">
+                  {event.location}
+                </div>
+                <div className="hidden truncate text-xs text-muted-foreground md:block">
+                  {formatTime(event.startTime)}-{formatTime(event.displayEndTime)}
+                  {event.location ? ` • ${event.location}` : ""}
+                </div>
+                {event.hasTooManyOverlaps ? (
+                  <div className="hidden text-xs text-destructive md:block">
+                    More than two events overlap here.
+                  </div>
+                ) : event.notes ? (
+                  <div className="hidden line-clamp-2 text-xs text-muted-foreground md:block">
+                    {event.notes}
+                  </div>
+                ) : null}
+              </>
+            )}
           </button>
         ))}
       </div>
