@@ -132,7 +132,7 @@ export function ContactRow({
           </Button>
         </div>
 
-        {updateState.message ? (
+        {updateState.message && !updateState.ok ? (
           <div className="lg:col-span-4">
             <ActionMessage state={updateState} />
           </div>
