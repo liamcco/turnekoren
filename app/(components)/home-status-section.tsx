@@ -12,7 +12,7 @@ export function HomeStatusSection({ currentEvent, nextEvent, now }: HomeStatusSe
   return (
     <section className="grid gap-4 md:grid-cols-2">
       <CurrentEventCard currentEvent={currentEvent} now={now} />
-      <NextEventCard nextEvent={nextEvent} />
+      <NextEventCard nextEvent={nextEvent} now={now} />
     </section>
   );
 }

@@ -188,3 +188,10 @@ export function getCurrentFloatingDate() {
     )
   );
 }
+
+export function differenceInFloatingCalendarDays(a: Date, b: Date) {
+  const aDay = Date.UTC(a.getUTCFullYear(), a.getUTCMonth(), a.getUTCDate());
+  const bDay = Date.UTC(b.getUTCFullYear(), b.getUTCMonth(), b.getUTCDate());
+
+  return Math.round((aDay - bDay) / (24 * 60 * 60 * 1000));
+}
