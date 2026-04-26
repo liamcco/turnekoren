@@ -5,7 +5,7 @@ import { ScheduleEvent } from "@/generated/prisma/client";
 
 interface HomeScheduleCardProps {
   currentEventId: number | null;
-  dayLabel: "Today" | "Tomorrow";
+  dayLabel: string;
   events: ScheduleEvent[];
 }
 

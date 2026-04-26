@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { ScheduleEvent } from "@/generated/prisma/client";
 import {
-  addFloatingDays,
   formatFloatingDateKey,
   getCurrentFloatingDate,
 } from "@/lib/floating-date";
@@ -11,7 +10,7 @@ export interface ScheduleSnapshot {
   currentEvent: ScheduleEvent | null;
   nextEvent: ScheduleEvent | null;
   todayEvents: ScheduleEvent[];
-  tomorrowEvents: ScheduleEvent[];
+  nextEventDayEvents: ScheduleEvent[];
 }
 
 const MEETUP_DURATION_MS = 15 * 60_000;
@@ -39,16 +38,17 @@ export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
   const todayEvents = events.filter((event) =>
     isSameDay(event.startTime, now)
   );
-  const tomorrow = addFloatingDays(now, 1);
-  const tomorrowEvents = events.filter((event) =>
-    isSameDay(event.startTime, tomorrow)
-  );
+  const nextEventDayKey = nextEvent ? formatFloatingDateKey(nextEvent.startTime) : null;
+  const nextEventDayEvents =
+    todayEvents.length === 0 && nextEventDayKey
+      ? events.filter((event) => formatFloatingDateKey(event.startTime) === nextEventDayKey)
+      : [];
 
   return {
     now,
     currentEvent,
     nextEvent,
     todayEvents,
-    tomorrowEvents,
+    nextEventDayEvents,
   };
 }
