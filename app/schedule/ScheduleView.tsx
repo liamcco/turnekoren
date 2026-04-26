@@ -1,12 +1,12 @@
 "use client"
 
 import { ScheduleEvent } from "@/generated/prisma/client";
-import { formatDateKey, getInitialSelectedDay, groupEventsByDay } from "../admin/schedule/utils";
+import { formatDateKey, getInitialSelectedDay, groupEventsByDay } from "../accesstonepal/schedule/utils";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleTimeline } from "@/components/schedule/ScheduleTimeline";
-import { DaySelector } from "../admin/schedule/Selectors";
+import { DaySelector } from "../accesstonepal/schedule/Selectors";
 import { getCurrentFloatingDate } from "@/lib/floating-date";
 
 interface ScheduleProps {
@@ -29,7 +29,7 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
 
   function handleSelectDay(day: string) {
     setSelectedDay(day);
-    router.replace(`/admin/schedule?day=${day}`, { scroll: false });
+    router.replace(`/schedule?day=${day}`, { scroll: false });
   }
 
   return (
