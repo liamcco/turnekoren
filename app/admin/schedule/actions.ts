@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getRequiredDateValue, getStringValue } from "@/lib/api";
+import { parseFloatingDateTime } from "@/lib/floating-date";
 
 export async function getScheduleData() {
   return prisma.scheduleEvent.findMany({
@@ -24,11 +25,11 @@ function getEventFormData(formData: FormData) {
   const title = getStringValue(formData, "title");
   const startTime = getRequiredDateValue(formData, "startTime");
   const endTimeValue = formData.get("endTime");
-  const endTime = endTimeValue ? new Date(endTimeValue.toString()) : null;
+  const endTimeString = typeof endTimeValue === "string" ? endTimeValue.trim() : "";
+  const endTime =
+    endTimeString ? parseFloatingDateTime(endTimeString) : null;
   const location = getStringValue(formData, "location");
   const notes = getStringValue(formData, "notes");
-
-  console.log({ title, startTime, endTime, location, notes });
 
   if (!title || !startTime || !location) {
     return {
@@ -37,8 +38,8 @@ function getEventFormData(formData: FormData) {
     };
   }
 
-  if (endTime !== null) {
-    if (Number.isNaN(endTime.getTime())) {
+  if (endTimeString) {
+    if (endTime === null) {
       return {
         ok: false as const,
         message: "Invalid end time.",

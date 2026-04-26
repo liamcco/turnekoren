@@ -2,7 +2,7 @@ import { Clock3 } from "lucide-react"
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ScheduleEvent } from "@/generated/prisma/client";
-import { TRIP_LOCALE } from "@/lib/constants";
+import { formatFloatingTime } from "@/lib/floating-date";
 
 interface ScheduleListItemProps {
   event: ScheduleEvent;
@@ -10,10 +10,10 @@ interface ScheduleListItemProps {
 }
 
 export function ScheduleListItem({ event, isCurrent }: ScheduleListItemProps) {
-    const startTime = event.startTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" });
+    const startTime = formatFloatingTime(event.startTime);
     const isMeetup = event.endTime === null;
     const endTime = event.endTime
-      ? event.endTime.toLocaleTimeString(TRIP_LOCALE, { hour: "2-digit", minute: "2-digit" })
+      ? formatFloatingTime(event.endTime)
       : null;
 
   return (

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { ScheduleEvent } from "@/generated/prisma/client";
+import { formatFloatingDateKey, getCurrentFloatingDate } from "@/lib/floating-date";
 
 export interface ScheduleSnapshot {
   now: Date;
@@ -20,7 +21,7 @@ export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
     orderBy: { startTime: "asc" },
   });
 
-  const now = new Date();
+  const now = getCurrentFloatingDate();
 
   const currentEvent = events.find(
     (event) => event.startTime <= now && getEventDisplayEnd(event) > now
@@ -29,9 +30,7 @@ export async function getScheduleSnapshot(): Promise<ScheduleSnapshot> {
   const nextEvent = events.find((event) => event.startTime > now) ?? null;
 
   const isSameDay = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
+    formatFloatingDateKey(a) === formatFloatingDateKey(b);
 
   const todayEvents = events.filter((event) =>
     isSameDay(event.startTime, now)
