@@ -34,11 +34,11 @@ export function NextEventCard({ nextEvent, now }: NextEventCardProps) {
     <Card className="bg-card/85">
       <CardHeader>
         <div className="flex flex-wrap gap-2">
-          <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
+          <Badge className="w-fit px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
             Next meetup
           </Badge>
           {dayBadgeLabel ? (
-            <Badge className="w-fit rounded-full px-3 py-1 text-[10px]" variant="secondary">
+            <Badge className="w-fit px-3 py-1 text-[10px]" variant="secondary">
               {dayBadgeLabel}
             </Badge>
           ) : null}

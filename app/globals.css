@@ -82,7 +82,7 @@
   --sidebar-accent-foreground: oklch(0.28 0.06 260);
   --sidebar-border: oklch(0.86 0.025 250);
   --sidebar-ring: color-mix(in oklab, var(--primary) 42%, transparent);
-  --radius: 0.65rem;
+  --radius: 0.2rem;
   --page-gradient: none;
 }
 

@@ -13,7 +13,7 @@ export default async function QuotePage() {
   return (
       <Card className="overflow-hidden border-none bg-linear-to-br from-card to-accent/50 shadow-md">
           <CardHeader>
-            <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase">
+            <Badge className="w-fit px-3 py-1 text-[10px] tracking-[0.24em] uppercase">
               Today&apos;s line
             </Badge>
             <CardTitle className="flex items-center gap-2">

@@ -31,7 +31,7 @@ export default async function RoomsPage() {
             <CardHeader>
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-2">
-                  <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
+                  <Badge className="w-fit px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
                     {label}
                   </Badge>
                   <CardTitle className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export default async function RoomsPage() {
                       <TableCell className="whitespace-normal">
                         <div className="flex flex-wrap gap-2">
                           {room.participants.map((participant) => (
-                            <Badge className="rounded-full" key={participant.id} variant="secondary">
+                            <Badge key={participant.id} variant="secondary">
                               <BedDouble className="size-3" />
                               {participant.name}
                             </Badge>
