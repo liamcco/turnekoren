@@ -11,6 +11,12 @@ import { getLinksAndPlaces } from "./links";
 export default async function PackingPage() {
   const { links, places } = await getLinksAndPlaces();
 
+  if (links.length + places.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">No links or places found.</p>
+    );
+  }
+
   return (
     <div className="grid gap-6">
       <section className="grid gap-4">
