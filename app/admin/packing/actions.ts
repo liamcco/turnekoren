@@ -55,7 +55,7 @@ export async function createPackingItemAction(
   try {
     await prisma.packingItem.create({ data: parsed.data });
 
-    revalidatePath("/admin/packing");
+    revalidatePath("/");
 
     return { ok: true, message: "Packing item created." };
   } catch {
@@ -85,7 +85,7 @@ export async function updatePackingItemAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/packing");
+    revalidatePath("/");
 
     return { ok: true, message: "Packing item updated." };
   } catch {
@@ -106,7 +106,7 @@ export async function deletePackingItemAction(
   try {
     await prisma.packingItem.delete({ where: { id } });
 
-    revalidatePath("/admin/packing");
+    revalidatePath("/");
 
     return { ok: true, message: "Packing item deleted." };
   } catch {

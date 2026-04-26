@@ -55,7 +55,7 @@ export async function createQuoteAction(
   try {
     await prisma.quote.create({ data: parsed.data });
 
-    revalidatePath("/admin/quote");
+    revalidatePath("/");
 
     return { ok: true, message: "Quote created." };
   } catch {
@@ -85,7 +85,7 @@ export async function updateQuoteAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/quote");
+    revalidatePath("/");
 
     return { ok: true, message: "Quote updated." };
   } catch {
@@ -106,7 +106,7 @@ export async function deleteQuoteAction(
   try {
     await prisma.quote.delete({ where: { id } });
 
-    revalidatePath("/admin/quote");
+    revalidatePath("/");
 
     return { ok: true, message: "Quote deleted." };
   } catch {

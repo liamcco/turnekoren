@@ -72,7 +72,7 @@ export async function createStayAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/stays");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -111,7 +111,7 @@ export async function updateStayAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/stays");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -140,7 +140,7 @@ export async function deleteStayAction(
       where: { id },
     });
 
-    revalidatePath("/admin/stays");
+    revalidatePath("/");
 
     return {
       ok: true,

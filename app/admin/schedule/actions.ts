@@ -83,7 +83,7 @@ export async function createScheduleEventAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/schedule");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -122,7 +122,7 @@ export async function updateScheduleEventAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/schedule");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -151,7 +151,7 @@ export async function deleteScheduleEventAction(
       where: { id },
     });
 
-    revalidatePath("/admin/schedule");
+    revalidatePath("/");
 
     return {
       ok: true,
