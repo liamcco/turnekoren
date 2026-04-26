@@ -49,7 +49,7 @@ export function CreateContactDialog({
             <Input id="new-phone" name="phone" placeholder="Phone number" required type="tel" />
           </div>
 
-          <ActionMessage state={state} />
+          {!state.ok && <ActionMessage state={state} />}
 
           <div className="flex justify-end gap-2">
             <Button
