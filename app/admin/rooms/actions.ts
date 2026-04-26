@@ -138,8 +138,7 @@ export async function createRoomAction(
       },
     });
 
-    revalidatePath("/");
-    revalidatePath("/");
+    revalidatePath("/rooms");
 
     return {
       ok: true,
@@ -198,8 +197,7 @@ export async function updateRoomAction(
       },
     });
 
-    revalidatePath("/");
-    revalidatePath("/");
+    revalidatePath("/rooms");
 
     return {
       ok: true,
@@ -228,8 +226,7 @@ export async function deleteRoomAction(
       where: { id },
     });
 
-    revalidatePath("/");
-    revalidatePath("/");
+    revalidatePath("/rooms");
 
     return {
       ok: true,
@@ -287,8 +284,7 @@ export async function copyRoomsFromStayAction(
       )
     );
 
-    revalidatePath("/");
-    revalidatePath("/");
+    revalidatePath("/rooms");
 
     return {
       ok: true,

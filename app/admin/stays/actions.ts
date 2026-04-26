@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getStringValue, getRequiredDateValue } from "@/lib/api";
 
@@ -72,8 +71,6 @@ export async function createStayAction(
       data: parsed.data,
     });
 
-    revalidatePath("/");
-
     return {
       ok: true,
       message: "Stay created.",
@@ -111,8 +108,6 @@ export async function updateStayAction(
       data: parsed.data,
     });
 
-    revalidatePath("/");
-
     return {
       ok: true,
       message: "Stay updated.",
@@ -139,8 +134,6 @@ export async function deleteStayAction(
     await prisma.stay.delete({
       where: { id },
     });
-
-    revalidatePath("/");
 
     return {
       ok: true,

@@ -55,7 +55,7 @@ export async function createContactAction(
   try {
     await prisma.contact.create({ data: parsed.data });
 
-    revalidatePath("/");
+    revalidatePath("/contacts");
 
     return { ok: true, message: "Contact created." };
   } catch {
@@ -85,7 +85,7 @@ export async function updateContactAction(
       data: parsed.data,
     });
 
-    revalidatePath("/");
+    revalidatePath("/contacts");
 
     return { ok: true, message: "Contact updated." };
   } catch {
@@ -106,7 +106,7 @@ export async function deleteContactAction(
   try {
     await prisma.contact.delete({ where: { id } });
 
-    revalidatePath("/");
+    revalidatePath("/contacts");
 
     return { ok: true, message: "Contact deleted." };
   } catch {

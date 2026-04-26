@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getStringValue } from "@/lib/api";
 import { importParticipantsFromCsv } from "@/lib/import";
@@ -80,8 +79,6 @@ export async function createParticipantAction(
       data: parsed.data,
     });
 
-    revalidatePath("/");
-
     return {
       ok: true,
       message: "Participant created.",
@@ -119,8 +116,6 @@ export async function updateParticipantAction(
       data: parsed.data,
     });
 
-    revalidatePath("/");
-
     return {
       ok: true,
       message: "Participant updated.",
@@ -147,8 +142,6 @@ export async function deleteParticipantAction(
     await prisma.participant.delete({
       where: { id },
     });
-
-    revalidatePath("/");
 
     return {
       ok: true,
@@ -189,8 +182,6 @@ export async function importParticipantsFromCsvAction(
         message: result.errors.join(" "),
       };
     }
-
-    revalidatePath("/");
 
     return {
       ok: true,
