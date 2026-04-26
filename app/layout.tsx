@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { APP_NAME } from "@/lib/constants";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: APP_NAME,
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </SidebarProvider>
           </TooltipProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
