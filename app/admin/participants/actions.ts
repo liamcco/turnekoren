@@ -80,7 +80,7 @@ export async function createParticipantAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/participants");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -119,7 +119,7 @@ export async function updateParticipantAction(
       data: parsed.data,
     });
 
-    revalidatePath("/admin/participants");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -148,7 +148,7 @@ export async function deleteParticipantAction(
       where: { id },
     });
 
-    revalidatePath("/admin/participants");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -190,7 +190,7 @@ export async function importParticipantsFromCsvAction(
       };
     }
 
-    revalidatePath("/admin/participants");
+    revalidatePath("/");
 
     return {
       ok: true,

@@ -49,7 +49,7 @@ export async function createPlaceAction(
       },
     });
 
-    revalidatePath("/admin/places");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -93,7 +93,7 @@ export async function updatePlaceAction(
       },
     });
 
-    revalidatePath("/admin/places");
+    revalidatePath("/");
 
     return {
       ok: true,
@@ -122,7 +122,7 @@ export async function deletePlaceAction(
       where: { id },
     });
 
-    revalidatePath("/admin/places");
+    revalidatePath("/");
 
     return {
       ok: true,
