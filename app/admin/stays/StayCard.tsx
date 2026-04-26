@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Link, ExternalLink, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { deleteStayAction, updateStayAction } from "./actions";
@@ -20,7 +21,7 @@ export function StayCard({
   setEditingStayId: Dispatch<SetStateAction<number | null>>;
 }) {
   const router = useRouter();
-    const roomCount = stay.rooms.length;
+  const roomCount = stay.rooms.length;
   const isEditing = editingStayId === stay.id;
 
   const [updateState, setUpdateState] = useState(initialState);
@@ -44,13 +45,15 @@ export function StayCard({
 
         <div className="hidden items-center text-sm text-muted-foreground md:flex">
           <Button asChild size="sm" variant={roomCount > 0 ? "outline" : "default"}>
-            <Link href={`/admin/rooms?stayId=${stay.id}`}>
-              {roomCount > 0
-                ? roomCount === 1
-                  ? "1 room"
-                  : `${roomCount} rooms`
-                : "Add rooms"}
-              <ExternalLink className="size-3" />
+            <Link className="inline-flex items-center gap-2" href={`/admin/rooms?stayId=${stay.id}`}>
+              <span>
+                {roomCount > 0
+                  ? roomCount === 1
+                    ? "1 room"
+                    : `${roomCount} rooms`
+                  : "Add rooms"}
+              </span>
+              <ExternalLink className="size-3.5" />
             </Link>
           </Button>
         </div>
