@@ -2,32 +2,27 @@ import { Room, Stay } from "@/generated/prisma/client";
 import { Participant } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
-type RoomWithStay = Room & 
-{ 
-  participants: Participant[] 
-} & {
-  stay: Stay | null;
+export type RoomWithParticipants = Room & {
+  participants: Participant[];
 };
 
-export async function getRoomsByStay(): Promise<Record<string, RoomWithStay[]>> {
-  const rooms = await prisma.room.findMany({
-    include: {
-      stay: true,
-      participants: true
-    },
+export async function getStays(): Promise<Stay[]> {
+  return prisma.stay.findMany({
+    orderBy: [{ startDate: "asc" }],
+  });
+}
+
+export function getNextUpcomingStayId(stays: Stay[]): number | null {
+  if (stays.length === 0) return null;
+  const now = new Date();
+  const upcoming = stays.find((stay) => new Date(stay.endDate) >= now);
+  return (upcoming ?? stays[stays.length - 1]).id;
+}
+
+export async function getRoomsForStay(stayId: number): Promise<RoomWithParticipants[]> {
+  return prisma.room.findMany({
+    where: { stayId },
+    include: { participants: true },
     orderBy: [{ name: "asc" }],
   });
-
-  return rooms
-    .filter((room) => room.stay !== null)
-    .reduce<Record<string, RoomWithStay[]>>((acc, room) => {
-      const stayName = room.stay?.name ?? "Uten opphold";
-
-      if (!acc[stayName]) {
-        acc[stayName] = [];
-      }
-
-      acc[stayName].push(room);
-      return acc;
-    }, {});
 }
