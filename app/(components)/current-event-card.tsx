@@ -28,7 +28,7 @@ export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
         <CardDescription className="text-primary-foreground/80">
           {currentEvent
             ? isMeetup
-              ? `${startTime} · ${currentEvent.location} · Meetup`
+              ? `${startTime} · ${currentEvent.location} · Samling`
               : `${startTime}-${endTime} · ${currentEvent.location}`
             : "The schedule is currently between activities."}
         </CardDescription>
