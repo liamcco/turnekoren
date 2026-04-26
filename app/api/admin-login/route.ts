@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
-import { AUTH_COOKIE, ADMIN_LOGIN_PATH, ADMIN_PATH } from "@/lib/auth";
+import { AUTH_COOKIE, ADMIN_LOGIN_PATH, ADMIN_PATH, COOKIE_MAX_AGE_SECONDS, LOGIN_ERROR_PARAM } from "@/lib/auth";
 
 function safeCompare(a: string, b: string): boolean {
   const bufA = Buffer.from(a);
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   if (!isValid) {
     const loginUrl = new URL(ADMIN_LOGIN_PATH, request.url);
     loginUrl.searchParams.set("from", from);
-    loginUrl.searchParams.set("error", "1");
+    loginUrl.searchParams.set("error", LOGIN_ERROR_PARAM);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 1 week
+    maxAge: COOKIE_MAX_AGE_SECONDS,
   });
 
   return response;
