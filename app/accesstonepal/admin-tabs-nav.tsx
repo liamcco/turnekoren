@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const adminTabs = [
-  { value: "schedule", label: "Schema", href: "/accesstonepal/schedule" },
+  { value: "schedule", label: "Schtjema", href: "/accesstonepal/schedule" },
   { value: "participants", label: "Deltagare", href: "/accesstonepal/participants" },
   { value: "rooms", label: "Rum", href: "/accesstonepal/rooms" },
   { value: "contacts", label: "Kontakter", href: "/accesstonepal/contacts" },
