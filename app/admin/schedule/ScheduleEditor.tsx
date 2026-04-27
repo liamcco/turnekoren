@@ -43,7 +43,7 @@ export function ScheduleEditor({ events, initialSelectedDay }: ScheduleEditorPro
 
   function handleSelectDay(day: string) {
     setSelectedDay(day);
-    router.replace(`/accesstonepal/schedule?day=${day}`, { scroll: false });
+    router.replace(`/admin/schedule?day=${day}`, { scroll: false });
   }
 
   return (

@@ -9,7 +9,7 @@ interface AdminLoginPageProps {
 }
 
 export default async function AdminLoginPage({ searchParams }: AdminLoginPageProps) {
-  const { from = "/accesstonepal", error } = await searchParams;
+  const { from = "/admin", error } = await searchParams;
 
   const loginActionUrl = `/api/admin-login?from=${encodeURIComponent(from)}`;
 
