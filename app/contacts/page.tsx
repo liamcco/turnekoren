@@ -15,7 +15,7 @@ export default async function ContactsPage() {
 
   if(contacts.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">Inga kontakter har lagts till ännu. Lägg till dem på adminsidan.</p>
+      <p className="text-sm text-muted-foreground">Inga kontakter har lagts till ännu.</p>
     );
   }
 

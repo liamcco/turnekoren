@@ -17,7 +17,7 @@ export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeSched
           {dayLabel}
         </Badge>
         <CardTitle>Aktuellt schema</CardTitle>
-        <CardDescription>Aktuella och kommande punkter i körordningen.</CardDescription>
+        <CardDescription>Aktuella och kommande punkter i löpande ordning.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {events.map((event) => (
@@ -26,7 +26,7 @@ export function HomeScheduleCard({ currentEventId, dayLabel, events }: HomeSched
 
         {events.length === 0 && (
           <p className="text-sm text-muted-foreground">
-            Inga schemapunkter ännu. Lägg till dem i adminportalen.
+            Inga schemapunkter ännu.
           </p>
         )}
       </CardContent>

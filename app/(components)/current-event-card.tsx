@@ -23,7 +23,7 @@ export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
           Just nu
         </Badge>
         <CardTitle className="text-3xl md:text-4xl">
-          {currentEvent ? currentEvent.title : "Ingen aktiv programpunkt"}
+          {currentEvent ? currentEvent.title : "Ingen aktivitet just nu."}
         </CardTitle>
         <CardDescription className="text-primary-foreground/80">
           {currentEvent
