@@ -5,8 +5,8 @@ export default function Layout({children}: PropsWithChildren) {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
         <PageHeader
-            description="The trip packing list, grouped so people can check things off quickly."
-            title="What To Pack"
+            description="Resans packlista, grupperad så att alla snabbt kan bocka av saker."
+            title="Packlista"
         />
         {children}
     </main>

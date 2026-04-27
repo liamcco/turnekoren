@@ -38,8 +38,8 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
   if (error || !data) {
     return (
       <Alert variant="destructive">
-        <AlertTitle>Unable to load exchange rate</AlertTitle>
-        <AlertDescription>{error || "The exchange service did not return data."}</AlertDescription>
+        <AlertTitle>Kunde inte läsa in växelkursen</AlertTitle>
+        <AlertDescription>{error || "Växeltjänsten returnerade ingen data."}</AlertDescription>
       </Alert>
     );
   }
@@ -51,13 +51,13 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
       <Card className="border-none bg-primary text-primary-foreground shadow-lg">
         <CardHeader>
           <Badge className="w-fit rounded-full bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20">
-            Live rate
+            Aktuell kurs
           </Badge>
           <CardTitle className="text-3xl md:text-4xl">
             1 {data.base} = {sekFormatter.format(data.rate)}
           </CardTitle>
           <CardDescription className="text-primary-foreground/80">
-            {data.source} published this rate for {data.updatedAt}.
+            {data.source} publicerade den här kursen för {data.updatedAt}.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -65,8 +65,8 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>EUR to SEK</CardTitle>
-            <CardDescription>Common amounts singers might convert on tour.</CardDescription>
+            <CardTitle>EUR till SEK</CardTitle>
+            <CardDescription>Vanliga belopp att räkna om under resan.</CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
@@ -92,8 +92,8 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>SEK to EUR</CardTitle>
-            <CardDescription>Reverse checks for menus, taxis, and tills.</CardDescription>
+            <CardTitle>SEK till EUR</CardTitle>
+            <CardDescription>Omvänd koll för menyer, taxi och betalningar.</CardDescription>
           </CardHeader>
           <CardContent>
             <Table>

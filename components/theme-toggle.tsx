@@ -17,7 +17,7 @@ export function ThemeToggle() {
 
   return (
     <Button
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={isDark ? "Byt till ljust läge" : "Byt till mörkt läge"}
       className="rounded-full"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       size="sm"
@@ -25,7 +25,7 @@ export function ThemeToggle() {
       variant="outline"
     >
       {isDark ? <MoonStar className="size-4" /> : <SunMedium className="size-4" />}
-      <span className="hidden sm:inline">{isDark ? "Dark" : "Light"}</span>
+      <span className="hidden sm:inline">{isDark ? "Mörkt" : "Ljust"}</span>
     </Button>
   );
 }

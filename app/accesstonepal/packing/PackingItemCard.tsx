@@ -40,7 +40,7 @@ export function PackingItemCard({
 
         <div className="flex justify-end gap-1">
           <Button
-            aria-label={`Edit ${item.label}`}
+            aria-label={`Redigera ${item.label}`}
             onClick={() => setEditingItemId(item.id)}
             size="icon"
             type="button"
@@ -63,7 +63,7 @@ export function PackingItemCard({
           >
             <input name="id" type="hidden" value={item.id} />
             <Button
-              aria-label={`Delete ${item.label}`}
+              aria-label={`Radera ${item.label}`}
               disabled={isDeleting}
               size="icon"
               type="submit"
@@ -104,18 +104,18 @@ export function PackingItemCard({
         <input name="id" type="hidden" value={item.id} />
 
         <div className="grid gap-2">
-          <Label htmlFor={`label-${item.id}`}>Label</Label>
+          <Label htmlFor={`label-${item.id}`}>Etikett</Label>
           <Input id={`label-${item.id}`} name="label" defaultValue={item.label} required />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`category-${item.id}`}>Category</Label>
+          <Label htmlFor={`category-${item.id}`}>Kategori</Label>
           <Input id={`category-${item.id}`} name="category" defaultValue={item.category} required />
         </div>
 
         <div className="flex gap-2 lg:justify-end">
           <Button disabled={isUpdating} type="submit">
-            {isUpdating ? "Saving..." : "Save"}
+            {isUpdating ? "Sparar..." : "Spara"}
           </Button>
           <Button
             disabled={isUpdating}
@@ -123,12 +123,12 @@ export function PackingItemCard({
             type="button"
             variant="outline"
           >
-            Cancel
+            Avbryt
           </Button>
         </div>
 
         <div className="grid gap-2 lg:col-span-3">
-          <Label htmlFor={`notes-${item.id}`}>Notes</Label>
+          <Label htmlFor={`notes-${item.id}`}>Anteckningar</Label>
           <Textarea id={`notes-${item.id}`} name="notes" defaultValue={item.notes ?? ""} />
         </div>
 

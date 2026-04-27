@@ -8,8 +8,8 @@ export default async function CurrencyPage() {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
       <PageHeader
-        description="A quick live conversion between euro and Swedish krona."
-        title="Currency Exchange"
+        description="Snabb aktuell omräkning mellan euro och svenska kronor."
+        title="Valutaväxling"
       />
       <CurrencyPanel data={data} />
     </main>

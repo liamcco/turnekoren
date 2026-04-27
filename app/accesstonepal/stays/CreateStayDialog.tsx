@@ -24,8 +24,8 @@ export function CreateStayDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create stay</DialogTitle>
-          <DialogDescription>Add an accommodation period to the trip.</DialogDescription>
+          <DialogTitle>Skapa boende</DialogTitle>
+          <DialogDescription>Lägg till en boendeperiod för resan.</DialogDescription>
         </DialogHeader>
 
         <form
@@ -45,25 +45,25 @@ export function CreateStayDialog({
           className="grid gap-4"
         >
           <div className="grid gap-2">
-            <Label htmlFor="new-name">Name</Label>
-            <Input id="new-name" name="name" placeholder="Hotel / cabin / hostel" required />
+            <Label htmlFor="new-name">Namn</Label>
+            <Input id="new-name" name="name" placeholder="Hotell / hytt / vandrarhem" required />
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="grid gap-2">
-              <Label htmlFor="new-start-date">Start date</Label>
+              <Label htmlFor="new-start-date">Startdatum</Label>
               <Input id="new-start-date" name="startDate" required type="date" />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="new-end-date">End date</Label>
+              <Label htmlFor="new-end-date">Slutdatum</Label>
               <Input id="new-end-date" name="endDate" required type="date" />
             </div>
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-notes">Notes</Label>
-            <Textarea id="new-notes" name="notes" placeholder="Optional notes" />
+            <Label htmlFor="new-notes">Anteckningar</Label>
+            <Textarea id="new-notes" name="notes" placeholder="Valfria anteckningar" />
           </div>
 
           <ActionMessage state={state} />
@@ -75,10 +75,10 @@ export function CreateStayDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>

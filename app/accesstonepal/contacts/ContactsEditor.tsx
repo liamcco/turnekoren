@@ -44,8 +44,8 @@ export function ContactEditor({ initialContacts }: { initialContacts: Contact[] 
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Contacts</h2>
-          <p className="text-sm text-muted-foreground">Create and edit important trip contacts.</p>
+          <h2 className="text-lg font-semibold">Kontakter</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera viktiga kontakter för resan.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -63,18 +63,18 @@ export function ContactEditor({ initialContacts }: { initialContacts: Contact[] 
       <div className="grid w-full gap-2">
         {contacts.length > 0 ? (
           <div className="hidden gap-3 px-4 text-xs font-medium uppercase tracking-wide text-muted-foreground md:grid md:grid-cols-[1fr_minmax(10rem,14rem)_minmax(10rem,14rem)_7.5rem]">
-            <div>Name</div>
-            <div>Role</div>
-            <div>Phone</div>
-            <div className="text-right">Actions</div>
+            <div>Namn</div>
+            <div>Roll</div>
+            <div>Telefon</div>
+            <div className="text-right">Åtgärder</div>
           </div>
         ) : null}
 
         {contacts.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No contacts yet</CardTitle>
-              <CardDescription>Create the first contact above.</CardDescription>
+              <CardTitle>Inga kontakter ännu</CardTitle>
+              <CardDescription>Skapa den första kontakten ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

@@ -45,11 +45,11 @@ export function RoomDialog({
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{isCreating ? "Create room" : "Edit room"}</DialogTitle>
+          <DialogTitle>{isCreating ? "Skapa rum" : "Redigera rum"}</DialogTitle>
           <DialogDescription>
             {isCreating
-              ? "Add a room and assign participants."
-              : "Update the room details and participants."}
+              ? "Lägg till ett rum och placera deltagare."
+              : "Uppdatera rumsdetaljer och deltagare."}
           </DialogDescription>
         </DialogHeader>
 
@@ -73,23 +73,23 @@ export function RoomDialog({
           {!isCreating ? <input name="id" type="hidden" value={room.id} /> : null}
 
           <div className="grid gap-2">
-            <Label htmlFor="room-name">Room name</Label>
+            <Label htmlFor="room-name">Rumsnamn</Label>
             <Input
               id="room-name"
               name="name"
               defaultValue={room?.name ?? ""}
-              placeholder="Room 101"
+              placeholder="Rum 101"
               required
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="room-notes">Notes</Label>
+            <Label htmlFor="room-notes">Anteckningar</Label>
             <Textarea
               id="room-notes"
               name="notes"
               defaultValue={room?.notes ?? ""}
-              placeholder="Optional notes"
+              placeholder="Valfria anteckningar"
             />
           </div>
 
@@ -104,10 +104,10 @@ export function RoomDialog({
 
           <div className="flex justify-end gap-2">
             <Button disabled={isPending} onClick={onClose} type="button" variant="outline">
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Saving..." : "Save room"}
+              {isPending ? "Sparar..." : "Spara rum"}
             </Button>
           </div>
         </form>
