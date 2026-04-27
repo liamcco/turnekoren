@@ -3,7 +3,6 @@ import {
   Backpack,
   CalendarDays,
   Coins,
-  ContactRound,
   Hotel,
   Link,
   MessageSquareQuote
@@ -34,12 +33,6 @@ export const MENU_ITEMS: MenuItem[] = [
     title: "Finnish Quote",
     description: "One daily phrase for the tour",
     icon: MessageSquareQuote,
-  },
-  {
-    href: "/contacts",
-    title: "Contacts",
-    description: "Organising group details",
-    icon: ContactRound,
   },
   {
     href: "/packing",

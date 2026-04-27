@@ -8,7 +8,6 @@ const adminTabs = [
   { value: "schedule", label: "Schema", href: "/accesstonepal/schedule" },
   { value: "participants", label: "Deltagare", href: "/accesstonepal/participants" },
   { value: "rooms", label: "Rum", href: "/accesstonepal/rooms" },
-  { value: "contacts", label: "Kontakter", href: "/accesstonepal/contacts" },
   { value: "packing", label: "Packning", href: "/accesstonepal/packing" },
   { value: "quotes", label: "Citat", href: "/accesstonepal/quotes" },
   { value: "places", label: "Platser", href: "/accesstonepal/places" },
