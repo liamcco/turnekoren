@@ -14,7 +14,7 @@ export default async function PackingPage() {
 
   if (Object.keys(groups).length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">Inga packningssaker ännu. Lägg till dem i adminportalen.</p>
+      <p className="text-sm text-muted-foreground">Inga packningssaker ännu.</p>
     );
   }
 
