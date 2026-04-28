@@ -49,9 +49,9 @@ export function StayCard({
               <span>
                 {roomCount > 0
                   ? roomCount === 1
-                    ? "1 room"
-                    : `${roomCount} rooms`
-                  : "Add rooms"}
+                    ? "1 rum"
+                    : `${roomCount} rum`
+                  : "Lägg till rum"}
               </span>
               <ExternalLink className="size-3.5" />
             </Link>
@@ -61,7 +61,7 @@ export function StayCard({
         <div className="flex justify-end gap-1">
           <Button
             asChild
-            aria-label={roomCount > 0 ? `View rooms for ${stay.name}` : `Add rooms to ${stay.name}`}
+            aria-label={roomCount > 0 ? `Visa rum för ${stay.name}` : `Lägg till rum för ${stay.name}`}
             size="icon"
             variant="ghost"
             className="md:hidden"
@@ -72,7 +72,7 @@ export function StayCard({
           </Button>
 
           <Button
-            aria-label={`Edit ${stay.name}`}
+            aria-label={`Redigera ${stay.name}`}
             onClick={() => setEditingStayId(stay.id)}
             size="icon"
             type="button"
@@ -95,7 +95,7 @@ export function StayCard({
           >
             <input name="id" type="hidden" value={stay.id} />
             <Button
-              aria-label={`Delete ${stay.name}`}
+              aria-label={`Radera ${stay.name}`}
               disabled={isDeleting}
               size="icon"
               type="submit"
@@ -136,12 +136,12 @@ export function StayCard({
         <input name="id" type="hidden" value={stay.id} />
 
         <div className="grid gap-2">
-          <Label htmlFor={`name-${stay.id}`}>Name</Label>
+          <Label htmlFor={`name-${stay.id}`}>Namn</Label>
           <Input id={`name-${stay.id}`} name="name" defaultValue={stay.name} required />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`start-date-${stay.id}`}>Start date</Label>
+          <Label htmlFor={`start-date-${stay.id}`}>Startdatum</Label>
           <Input
             id={`start-date-${stay.id}`}
             name="startDate"
@@ -152,7 +152,7 @@ export function StayCard({
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`end-date-${stay.id}`}>End date</Label>
+          <Label htmlFor={`end-date-${stay.id}`}>Slutdatum</Label>
           <Input
             id={`end-date-${stay.id}`}
             name="endDate"
@@ -164,7 +164,7 @@ export function StayCard({
 
         <div className="flex gap-2 lg:justify-end">
           <Button disabled={isUpdating} type="submit">
-            {isUpdating ? "Saving..." : "Save"}
+            {isUpdating ? "Sparar..." : "Spara"}
           </Button>
           <Button
             disabled={isUpdating}
@@ -172,12 +172,12 @@ export function StayCard({
             type="button"
             variant="outline"
           >
-            Cancel
+            Avbryt
           </Button>
         </div>
 
         <div className="grid gap-2 lg:col-span-4">
-          <Label htmlFor={`notes-${stay.id}`}>Notes</Label>
+          <Label htmlFor={`notes-${stay.id}`}>Anteckningar</Label>
           <Textarea id={`notes-${stay.id}`} name="notes" defaultValue={stay.notes ?? ""} />
         </div>
 

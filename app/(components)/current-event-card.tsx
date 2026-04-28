@@ -20,17 +20,17 @@ export function CurrentEventCard({ currentEvent, now }: CurrentEventCardProps) {
     <Card className="border-none bg-primary text-primary-foreground shadow-lg">
       <CardHeader>
         <Badge className="w-fit rounded-full bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20">
-          Right now
+          Just nu
         </Badge>
         <CardTitle className="text-3xl md:text-4xl">
-          {currentEvent ? currentEvent.title : "No active event"}
+          {currentEvent ? currentEvent.title : "Ingen aktivitet just nu."}
         </CardTitle>
         <CardDescription className="text-primary-foreground/80">
           {currentEvent
             ? isMeetup
               ? `${startTime} · ${currentEvent.location} · Samling`
               : `${startTime}-${endTime} · ${currentEvent.location}`
-            : "The schedule is currently between activities."}
+            : "Schemat är just nu mellan aktiviteter."}
         </CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-primary-foreground/80">{formatNow(now)}</CardContent>

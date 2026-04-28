@@ -47,7 +47,7 @@ export function ParticipantCard({
 
         <div className="flex justify-end gap-1">
           <Button
-            aria-label={`Edit ${participant.name}`}
+            aria-label={`Redigera ${participant.name}`}
             onClick={() => setEditingParticipantId(participant.id)}
             size="icon"
             type="button"
@@ -70,7 +70,7 @@ export function ParticipantCard({
           >
             <input name="id" type="hidden" value={participant.id} />
             <Button
-              aria-label={`Delete ${participant.name}`}
+              aria-label={`Radera ${participant.name}`}
               disabled={isDeleting}
               size="icon"
               type="submit"
@@ -111,7 +111,7 @@ export function ParticipantCard({
         <input name="id" type="hidden" value={participant.id} />
 
         <div className="grid gap-2">
-          <Label htmlFor={`name-${participant.id}`}>Name</Label>
+          <Label htmlFor={`name-${participant.id}`}>Namn</Label>
           <Input
             id={`name-${participant.id}`}
             name="name"
@@ -121,7 +121,7 @@ export function ParticipantCard({
         </div>
 
         <div className="grid gap-2">
-          <Label>Choir / Voice</Label>
+          <Label>Kör / stämma</Label>
           <div className="grid grid-cols-2 gap-2">
             <ChoirSelect defaultValue={participant.choir} />
             <VoiceSelect defaultValue={participant.voice} />
@@ -129,19 +129,19 @@ export function ParticipantCard({
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor={`mobile-${participant.id}`}>Mobile</Label>
+          <Label htmlFor={`mobile-${participant.id}`}>Mobil</Label>
           <Input
             id={`mobile-${participant.id}`}
             name="mobile"
             defaultValue={participant.mobile ?? ""}
-            placeholder="Optional phone number"
+            placeholder="Valfritt telefonnummer"
             type="tel"
           />
         </div>
 
         <div className="flex gap-2 lg:justify-end">
           <Button disabled={isUpdating} type="submit">
-            {isUpdating ? "Saving..." : "Save"}
+            {isUpdating ? "Sparar..." : "Spara"}
           </Button>
           <Button
             disabled={isUpdating}
@@ -149,7 +149,7 @@ export function ParticipantCard({
             type="button"
             variant="outline"
           >
-            Cancel
+            Avbryt
           </Button>
         </div>
 

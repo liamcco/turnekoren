@@ -5,15 +5,14 @@ import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const adminTabs = [
-  { value: "schedule", label: "Schedule", href: "/accesstonepal/schedule" },
-  { value: "participants", label: "Participants", href: "/accesstonepal/participants" },
-  { value: "rooms", label: "Rooms", href: "/accesstonepal/rooms" },
-  { value: "contacts", label: "Contacts", href: "/accesstonepal/contacts" },
-  { value: "packing", label: "Packing", href: "/accesstonepal/packing" },
-  { value: "quotes", label: "Quotes", href: "/accesstonepal/quotes" },
-  { value: "places", label: "Places", href: "/accesstonepal/places" },
-  { value: "links", label: "Links", href: "/accesstonepal/links" },
-  { value: "stays", label: "Stays", href: "/accesstonepal/stays" },
+  { value: "schedule", label: "Schema", href: "/accesstonepal/schedule" },
+  { value: "participants", label: "Deltagare", href: "/accesstonepal/participants" },
+  { value: "rooms", label: "Rum", href: "/accesstonepal/rooms" },
+  { value: "packing", label: "Packning", href: "/accesstonepal/packing" },
+  { value: "quotes", label: "Citat", href: "/accesstonepal/quotes" },
+  { value: "places", label: "Platser", href: "/accesstonepal/places" },
+  { value: "links", label: "Länkar", href: "/accesstonepal/links" },
+  { value: "stays", label: "Boenden", href: "/accesstonepal/stays" },
 ] as const;
 
 function getActiveTab(pathname: string) {

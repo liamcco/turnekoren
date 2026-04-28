@@ -173,7 +173,7 @@ export function ScheduleTimeline({
                 </div>
                 {event.hasTooManyOverlaps ? (
                   <div className="hidden text-xs text-destructive md:block">
-                    More than two events overlap here.
+                    Fler än två programpunkter överlappar här.
                   </div>
                 ) : event.notes ? (
                   <div className="hidden line-clamp-2 text-xs text-muted-foreground md:block">

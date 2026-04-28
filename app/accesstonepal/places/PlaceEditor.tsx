@@ -41,8 +41,8 @@ export function PlaceEditor({ places }: { places: Place[] }) {
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Places</h2>
-          <p className="text-sm text-muted-foreground">Create and edit useful places for the trip hub.</p>
+          <h2 className="text-lg font-semibold">Platser</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera användbara platser för resehubben.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -59,8 +59,8 @@ export function PlaceEditor({ places }: { places: Place[] }) {
         {places.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No places yet</CardTitle>
-              <CardDescription>Create the first place above.</CardDescription>
+              <CardTitle>Inga platser ännu</CardTitle>
+              <CardDescription>Skapa den första platsen ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (
