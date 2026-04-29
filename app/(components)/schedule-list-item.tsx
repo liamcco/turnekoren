@@ -35,12 +35,12 @@ export function ScheduleListItem({ event, isCurrent }: ScheduleListItemProps) {
         <h3 className="font-medium">{event.title}</h3>
         <p className="text-sm text-muted-foreground">
           {event.location}
-          {isMeetup ? " · Meetup" : ""}
+          {isMeetup ? " · Samling" : ""}
           {event.notes ? ` · ${event.notes}` : ""}
         </p>
       </div>
       <div className="flex items-start justify-start md:justify-end">
-        <Badge variant={isCurrent ? "default" : "outline"}>{isCurrent ? "Now" : "Upcoming"}</Badge>
+        <Badge variant={isCurrent ? "default" : "outline"}>{isCurrent ? "Nu" : "Kommande"}</Badge>
       </div>
     </div>
   );

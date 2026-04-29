@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Settings2 } from "lucide-react";
+import { Home } from "lucide-react";
 import { MENU_ITEMS } from "@/components/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -36,14 +36,14 @@ export function AppSidebar() {
           <p className="text-xs font-semibold tracking-[0.24em] text-sidebar-foreground/70 uppercase">
             Choir Tour Hub
           </p>
-          <p className="font-serif text-xl text-sidebar-foreground">Trip utilities</p>
+          <p className="font-serif text-xl text-sidebar-foreground">Reseverktyg</p>
         </div>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/"}>
               <Link href="/" onClick={closeMobileSidebar}>
                 <Home />
-                <span>Home</span>
+                <span>Hem</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -52,7 +52,7 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Utilities</SidebarGroupLabel>
+          <SidebarGroupLabel>Verktyg</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {MENU_ITEMS.map((item) => {

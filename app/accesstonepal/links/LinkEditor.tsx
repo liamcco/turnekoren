@@ -41,8 +41,8 @@ export function LinkEditor({ links }: { links: UsefulLink[] }) {
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Links</h2>
-          <p className="text-sm text-muted-foreground">Create and edit useful links for the trip hub.</p>
+          <h2 className="text-lg font-semibold">Länkar</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera användbara länkar för resehubben.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -59,8 +59,8 @@ export function LinkEditor({ links }: { links: UsefulLink[] }) {
         {links.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No links yet</CardTitle>
-              <CardDescription>Create the first useful link above.</CardDescription>
+              <CardTitle>Inga länkar ännu</CardTitle>
+              <CardDescription>Skapa den första användbara länken ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

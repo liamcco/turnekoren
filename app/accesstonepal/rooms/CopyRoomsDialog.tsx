@@ -35,9 +35,9 @@ export function CopyRoomsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Copy rooms</DialogTitle>
+          <DialogTitle>Kopiera rum</DialogTitle>
           <DialogDescription>
-            Duplicate all rooms from another stay into {getSelectedStayName(stays, selectedStayId)}.
+            Kopiera alla rum från ett annat boende till {getSelectedStayName(stays, selectedStayId)}.
           </DialogDescription>
         </DialogHeader>
 
@@ -57,10 +57,10 @@ export function CopyRoomsDialog({
           <input name="targetStayId" type="hidden" value={selectedStayId} />
 
           <div className="grid gap-2">
-            <Label>Copy all rooms from</Label>
+            <Label>Kopiera alla rum från</Label>
             <Select name="sourceStayId" required>
               <SelectTrigger>
-                <SelectValue placeholder="Choose stay" />
+                <SelectValue placeholder="Välj boende" />
               </SelectTrigger>
               <SelectContent>
                 {copyFromOptions.map((stay) => (
@@ -74,7 +74,7 @@ export function CopyRoomsDialog({
 
           {copyFromOptions.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              There are no other stays to copy rooms from.
+              Det finns inga andra boenden att kopiera rum från.
             </p>
           ) : null}
 
@@ -87,11 +87,11 @@ export function CopyRoomsDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending || copyFromOptions.length === 0} type="submit">
               <Copy className="size-4" />
-              {isPending ? "Copying..." : "Copy rooms"}
+              {isPending ? "Kopierar..." : "Kopiera rum"}
             </Button>
           </div>
         </form>

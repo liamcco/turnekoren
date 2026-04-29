@@ -26,7 +26,7 @@ export default async function RoomsPage({ searchParams }: RoomsPageProps) {
   const stays = await getStays();
 
   if (stays.length === 0) {
-    return <p className="text-sm text-muted-foreground">No rooming information available yet.</p>;
+    return <p className="text-sm text-muted-foreground">Ingen rumsinformation finns ännu.</p>;
   }
 
   const resolvedParams = await searchParams;
@@ -57,23 +57,23 @@ export default async function RoomsPage({ searchParams }: RoomsPageProps) {
               </Badge>
               <CardTitle className="flex items-center gap-2">
                 <Hotel className="size-5 text-muted-foreground" />
-                {selectedStay.name} rooms
+                {selectedStay.name} rum
               </CardTitle>
-              <CardDescription>Check assignments, cabin splits, and any extra notes.</CardDescription>
+              <CardDescription>Kontrollera rumsindelning, hyttfördelning och extra anteckningar.</CardDescription>
             </div>
-            <Badge variant="secondary">{rooms.length} rooms</Badge>
+            <Badge variant="secondary">{rooms.length} rum</Badge>
           </div>
         </CardHeader>
         <CardContent>
           {rooms.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No rooms assigned for this stay yet.</p>
+            <p className="text-sm text-muted-foreground">Inga rum har tilldelats för denna vistelse ännu.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Room</TableHead>
-                  <TableHead className="whitespace-normal">Occupants</TableHead>
-                  <TableHead className="whitespace-normal">Notes</TableHead>
+                  <TableHead>Rum</TableHead>
+                  <TableHead className="whitespace-normal">Boende</TableHead>
+                  <TableHead className="whitespace-normal">Anteckningar</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -91,7 +91,7 @@ export default async function RoomsPage({ searchParams }: RoomsPageProps) {
                       </div>
                     </TableCell>
                     <TableCell className="whitespace-normal text-muted-foreground">
-                      {room.notes || "No extra notes."}
+                      {room.notes || "Inga extra anteckningar."}
                     </TableCell>
                   </TableRow>
                 ))}

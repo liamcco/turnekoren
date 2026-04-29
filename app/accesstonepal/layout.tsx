@@ -12,15 +12,15 @@ export default function AdminPageLayout({ children }: { children: React.ReactNod
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
       <PageHeader
-        description="Edit every section shown in the mobile hub. This starter does not include authentication yet."
-        title="Admin Portal"
+        description="Redigera alla delar som visas i mobilhubben. Autentisering är inte aktiverad ännu."
+        title="Adminportal"
       />
 
       <Alert>
         <ShieldAlert className="size-4" />
-        <AlertTitle>Authentication is not enabled yet</AlertTitle>
+        <AlertTitle>Autentisering är inte aktiverad ännu</AlertTitle>
         <AlertDescription>
-          This admin portal is currently open by URL only. Add authentication before using it on a public deployment.
+          Den här adminportalen är just nu öppen via URL. Lägg till autentisering innan den används publikt.
         </AlertDescription>
       </Alert>
 

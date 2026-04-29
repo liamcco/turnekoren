@@ -83,15 +83,15 @@ function ImportParticipantsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Import participants</DialogTitle>
+          <DialogTitle>Importera deltagare</DialogTitle>
           <DialogDescription>
-            Upload a CSV file with the columns name, choir, voice and mobile.
+            Ladda upp en CSV-fil med kolumnerna name, choir, voice och mobile.
           </DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="participants-file">CSV file</Label>
+            <Label htmlFor="participants-file">CSV-fil</Label>
             <Input
               id="participants-file"
               name="file"
@@ -110,11 +110,11 @@ function ImportParticipantsDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
               <Upload className="size-4" />
-              {isPending ? "Importing..." : "Import"}
+              {isPending ? "Importerar..." : "Importera"}
             </Button>
           </div>
         </form>
@@ -147,13 +147,13 @@ export function ParticipantEditor({ initialParticipants }: { initialParticipants
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Participants</h2>
-          <p className="text-sm text-muted-foreground">Create and edit the singers joining the trip.</p>
+          <h2 className="text-lg font-semibold">Deltagare</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera sångarna som följer med på resan.</p>
         </div>
 
         <div className="flex shrink-0 gap-2">
           <Button
-            aria-label="Import participants from CSV"
+            aria-label="Importera deltagare från CSV"
             onClick={() => setIsImportDialogOpen(true)}
             size="icon"
             type="button"
@@ -162,7 +162,7 @@ export function ParticipantEditor({ initialParticipants }: { initialParticipants
             <Upload className="size-4" />
           </Button>
           <Button
-            aria-label="Create participant"
+            aria-label="Skapa deltagare"
             onClick={() => setIsCreateDialogOpen(true)}
             size="icon"
             type="button"
@@ -193,31 +193,31 @@ export function ParticipantEditor({ initialParticipants }: { initialParticipants
               onClick={() => toggleSort("name")}
               type="button"
             >
-              Name{getSortIndicator("name", sortKey, sortDirection)}
+              Namn{getSortIndicator("name", sortKey, sortDirection)}
             </button>
             <button
               className="text-left hover:text-foreground"
               onClick={() => toggleSort("choir")}
               type="button"
             >
-              Choir{getSortIndicator("choir", sortKey, sortDirection)}
+              Kör{getSortIndicator("choir", sortKey, sortDirection)}
             </button>
             <button
               className="text-left hover:text-foreground"
               onClick={() => toggleSort("voice")}
               type="button"
             >
-              Voice{getSortIndicator("voice", sortKey, sortDirection)}
+              Stämma{getSortIndicator("voice", sortKey, sortDirection)}
             </button>
-            <div>Mobile</div>
-            <div className="text-right">Actions</div>
+            <div>Mobil</div>
+            <div className="text-right">Åtgärder</div>
           </div>
         ) : null}
         {initialParticipants.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No participants yet</CardTitle>
-              <CardDescription>Create the first participant above.</CardDescription>
+              <CardTitle>Inga deltagare ännu</CardTitle>
+              <CardDescription>Skapa den första deltagaren ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

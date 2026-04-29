@@ -50,8 +50,8 @@ export function PackingItemEditor({ initialItems }: { initialItems: PackingItem[
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Packing</h2>
-          <p className="text-sm text-muted-foreground">Create and edit packing items for the trip.</p>
+          <h2 className="text-lg font-semibold">Packning</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera packningssaker för resan.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -68,8 +68,8 @@ export function PackingItemEditor({ initialItems }: { initialItems: PackingItem[
         {initialItems.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No packing items yet</CardTitle>
-              <CardDescription>Create the first packing item above.</CardDescription>
+              <CardTitle>Inga packningssaker ännu</CardTitle>
+              <CardDescription>Skapa den första packningssaken ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

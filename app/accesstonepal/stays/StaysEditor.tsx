@@ -54,8 +54,8 @@ export function StayEditor({ initialStays }: { initialStays: StayWithRooms[] }) 
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Stays</h2>
-          <p className="text-sm text-muted-foreground">Create and edit accommodation periods for the trip.</p>
+          <h2 className="text-lg font-semibold">Boenden</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera boendeperioder för resan.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -71,18 +71,18 @@ export function StayEditor({ initialStays }: { initialStays: StayWithRooms[] }) 
       <div className="grid w-full gap-2">
         {initialStays.length > 0 ? (
           <div className="hidden gap-3 px-4 text-xs font-medium uppercase tracking-wide text-muted-foreground md:grid md:grid-cols-[minmax(8rem,14rem)_minmax(12rem,1fr)_minmax(10rem,12rem)_7.5rem]">
-            <div>Name</div>
-            <div>Dates</div>
-            <div>Rooms</div>
-            <div className="text-right">Actions</div>
+            <div>Namn</div>
+            <div>Datum</div>
+            <div>Rum</div>
+            <div className="text-right">Åtgärder</div>
           </div>
         ) : null}
 
         {initialStays.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No stays yet</CardTitle>
-              <CardDescription>Create the first stay above.</CardDescription>
+              <CardTitle>Inga boenden ännu</CardTitle>
+              <CardDescription>Skapa det första boendet ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

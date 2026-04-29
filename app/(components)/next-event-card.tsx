@@ -23,7 +23,7 @@ function getDayBadgeLabel(nextEvent: ScheduleEvent | null, now: Date) {
     return null;
   }
 
-  return daysUntilEvent === 1 ? "Tomorrow" : `in ${daysUntilEvent} days`;
+  return daysUntilEvent === 1 ? "Imorgon" : `om ${daysUntilEvent} dagar`;
 }
 
 export function NextEventCard({ nextEvent, now }: NextEventCardProps) {
@@ -35,7 +35,7 @@ export function NextEventCard({ nextEvent, now }: NextEventCardProps) {
       <CardHeader>
         <div className="flex flex-wrap gap-2">
           <Badge className="w-fit rounded-full px-3 py-1 text-[10px] tracking-[0.24em] uppercase" variant="outline">
-            Next meetup
+            Nästa samling
           </Badge>
           {dayBadgeLabel ? (
             <Badge className="w-fit rounded-full px-3 py-1 text-[10px]" variant="secondary">
@@ -43,17 +43,17 @@ export function NextEventCard({ nextEvent, now }: NextEventCardProps) {
             </Badge>
           ) : null}
         </div>
-        <CardTitle>{nextEvent ? nextEvent.title : "Nothing else scheduled"}</CardTitle>
+        <CardTitle>{nextEvent ? nextEvent.title : "Inget mer schemalagt"}</CardTitle>
         <CardDescription>
           {nextEvent
-            ? `${startTime} at ${nextEvent.location}`
-            : "The current plan has no upcoming items yet."}
+            ? `${startTime} på ${nextEvent.location}`
+            : "Planen har inga kommande punkter ännu."}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <Separator />
         <p className="text-sm text-muted-foreground">
-          {nextEvent?.notes || "No extra notes for this meetup."}
+          {nextEvent?.notes || "Inga extra anteckningar för den här samlingen."}
         </p>
       </CardContent>
     </Card>

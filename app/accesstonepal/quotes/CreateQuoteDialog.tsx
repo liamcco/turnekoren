@@ -21,24 +21,24 @@ export function CreateQuoteDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create quote</DialogTitle>
-          <DialogDescription>Add a quote and optional context.</DialogDescription>
+          <DialogTitle>Skapa citat</DialogTitle>
+          <DialogDescription>Lägg till ett citat och valfri kontext.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-text">Quote</Label>
-            <Textarea id="new-text" name="text" placeholder="Original quote" required />
+            <Label htmlFor="new-text">Citat</Label>
+            <Textarea id="new-text" name="text" placeholder="Originalcitat" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-translation">Translation</Label>
-            <Textarea id="new-translation" name="translation" placeholder="Translation" required />
+            <Label htmlFor="new-translation">Översättning</Label>
+            <Textarea id="new-translation" name="translation" placeholder="Översättning" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-context">Context</Label>
-            <Textarea id="new-context" name="context" placeholder="Optional context" />
+            <Label htmlFor="new-context">Kontext</Label>
+            <Textarea id="new-context" name="context" placeholder="Valfri kontext" />
           </div>
 
           <ActionMessage state={state} />
@@ -50,10 +50,10 @@ export function CreateQuoteDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>

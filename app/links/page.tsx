@@ -13,7 +13,7 @@ export default async function PackingPage() {
 
   if (links.length + places.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">No links or places found.</p>
+      <p className="text-sm text-muted-foreground">Inga länkar eller platser hittades.</p>
     );
   }
 

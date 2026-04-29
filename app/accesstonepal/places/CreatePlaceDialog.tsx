@@ -23,13 +23,13 @@ export function CreatePlaceDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create place</DialogTitle>
-          <DialogDescription>Add a place to the trip hub.</DialogDescription>
+          <DialogTitle>Skapa plats</DialogTitle>
+          <DialogDescription>Lägg till en plats i resehubben.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-name">Name</Label>
+            <Label htmlFor="new-name">Namn</Label>
             <Input id="new-name" name="name" placeholder="Google Maps" required />
           </div>
 
@@ -45,20 +45,20 @@ export function CreatePlaceDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-address">Address</Label>
+            <Label htmlFor="new-address">Adress</Label>
             <Input
               id="new-address"
               name="address"
-              placeholder="Optional address"
+              placeholder="Valfri adress"
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-description">Description</Label>
+            <Label htmlFor="new-description">Beskrivning</Label>
             <Textarea
               id="new-description"
               name="description"
-              placeholder="Optional description"
+              placeholder="Valfri beskrivning"
             />
           </div>
 
@@ -71,10 +71,10 @@ export function CreatePlaceDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>

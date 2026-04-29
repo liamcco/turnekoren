@@ -26,13 +26,13 @@ export function RoomCard({
           <CardTitle className="truncate text-base">{room.name}</CardTitle>
           <CardDescription>
             {room.participants.length === 1
-              ? "1 participant"
-              : `${room.participants.length} participants`}
+              ? "1 deltagare"
+              : `${room.participants.length} deltagare`}
           </CardDescription>
         </div>
 
         <div className="flex shrink-0 gap-1">
-          <Button aria-label={`Edit ${room.name}`} onClick={onEdit} size="icon" type="button" variant="ghost">
+          <Button aria-label={`Redigera ${room.name}`} onClick={onEdit} size="icon" type="button" variant="ghost">
             <Pencil className="size-4" />
           </Button>
 
@@ -49,7 +49,7 @@ export function RoomCard({
           >
             <input name="id" type="hidden" value={room.id} />
             <Button
-              aria-label={`Delete ${room.name}`}
+              aria-label={`Radera ${room.name}`}
               disabled={isDeleting}
               size="icon"
               type="submit"
@@ -76,7 +76,7 @@ export function RoomCard({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">No participants assigned.</p>
+          <p className="text-sm text-muted-foreground">Inga deltagare placerade.</p>
         )}
 
         <ActionMessage state={deleteState} />

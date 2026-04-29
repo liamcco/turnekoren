@@ -51,15 +51,15 @@ export function ScheduleEditor({ events, initialSelectedDay }: ScheduleEditorPro
       <Card>
         <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
           <div>
-            <CardTitle>Schedule</CardTitle>
+            <CardTitle>Schema</CardTitle>
             <CardDescription>
-              View the trip schedule day by day. Tap an event to edit it.
+              Visa resans schema dag för dag. Tryck på en programpunkt för att redigera den.
             </CardDescription>
           </div>
 
           {hasEvents ? (
             <Button
-              aria-label="Create event"
+              aria-label="Skapa schemapunkt"
               onClick={() => setSelectedEvent(null)}
               size="icon"
               type="button"
@@ -86,9 +86,9 @@ export function ScheduleEditor({ events, initialSelectedDay }: ScheduleEditorPro
           ) : (
             <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-lg border border-dashed p-8 text-center">
               <div>
-                <h3 className="text-lg font-medium">No events yet</h3>
+                <h3 className="text-lg font-medium">Inga schemapunkter ännu</h3>
                 <p className="text-sm text-muted-foreground">
-                  Create your first event to start building the schedule.
+                  Skapa den första schemapunkten för att börja bygga schemat.
                 </p>
               </div>
 
@@ -100,7 +100,7 @@ export function ScheduleEditor({ events, initialSelectedDay }: ScheduleEditorPro
                 type="button"
               >
                 <Plus className="size-4" />
-                Create your first event
+                Skapa din första schemapunkt
               </Button>
             </div>
           )}
