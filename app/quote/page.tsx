@@ -3,6 +3,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge, Sparkles } from "lucide-react";
 import { Separator } from "@/components/ui/separator"
 
+export const dynamic = "force-dynamic";
+
 export default async function QuotePage() {
   const quote = await getDailyQuote();
 
