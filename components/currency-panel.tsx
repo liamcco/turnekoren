@@ -16,18 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { ExchangeRatePayload } from "@/app/currency/exchange";
-
-const sekFormatter = new Intl.NumberFormat("sv-SE", {
-  style: "currency",
-  currency: "SEK",
-  maximumFractionDigits: 2,
-});
-
-const euroFormatter = new Intl.NumberFormat("fi-FI", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 2,
-});
+import { CurrencyConverter } from "@/components/currency-converter";
+import { euroFormatter, sekFormatter } from "@/lib/formatting";
 
 interface CurrencyPanelProps {
   data: ExchangeRatePayload | null;
@@ -61,6 +51,8 @@ export function CurrencyPanel({ data, error = "" }: CurrencyPanelProps) {
           </CardDescription>
         </CardHeader>
       </Card>
+
+      <CurrencyConverter rate={data.rate} inverse={data.inverse} />
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>

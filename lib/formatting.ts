@@ -22,3 +22,15 @@ export function formatTime(value: string): string {
 export function formatNow(value: Date): string {
   return formatFloatingNow(value);
 }
+
+export const sekFormatter = new Intl.NumberFormat("sv-SE", {
+  style: "currency",
+  currency: "SEK",
+  maximumFractionDigits: 2,
+});
+
+export const euroFormatter = new Intl.NumberFormat("fi-FI", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 2,
+});
