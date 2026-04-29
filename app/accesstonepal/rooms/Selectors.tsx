@@ -16,12 +16,12 @@ export function StaySelector({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>No stays yet</CardTitle>
-          <CardDescription>Create a stay before editing rooms.</CardDescription>
+          <CardTitle>Inga boenden ännu</CardTitle>
+          <CardDescription>Skapa ett boende innan du redigerar rum.</CardDescription>
         </CardHeader>
         <CardContent>
           <Button asChild>
-            <a href="/admin/stays">Create stays</a>
+            <a href="/admin/stays">Skapa boenden</a>
           </Button>
         </CardContent>
       </Card>
@@ -34,7 +34,7 @@ export function StaySelector({
       onValueChange={(value) => onSelectStay(Number(value))}
     >
       <SelectTrigger className="max-w-md">
-        <SelectValue placeholder="Choose stay" />
+        <SelectValue placeholder="Välj boende" />
       </SelectTrigger>
       <SelectContent>
         {stays.map((stay) => (

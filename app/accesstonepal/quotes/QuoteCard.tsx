@@ -37,7 +37,7 @@ export function QuoteCard({
 
           <div className="flex shrink-0 gap-1">
             <Button
-              aria-label="Edit quote"
+              aria-label="Redigera citat"
               onClick={() => setEditingQuoteId(quote.id)}
               size="icon"
               type="button"
@@ -49,7 +49,7 @@ export function QuoteCard({
             <form action={deleteAction}>
               <input name="id" type="hidden" value={quote.id} />
               <Button
-                aria-label="Delete quote"
+                aria-label="Radera citat"
                 disabled={isDeleting}
                 size="icon"
                 type="submit"
@@ -74,12 +74,12 @@ export function QuoteCard({
     <Card>
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
-          <CardTitle>Edit quote</CardTitle>
-          <CardDescription>Update quote, translation and context.</CardDescription>
+          <CardTitle>Redigera citat</CardTitle>
+          <CardDescription>Uppdatera citat, översättning och kontext.</CardDescription>
         </div>
 
         <Button
-          aria-label="Cancel editing"
+          aria-label="Avbryt redigering"
           disabled={isUpdating}
           onClick={() => setEditingQuoteId(null)}
           size="icon"
@@ -95,12 +95,12 @@ export function QuoteCard({
           <input name="id" type="hidden" value={quote.id} />
 
           <div className="grid gap-2">
-            <Label htmlFor={`text-${quote.id}`}>Quote</Label>
+            <Label htmlFor={`text-${quote.id}`}>Citat</Label>
             <Textarea id={`text-${quote.id}`} name="text" defaultValue={quote.text} required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor={`translation-${quote.id}`}>Translation</Label>
+            <Label htmlFor={`translation-${quote.id}`}>Översättning</Label>
             <Textarea
               id={`translation-${quote.id}`}
               name="translation"
@@ -110,13 +110,13 @@ export function QuoteCard({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor={`context-${quote.id}`}>Context</Label>
+            <Label htmlFor={`context-${quote.id}`}>Kontext</Label>
             <Textarea id={`context-${quote.id}`} name="context" defaultValue={quote.context ?? ""} />
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <Button disabled={isUpdating} type="submit">
-              {isUpdating ? "Saving..." : "Save changes"}
+              {isUpdating ? "Sparar..." : "Spara ändringar"}
             </Button>
             <Button
               disabled={isUpdating}
@@ -124,7 +124,7 @@ export function QuoteCard({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <ActionMessage state={updateState} />
           </div>

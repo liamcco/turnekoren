@@ -37,18 +37,18 @@ export function ParticipantPicker({
   return (
     <div className="grid gap-3">
       <div className="grid gap-2">
-        <Label htmlFor="participant-search">Participants</Label>
+        <Label htmlFor="participant-search">Deltagare</Label>
         <Input
           id="participant-search"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search participants"
+          placeholder="Sök deltagare"
         />
       </div>
 
       <div className="max-h-64 overflow-y-auto rounded-md border">
         {filteredParticipants.length === 0 ? (
-          <p className="p-3 text-sm text-muted-foreground">No participants found.</p>
+          <p className="p-3 text-sm text-muted-foreground">Inga deltagare hittades.</p>
         ) : (
           filteredParticipants.map((participant) => {
             const isSelected = selectedSet.has(participant.id);
@@ -70,7 +70,7 @@ export function ParticipantPicker({
                   {getParticipantLabel(participant)}
                 </span>
                 <span className="shrink-0 text-xs text-muted-foreground">
-                  {isSelected ? "Selected" : isUnavailable ? "Already in room" : "Add"}
+                  {isSelected ? "Vald" : isUnavailable ? "Redan i rum" : "Lägg till"}
                 </span>
               </button>
             );

@@ -106,11 +106,11 @@ export function EventEditorDialog({
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{isCreating ? "Create event" : "Edit event"}</DialogTitle>
+          <DialogTitle>{isCreating ? "Skapa schemapunkt" : "Redigera schemapunkt"}</DialogTitle>
           <DialogDescription>
             {isCreating
-              ? "Add a new item to the trip schedule."
-              : "Update this schedule item."}
+              ? "Lägg till en ny punkt i resans schema."
+              : "Uppdatera den här schemapunkten."}
           </DialogDescription>
         </DialogHeader>
 
@@ -126,12 +126,12 @@ export function EventEditorDialog({
                 onCheckedChange={(checked: boolean) => setIsMeetup(checked === true)}
               />
               <Label htmlFor="isMeetup" className="cursor-pointer">
-                Meetup / point in time
+                Samling / tidpunkt
               </Label>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Titel</Label>
               <Input
                 id="title"
                 name="title"
@@ -155,7 +155,7 @@ export function EventEditorDialog({
 
               {!isMeetup ? (
                 <div className="grid gap-2">
-                  <Label htmlFor="endTime">End</Label>
+                  <Label htmlFor="endTime">Slut</Label>
                   <Input
                     id="endTime"
                     name="endTime"
@@ -170,7 +170,7 @@ export function EventEditorDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="location">Location</Label>
+            <Label htmlFor="location">Plats</Label>
             <Input
               id="location"
               name="location"
@@ -180,7 +180,7 @@ export function EventEditorDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="notes">Notes</Label>
+            <Label htmlFor="notes">Anteckningar</Label>
             <Textarea id="notes" name="notes" defaultValue={event?.notes ?? ""} />
           </div>
 
@@ -192,7 +192,7 @@ export function EventEditorDialog({
 
           {exceedsOverlapLimit ? (
             <p className="text-sm text-destructive">
-              This would create more than two overlapping events. Move the event or shorten it before saving.
+              Det här skulle skapa fler än två överlappande programpunkter. Flytta eller korta ner punkten innan du sparar.
             </p>
           ) : null}
 
@@ -211,7 +211,7 @@ export function EventEditorDialog({
                 variant="destructive"
               >
                 <Trash2 className="size-4" />
-                {isDeletingPending ? "Deleting..." : "Delete"}
+                {isDeletingPending ? "Raderar..." : "Radera"}
               </Button>
             ) : (
               <div />
@@ -219,10 +219,10 @@ export function EventEditorDialog({
 
             <div className="flex gap-2">
               <Button disabled={isPending || isDeletingPending} onClick={onClose} type="button" variant="outline">
-                Cancel
+                Avbryt
               </Button>
               <Button disabled={isPending || isDeletingPending || exceedsOverlapLimit} type="submit">
-                {isPending ? "Saving..." : "Save changes"}
+                {isPending ? "Sparar..." : "Spara ändringar"}
               </Button>
             </div>
           </div>

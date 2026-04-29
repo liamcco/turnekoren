@@ -19,9 +19,9 @@ export function HomePage({ snapshot }: HomePageProps) {
   const daysUntilVisibleDay = differenceInFloatingCalendarDays(visibleDay, now);
   const dayLabel =
     daysUntilVisibleDay === 0
-      ? "Today"
+      ? "Idag"
       : daysUntilVisibleDay === 1
-        ? "Tomorrow"
+        ? "Imorgon"
         : formatFloatingShortDate(visibleDay);
 
   return (

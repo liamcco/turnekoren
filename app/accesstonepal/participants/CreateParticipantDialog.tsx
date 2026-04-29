@@ -25,8 +25,8 @@ export function CreateParticipantDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create participant</DialogTitle>
-          <DialogDescription>Add a singer to the trip.</DialogDescription>
+          <DialogTitle>Skapa deltagare</DialogTitle>
+          <DialogDescription>Lägg till en sångare på resan.</DialogDescription>
         </DialogHeader>
 
         <form
@@ -46,12 +46,12 @@ export function CreateParticipantDialog({
           className="grid gap-4"
         >
           <div className="grid gap-2">
-            <Label htmlFor="new-name">Name</Label>
+            <Label htmlFor="new-name">Namn</Label>
             <Input id="new-name" name="name" placeholder="Ada Lovelace" required />
           </div>
 
           <div className="grid gap-2">
-            <Label>Choir / Voice</Label>
+            <Label>Kör / stämma</Label>
             <div className="grid grid-cols-2 gap-2">
               <ChoirSelect />
               <VoiceSelect />
@@ -59,8 +59,8 @@ export function CreateParticipantDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-mobile">Mobile</Label>
-            <Input id="new-mobile" name="mobile" placeholder="Optional phone number" type="tel" />
+            <Label htmlFor="new-mobile">Mobil</Label>
+            <Input id="new-mobile" name="mobile" placeholder="Valfritt telefonnummer" type="tel" />
           </div>
 
           <ActionMessage state={state} />
@@ -72,10 +72,10 @@ export function CreateParticipantDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>

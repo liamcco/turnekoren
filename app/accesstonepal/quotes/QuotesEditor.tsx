@@ -42,8 +42,8 @@ export function QuoteEditor({ initialQuotes }: { initialQuotes: Quote[] }) {
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Quotes</h2>
-          <p className="text-sm text-muted-foreground">Create and edit quotes for the trip hub.</p>
+          <h2 className="text-lg font-semibold">Citat</h2>
+          <p className="text-sm text-muted-foreground">Skapa och redigera citat för resehubben.</p>
         </div>
 
         <Button onClick={() => setIsCreateDialogOpen(true)} size="icon" type="button">
@@ -60,8 +60,8 @@ export function QuoteEditor({ initialQuotes }: { initialQuotes: Quote[] }) {
         {quotes.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No quotes yet</CardTitle>
-              <CardDescription>Create the first quote above.</CardDescription>
+              <CardTitle>Inga citat ännu</CardTitle>
+              <CardDescription>Skapa det första citatet ovan.</CardDescription>
             </CardHeader>
           </Card>
         ) : (

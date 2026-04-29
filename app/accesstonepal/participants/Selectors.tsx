@@ -7,7 +7,7 @@ export function ChoirSelect({ defaultValue }: { defaultValue?: string }) {
   return (
     <Select name="choir" defaultValue={defaultValue ?? choirs[0]} required>
       <SelectTrigger>
-        <SelectValue placeholder="Choose choir" />
+        <SelectValue placeholder="Välj kör" />
       </SelectTrigger>
       <SelectContent>
         {choirs.map((choir) => (
@@ -24,7 +24,7 @@ export function VoiceSelect({ defaultValue }: { defaultValue?: string }) {
   return (
     <Select name="voice" defaultValue={defaultValue ?? voices[0]} required>
       <SelectTrigger>
-        <SelectValue placeholder="Choose voice" />
+        <SelectValue placeholder="Välj stämma" />
       </SelectTrigger>
       <SelectContent>
         {voices.map((voice) => (

@@ -13,18 +13,18 @@ export function ContactInfoDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{contact?.name}</DialogTitle>
-          <DialogDescription>Contact details</DialogDescription>
+          <DialogDescription>Kontaktuppgifter</DialogDescription>
         </DialogHeader>
 
         {contact ? (
           <div className="grid gap-4">
             <div className="grid gap-1">
-              <p className="text-sm font-medium">Role</p>
+              <p className="text-sm font-medium">Roll</p>
               <p className="text-sm text-muted-foreground">{contact.role}</p>
             </div>
 
             <div className="grid gap-1">
-              <p className="text-sm font-medium">Phone</p>
+              <p className="text-sm font-medium">Telefon</p>
               <p className="text-sm text-muted-foreground">{contact.phone}</p>
             </div>
           </div>

@@ -29,24 +29,24 @@ export function CreateContactDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create contact</DialogTitle>
-          <DialogDescription>Add an important contact for the trip.</DialogDescription>
+          <DialogTitle>Skapa kontakt</DialogTitle>
+          <DialogDescription>Lägg till en viktig kontakt för resan.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-name">Name</Label>
-            <Input id="new-name" name="name" placeholder="Name" required />
+            <Label htmlFor="new-name">Namn</Label>
+            <Input id="new-name" name="name" placeholder="Namn" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-role">Role</Label>
-            <Input id="new-role" name="role" placeholder="Role" required />
+            <Label htmlFor="new-role">Roll</Label>
+            <Input id="new-role" name="role" placeholder="Roll" required />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-phone">Phone</Label>
-            <Input id="new-phone" name="phone" placeholder="Phone number" required type="tel" />
+            <Label htmlFor="new-phone">Telefon</Label>
+            <Input id="new-phone" name="phone" placeholder="Telefonnummer" required type="tel" />
           </div>
 
           {!state.ok && <ActionMessage state={state} />}
@@ -58,10 +58,10 @@ export function CreateContactDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? <><Loader2 className="mr-2 size-4 animate-spin" />Creating...</> : "Create"}
+              {isPending ? <><Loader2 className="mr-2 size-4 animate-spin" />Skapar...</> : "Create"}
             </Button>
           </div>
         </form>

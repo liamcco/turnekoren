@@ -25,13 +25,13 @@ export function CreateLinkDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create link</DialogTitle>
-          <DialogDescription>Add a useful link to the trip hub.</DialogDescription>
+          <DialogTitle>Skapa länk</DialogTitle>
+          <DialogDescription>Lägg till en användbar länk i resehubben.</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-title">Title</Label>
+            <Label htmlFor="new-title">Titel</Label>
             <Input id="new-title" name="title" placeholder="Google Maps" required />
           </div>
 
@@ -47,11 +47,11 @@ export function CreateLinkDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="new-description">Description</Label>
+            <Label htmlFor="new-description">Beskrivning</Label>
             <Textarea
               id="new-description"
               name="description"
-              placeholder="Optional description"
+              placeholder="Valfri beskrivning"
             />
           </div>
 
@@ -64,10 +64,10 @@ export function CreateLinkDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              Avbryt
             </Button>
             <Button disabled={isPending} type="submit">
-              {isPending ? "Creating..." : "Create"}
+              {isPending ? "Skapar..." : "Skapa"}
             </Button>
           </div>
         </form>
