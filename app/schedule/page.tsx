@@ -1,4 +1,4 @@
-import { getInitialSelectedDay, isValidDayKey } from "../accesstonepal/schedule/utils";
+import { getInitialSelectedDay, isValidDayKey } from "../admin/schedule/utils";
 import { getScheduleData } from "./actions";
 import { ScheduleView } from "./ScheduleView";
 

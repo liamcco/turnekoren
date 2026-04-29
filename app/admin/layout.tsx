@@ -1,6 +1,3 @@
-import { ShieldAlert } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
 import { PageHeader } from "@/components/page-header";
 import { AdminTabsNav } from "./admin-tabs-nav";
 
@@ -15,14 +12,6 @@ export default function AdminPageLayout({ children }: { children: React.ReactNod
         description="Redigera alla delar som visas i mobilhubben. Autentisering är inte aktiverad ännu."
         title="Adminportal"
       />
-
-      <Alert>
-        <ShieldAlert className="size-4" />
-        <AlertTitle>Autentisering är inte aktiverad ännu</AlertTitle>
-        <AlertDescription>
-          Den här adminportalen är just nu öppen via URL. Lägg till autentisering innan den används publikt.
-        </AlertDescription>
-      </Alert>
 
       <AdminTabsNav />
 
