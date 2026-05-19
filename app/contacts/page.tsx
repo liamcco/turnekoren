@@ -9,8 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getContacts } from "@/app/contacts/contacts";
+import { notFound } from "next/navigation";
 
 export default async function ContactsPage() {
+  return notFound();
+  
   const contacts = await getContacts();
 
   if(contacts.length === 0) {

@@ -35,12 +35,12 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "One daily phrase for the tour",
     icon: MessageSquareQuote,
   },
-  {
+/*   {
     href: "/contacts",
     title: "Contacts",
     description: "Organising group details",
     icon: ContactRound,
-  },
+  }, */
   {
     href: "/packing",
     title: "Packing",
