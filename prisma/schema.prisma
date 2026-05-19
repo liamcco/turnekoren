@@ -96,3 +96,16 @@ model UsefulLink {
 
   @@map("useful_links")
 }
+
+model FileAsset {
+  id           Int      @id @default(autoincrement())
+  filename     String   @unique
+  pathname     String
+  url          String
+  downloadUrl  String   @map("download_url")
+  size         Int
+  contentType  String   @map("content_type")
+  uploadedAt   DateTime @default(now()) @db.Timestamp(3) @map("uploaded_at")
+
+  @@map("file_assets")
+}
