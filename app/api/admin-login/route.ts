@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
-import { AUTH_COOKIE, ADMIN_LOGIN_PATH, ADMIN_PATH, COOKIE_MAX_AGE_SECONDS, LOGIN_ERROR_PARAM } from "@/lib/auth";
+import { createAdminSessionToken } from "@/lib/admin-session";
+import {
+  AUTH_COOKIE,
+  ADMIN_LOGIN_PATH,
+  ADMIN_PATH,
+  COOKIE_MAX_AGE_SECONDS,
+  LOGIN_ERROR_PARAM,
+  getSafeAdminRedirectPath,
+} from "@/lib/auth";
 
 function safeCompare(a: string, b: string): boolean {
   const bufA = Buffer.from(a);
@@ -16,11 +24,14 @@ function safeCompare(a: string, b: string): boolean {
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const password = formData.get("password");
-  const from = request.nextUrl.searchParams.get("from") ?? ADMIN_PATH;
+  const from = getSafeAdminRedirectPath(request.nextUrl.searchParams.get("from") ?? ADMIN_PATH);
 
-  const adminPassword = process.env.ADMIN_PASSWORD ?? "changeme";
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  const isValid = typeof password === "string" && safeCompare(password, adminPassword);
+  const isValid =
+    typeof password === "string" &&
+    typeof adminPassword === "string" &&
+    safeCompare(password, adminPassword);
 
   if (!isValid) {
     const loginUrl = new URL(ADMIN_LOGIN_PATH, request.url);
@@ -29,8 +40,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  const token = await createAdminSessionToken();
   const response = NextResponse.redirect(new URL(from, request.url));
-  response.cookies.set(AUTH_COOKIE, "true", {
+  response.cookies.set(AUTH_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
