@@ -1,37 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  ADMIN_AUTH_COOKIE,
   ADMIN_PATH,
-  INTERNAL_AUTH_COOKIE,
   INTERNAL_PATH,
+  LOGIN_CONFIGS,
   LOGIN_PATH,
   LOGIN_TYPE_PARAM,
 } from "@/lib/auth";
-import { isValidAdminSessionToken, isValidInternalSessionToken } from "@/lib/admin-session";
+import { isValidSessionToken } from "@/lib/session";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const config = pathname.startsWith(INTERNAL_PATH)
+    ? LOGIN_CONFIGS.internal
+    : pathname.startsWith(ADMIN_PATH)
+      ? LOGIN_CONFIGS.admin
+      : null;
 
-  if (pathname.startsWith(ADMIN_PATH)) {
-    const authCookie = request.cookies.get(ADMIN_AUTH_COOKIE);
-
-    if (!(await isValidAdminSessionToken(authCookie?.value))) {
-      const loginUrl = new URL(LOGIN_PATH, request.url);
-      loginUrl.searchParams.set(LOGIN_TYPE_PARAM, "admin");
-      loginUrl.searchParams.set("from", `${pathname}${request.nextUrl.search}`);
-      return NextResponse.redirect(loginUrl);
-    }
+  if (!config) {
+    return NextResponse.next();
   }
 
-  if (pathname.startsWith(INTERNAL_PATH)) {
-    const authCookie = request.cookies.get(INTERNAL_AUTH_COOKIE);
+  const authCookie = request.cookies.get(config.authCookie);
 
-    if (!(await isValidInternalSessionToken(authCookie?.value))) {
-      const loginUrl = new URL(LOGIN_PATH, request.url);
-      loginUrl.searchParams.set(LOGIN_TYPE_PARAM, "internal");
-      loginUrl.searchParams.set("from", `${pathname}${request.nextUrl.search}`);
-      return NextResponse.redirect(loginUrl);
-    }
+  if (!(await isValidSessionToken(authCookie?.value, config.type))) {
+    const loginUrl = new URL(LOGIN_PATH, request.url);
+    loginUrl.searchParams.set(LOGIN_TYPE_PARAM, config.type);
+    loginUrl.searchParams.set("from", `${pathname}${request.nextUrl.search}`);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

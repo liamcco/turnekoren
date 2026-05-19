@@ -7,7 +7,7 @@ interface LoginPageProps {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const { from, error, type } = await searchParams;
-  const config = getLoginConfig(type ?? null);
+  const config = getLoginConfig(type);
   const safeFrom = getSafeRedirectPath(from ?? config.defaultPath, config.defaultPath);
   const loginActionUrl = `/api/login?${LOGIN_TYPE_PARAM}=${config.type}&from=${encodeURIComponent(safeFrom)}`;
 

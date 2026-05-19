@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
-import { createSessionTokenForType } from "@/lib/admin-session";
+import { createSessionToken } from "@/lib/session";
 import {
   COOKIE_MAX_AGE_SECONDS,
   LOGIN_ERROR_PARAM,
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  const token = await createSessionTokenForType(config.type);
+  const token = await createSessionToken(config.type);
   const response = NextResponse.redirect(new URL(from, request.url));
   response.cookies.set(config.authCookie, token, {
     httpOnly: true,

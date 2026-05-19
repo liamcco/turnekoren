@@ -18,7 +18,7 @@ export interface LoginConfig {
   subtitle: string;
 }
 
-export const loginConfigs: Record<LoginType, LoginConfig> = {
+export const LOGIN_CONFIGS: Record<LoginType, LoginConfig> = {
   admin: {
     type: "admin",
     authCookie: ADMIN_AUTH_COOKIE,
@@ -37,8 +37,8 @@ export const loginConfigs: Record<LoginType, LoginConfig> = {
   },
 };
 
-export function getLoginConfig(type: string | null): LoginConfig {
-  return type === "internal" ? loginConfigs.internal : loginConfigs.admin;
+export function getLoginConfig(type: string | null | undefined): LoginConfig {
+  return type === "internal" ? LOGIN_CONFIGS.internal : LOGIN_CONFIGS.admin;
 }
 
 function isPathWithin(pathname: string, basePath: string): boolean {
@@ -56,12 +56,4 @@ export function getSafeRedirectPath(from: string | null, fallbackPath: string): 
   } catch {
     return fallbackPath;
   }
-}
-
-export function getSafeAdminRedirectPath(from: string | null): string {
-  return getSafeRedirectPath(from, ADMIN_PATH);
-}
-
-export function getSafeInternalRedirectPath(from: string | null): string {
-  return getSafeRedirectPath(from, INTERNAL_PATH);
 }
