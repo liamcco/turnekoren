@@ -1,22 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AUTH_COOKIE, ADMIN_PATH, ADMIN_LOGIN_PATH } from "@/lib/auth";
+import {
+  ADMIN_PATH,
+  INTERNAL_PATH,
+  LOGIN_CONFIGS,
+  LOGIN_PATH,
+  LOGIN_TYPE_PARAM,
+} from "@/lib/auth";
+import { isValidSessionToken } from "@/lib/session";
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const config = pathname.startsWith(INTERNAL_PATH)
+    ? LOGIN_CONFIGS.internal
+    : pathname.startsWith(ADMIN_PATH)
+      ? LOGIN_CONFIGS.admin
+      : null;
 
-  if (pathname.startsWith(ADMIN_PATH)) {
-    const authCookie = request.cookies.get(AUTH_COOKIE);
+  if (!config) {
+    return NextResponse.next();
+  }
 
-    if (authCookie?.value !== "true") {
-      const loginUrl = new URL(ADMIN_LOGIN_PATH, request.url);
-      loginUrl.searchParams.set("from", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
+  const authCookie = request.cookies.get(config.authCookie);
+
+  if (!(await isValidSessionToken(authCookie?.value, config.type))) {
+    const loginUrl = new URL(LOGIN_PATH, request.url);
+    loginUrl.searchParams.set(LOGIN_TYPE_PARAM, config.type);
+    loginUrl.searchParams.set("from", `${pathname}${request.nextUrl.search}`);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/internal/:path*"],
 };

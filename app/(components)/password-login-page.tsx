@@ -4,15 +4,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { APP_NAME } from "@/lib/constants";
 
-interface AdminLoginPageProps {
-  searchParams: Promise<{ from?: string; error?: string }>;
+interface PasswordLoginPageProps {
+  actionUrl: string;
+  error?: string;
+  placeholder: string;
+  subtitle: string;
 }
 
-export default async function AdminLoginPage({ searchParams }: AdminLoginPageProps) {
-  const { from = "/admin", error } = await searchParams;
-
-  const loginActionUrl = `/api/admin-login?from=${encodeURIComponent(from)}`;
-
+export function PasswordLoginPage({
+  actionUrl,
+  error,
+  placeholder,
+  subtitle,
+}: PasswordLoginPageProps) {
   return (
     <div className="flex min-h-svh items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
@@ -21,17 +25,17 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
             <Lock className="size-5" />
           </div>
           <h1 className="text-2xl font-semibold">{APP_NAME}</h1>
-          <p className="text-sm text-muted-foreground">Admin access only</p>
+          <p className="text-sm text-muted-foreground">{subtitle}</p>
         </div>
 
-        <form action={loginActionUrl} method="POST" className="grid gap-4">
+        <form action={actionUrl} method="POST" className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               name="password"
               type="password"
-              placeholder="Enter admin password"
+              placeholder={placeholder}
               required
               autoFocus
             />
