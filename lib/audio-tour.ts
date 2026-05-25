@@ -19,6 +19,8 @@ export type AudioTourPlayEvent = {
   audioUrl: string;
   title: string;
   startAt: number;
+  startedAt: number;
+  durationSeconds: number;
 };
 
 export function isMp3Filename(filename: string) {
@@ -43,6 +45,8 @@ export function isAudioTourPlayEvent(value: unknown): value is AudioTourPlayEven
     typeof payload.clipId === "string" &&
     typeof payload.audioUrl === "string" &&
     typeof payload.title === "string" &&
-    typeof payload.startAt === "number"
+    typeof payload.startAt === "number" &&
+    typeof payload.startedAt === "number" &&
+    typeof payload.durationSeconds === "number"
   );
 }

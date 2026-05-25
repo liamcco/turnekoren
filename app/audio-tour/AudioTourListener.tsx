@@ -77,7 +77,9 @@ export function AudioTourListener() {
 
     const audio = new Audio();
     audio.preload = "auto";
+    audio.controls = false;
     audio.setAttribute("playsinline", "true");
+    audio.setAttribute("webkit-playsinline", "true");
 
     const handlePlay = () => {
       setIsPlaying(true);
@@ -118,13 +120,43 @@ export function AudioTourListener() {
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         artist: "Choir audio tour",
+        album: "Helsinki sightseeing",
         title: clip.title,
+        artwork: [
+          {
+            src: "/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
       });
       navigator.mediaSession.setActionHandler("play", () => {
         void audioRef.current?.play();
       });
       navigator.mediaSession.setActionHandler("pause", () => {
         audioRef.current?.pause();
+      });
+      navigator.mediaSession.setActionHandler("stop", () => {
+        audioRef.current?.pause();
+      });
+      navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+        const audio = audioRef.current;
+        if (!audio) {
+          return;
+        }
+
+        audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset ?? 10));
+      });
+      navigator.mediaSession.setActionHandler("seekforward", (details) => {
+        const audio = audioRef.current;
+        if (!audio || !Number.isFinite(audio.duration)) {
+          return;
+        }
+
+        audio.currentTime = Math.min(
+          audio.duration,
+          audio.currentTime + (details.seekOffset ?? 10),
+        );
       });
     } catch {
       // Media Session support varies across mobile browsers.
@@ -134,7 +166,12 @@ export function AudioTourListener() {
   const startPlayback = useCallback(
     async (clip: AudioTourPlayEvent) => {
       const audio = ensureAudio();
-      const offsetSeconds = Math.max(0, (Date.now() - clip.startAt) / 1000);
+      const effectiveStartedAt = clip.startedAt ?? clip.startAt;
+      const offsetSeconds = Math.max(0, (Date.now() - effectiveStartedAt) / 1000);
+
+      if (clip.durationSeconds && offsetSeconds >= clip.durationSeconds) {
+        return;
+      }
 
       const seekToSyncedOffset = () => {
         if (offsetSeconds <= 0) {
@@ -204,9 +241,53 @@ export function AudioTourListener() {
     [ensureAudio, startPlayback],
   );
 
+  const syncCurrentAudioTourPlayback = useCallback(async () => {
+    try {
+      const response = await fetch("/api/audio-tour/current", {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data = (await response.json()) as {
+        current: null | {
+          clipId: string;
+          audioUrl: string;
+          title: string;
+          startedAt: number;
+          durationSeconds: number;
+          elapsedSeconds?: number;
+          serverNow?: number;
+        };
+      };
+
+      if (!data.current) {
+        return;
+      }
+
+      const elapsedSeconds = data.current.elapsedSeconds ?? 0;
+      const syntheticStartedAt = Date.now() - elapsedSeconds * 1000;
+
+      schedulePlayback({
+        type: "play",
+        clipId: data.current.clipId,
+        audioUrl: data.current.audioUrl,
+        title: data.current.title,
+        startAt: syntheticStartedAt,
+        startedAt: syntheticStartedAt,
+        durationSeconds: data.current.durationSeconds,
+      });
+    } catch (syncError) {
+      console.error("Failed to sync current audio tour playback", syncError);
+    }
+  }, [schedulePlayback]);
+
   async function handleJoin() {
     ensureAudio();
     setHasJoined(true);
+    void syncCurrentAudioTourPlayback();
   }
 
   async function handleTogglePlayback() {
@@ -260,6 +341,10 @@ export function AudioTourListener() {
 
           setConnectionStatus(change.current as ConnectionStatus);
 
+          if (change.current === "connected") {
+            void syncCurrentAudioTourPlayback();
+          }
+
           if (change.current === "failed") {
             setError(change.reason?.message ?? "Unable to connect to the audio tour.");
           }
@@ -306,7 +391,25 @@ export function AudioTourListener() {
       ablyRef.current?.close();
       ablyRef.current = null;
     };
-  }, [hasJoined, schedulePlayback]);
+  }, [hasJoined, schedulePlayback, syncCurrentAudioTourPlayback]);
+
+  useEffect(() => {
+    if (!hasJoined) {
+      return;
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void syncCurrentAudioTourPlayback();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [hasJoined, syncCurrentAudioTourPlayback]);
 
   useEffect(() => {
     return () => {

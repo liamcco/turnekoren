@@ -111,14 +111,15 @@ model FileAsset {
 }
 
 model AudioTourClip {
-  id           String   @id @default(cuid())
-  title        String
-  description  String?
-  audioUrl     String   @map("audio_url")
-  blobPathname String   @unique @map("blob_pathname")
-  size         Int
-  contentType  String   @map("content_type")
-  createdAt    DateTime @default(now()) @db.Timestamp(3) @map("created_at")
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  audioUrl        String   @map("audio_url")
+  blobPathname    String   @unique @map("blob_pathname")
+  size            Int
+  contentType     String   @map("content_type")
+  durationSeconds Int?     @map("duration_seconds")
+  createdAt       DateTime @default(now()) @db.Timestamp(3) @map("created_at")
 
   @@map("audio_tour_clips")
 }
