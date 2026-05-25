@@ -10,7 +10,7 @@ import { addFloatingDays, formatFloatingDateKey, parseFloatingDate } from "@/lib
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 
 function getWeekStart(dayKey: string): string {
   const date = parseFloatingDate(dayKey);

@@ -76,7 +76,7 @@ function positionDayEvents(
   return result;
 }
 
-const SHORT_WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const SHORT_WEEKDAYS = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
 
 function getDayLabel(dayKey: string): string {
   const date = parseFloatingDate(dayKey);
