@@ -4,6 +4,7 @@ import {
   CalendarDays,
   Coins,
   ContactRound,
+  Headphones,
   Hotel,
   Link,
   MessageSquareQuote
@@ -52,6 +53,12 @@ export const MENU_ITEMS: MenuItem[] = [
     title: "Användbart",
     description: "Användbara länkar för resan",
     icon: Link,
+  },
+  {
+    href: "/audio-tour",
+    title: "Audio Tour",
+    description: "Listen to shared tour clips",
+    icon: Headphones,
   },
   {
     href: "/schedule",
