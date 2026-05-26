@@ -1,7 +1,7 @@
 "use client"
 
 import { ScheduleEvent } from "@/generated/prisma/client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getDayStart,
   getDayEnd,
@@ -11,11 +11,10 @@ import {
 } from "../../app/admin/schedule/utils";
 import { parseFloatingDate } from "@/lib/floating-date";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const HOUR_HEIGHT = 64;
-const MIN_EVENT_HEIGHT = 20;
+const DESKTOP_HOUR_HEIGHT = 64;
 const POINT_IN_TIME_DURATION_MINUTES = 15;
-const POINT_IN_TIME_HEIGHT = 24;
 
 type EventColumn = 0 | 1;
 
@@ -39,11 +38,14 @@ function eventsOverlap(a: ScheduleEvent, b: ScheduleEvent): boolean {
 function positionDayEvents(
   events: ScheduleEvent[],
   dayKey: string,
-  timelineStartHour: number
+  timelineStartHour: number,
+  hourHeight: number
 ): PositionedEvent[] {
   const dayStart = getDayStart(dayKey);
   const dayEnd = getDayEnd(dayKey);
   const timelineStartMinutes = timelineStartHour * 60;
+  const minEventHeight = Math.max(14, (15 / 60) * hourHeight);
+  const pointHeight = Math.max(16, (POINT_IN_TIME_DURATION_MINUTES / 60) * hourHeight);
   const sorted = [...events].sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
   const result: PositionedEvent[] = [];
 
@@ -63,10 +65,10 @@ function positionDayEvents(
     result.push({
       ...event,
       column,
-      top: ((startMins - timelineStartMinutes) / 60) * HOUR_HEIGHT,
+      top: ((startMins - timelineStartMinutes) / 60) * hourHeight,
       height: isPointInTime
-        ? POINT_IN_TIME_HEIGHT
-        : Math.max((durMins / 60) * HOUR_HEIGHT, MIN_EVENT_HEIGHT),
+        ? pointHeight
+        : Math.max((durMins / 60) * hourHeight, minEventHeight),
       isPointInTime,
       displayEndTime,
       hasOverlap: eventHasOverlap,
@@ -131,6 +133,22 @@ export function WeekTimeline({
   weekDays: string[];
 }) {
   const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
+  const isMobile = useIsMobile();
+  // bodyRef measures the flex-allocated height of the timeline body on mobile.
+  // ResizeObserver fires whenever layout changes, giving us the exact available
+  // height so we can scale hourHeight to fill it precisely.
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [bodyHeight, setBodyHeight] = useState(0);
+
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      setBodyHeight(entries[0].contentRect.height);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const timelineStartHour = useMemo(() => {
     let min = 8;
@@ -144,34 +162,44 @@ export function WeekTimeline({
     return min;
   }, [eventsByDay, weekDays]);
 
-  const hours = Array.from(
-    { length: 24 - timelineStartHour },
-    (_, i) => timelineStartHour + i
+  const hours = useMemo(
+    () => Array.from({ length: 24 - timelineStartHour }, (_, i) => timelineStartHour + i),
+    [timelineStartHour]
   );
+
+  // On mobile: scale hourHeight to fill the CSS-allocated body height exactly.
+  // On desktop: use fixed pixel height.
+  const hourHeight = useMemo(() => {
+    if (!isMobile || bodyHeight === 0) return DESKTOP_HOUR_HEIGHT;
+    return Math.max(28, bodyHeight / hours.length);
+  }, [isMobile, bodyHeight, hours]);
 
   const positionedByDay = useMemo(() => {
     return Object.fromEntries(
       weekDays.map((dayKey) => [
         dayKey,
-        positionDayEvents(eventsByDay[dayKey] ?? [], dayKey, timelineStartHour),
+        positionDayEvents(eventsByDay[dayKey] ?? [], dayKey, timelineStartHour, hourHeight),
       ])
     );
-  }, [eventsByDay, weekDays, timelineStartHour]);
+  }, [eventsByDay, weekDays, timelineStartHour, hourHeight]);
 
   const hasAnyEvents = weekDays.some((d) => (eventsByDay[d] ?? []).length > 0);
-  const totalHeight = hours.length * HOUR_HEIGHT;
+  const totalHeight = hours.length * hourHeight;
   const colCount = weekDays.length;
-  const gridCols = `4rem repeat(${colCount}, minmax(80px, 1fr))`;
+  // Wider columns on mobile so day content is more readable
+  const colMinWidth = isMobile ? "150px" : "80px";
+  const gridCols = `4rem repeat(${colCount}, minmax(${colMinWidth}, 1fr))`;
 
   return (
-    <>
+    <div className={`max-md:flex max-md:flex-col${hasAnyEvents ? " max-md:h-full" : ""}`}>
       {/* Outer border wrapper — keeps the border around both header and body */}
-      <div className="rounded-lg border">
-        {/* Scrollable area: header + timeline body scroll together */}
-        <div className="overflow-x-auto">
-          {/* Day header row */}
+      <div className="rounded-lg border max-md:flex max-md:flex-col max-md:flex-1 max-md:min-h-0">
+        {/* Scrollable area: header + timeline body scroll together horizontally */}
+        <div className="overflow-x-auto max-md:flex-1 max-md:min-h-0 max-md:flex max-md:flex-col">
+          {/* Day header row — sticky on desktop so it stays visible when timeline overflows viewport height */}
+          {/* max-md:min-w-max: forces the box width to match grid content width so bg/border aren't clipped at viewport edge */}
           <div
-            className="grid border-b bg-muted/30"
+            className="grid border-b bg-muted/30 md:sticky md:top-0 md:z-10 max-md:flex-none max-md:min-w-max"
             style={{ gridTemplateColumns: gridCols }}
           >
             <div className="border-r" />
@@ -193,6 +221,10 @@ export function WeekTimeline({
             })}
           </div>
 
+          {/* Body wrapper: on mobile, flex-1 so it fills remaining space.
+               No overflow-hidden here — that would clip the grid's horizontal width and
+               prevent the overflow-x-auto parent from creating a proper scroll range. */}
+          <div ref={bodyRef} className="max-md:flex-1 max-md:min-h-0">
           {/* Timeline grid — only rendered when there are events */}
           {hasAnyEvents && (
             <div
@@ -205,7 +237,7 @@ export function WeekTimeline({
                   <div
                     key={hour}
                     className="border-b px-2 pt-1 text-right text-xs text-muted-foreground"
-                    style={{ height: HOUR_HEIGHT }}
+                    style={{ height: hourHeight }}
                   >
                     {hour.toString().padStart(2, "0")}:00
                   </div>
@@ -225,7 +257,7 @@ export function WeekTimeline({
                       <div
                         key={hour}
                         className="border-b border-l"
-                        style={{ height: HOUR_HEIGHT }}
+                        style={{ height: hourHeight }}
                       />
                     ))}
 
@@ -263,6 +295,7 @@ export function WeekTimeline({
               })}
             </div>
           )}
+          </div>{/* end bodyRef wrapper */}
         </div>
 
         {/* Empty message lives OUTSIDE the scrollable div so it always stays centered */}
@@ -278,6 +311,6 @@ export function WeekTimeline({
         open={selectedEvent !== null}
         onClose={() => setSelectedEvent(null)}
       />
-    </>
+    </div>
   );
 }

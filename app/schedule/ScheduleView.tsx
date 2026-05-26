@@ -77,12 +77,12 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
   }
 
   return (
-    <div className="grid gap-6">
-      <Card>
+    <div className="grid gap-6 max-md:flex max-md:flex-col max-md:h-full">
+      <Card className="max-md:flex-1 max-md:min-h-0">
         <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
           <div>
             <CardTitle>Schema</CardTitle>
-            <CardDescription>Visa resans schema dag för dag.</CardDescription>
+            <CardDescription className="hidden md:block">Visa resans schema dag för dag.</CardDescription>
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -108,7 +108,7 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="max-md:flex-1 max-md:min-h-0 max-md:overflow-hidden">
           <WeekTimeline eventsByDay={eventsByDay} weekDays={weekDays} />
         </CardContent>
       </Card>
