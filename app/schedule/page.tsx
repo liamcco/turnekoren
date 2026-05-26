@@ -4,16 +4,16 @@ import { ScheduleView } from "./ScheduleView";
 
 interface SchedulePageProps {
   searchParams?: Promise<{
-    day?: string;
+    week?: string;
   }>;
 }
 
 export default async function AdminSchedulePage({ searchParams }: SchedulePageProps) {
   const events = await getScheduleData();
   const resolvedSearchParams = await searchParams;
-  const requestedDay = resolvedSearchParams?.day;
-  const initialSelectedDay = isValidDayKey(requestedDay)
-    ? requestedDay
+  const requestedWeek = resolvedSearchParams?.week;
+  const initialSelectedDay = isValidDayKey(requestedWeek)
+    ? requestedWeek
     : getInitialSelectedDay(events);
 
   return <ScheduleView events={events} initialSelectedDay={initialSelectedDay} />;
