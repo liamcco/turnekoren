@@ -8,10 +8,42 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { WeekTimeline } from "@/components/schedule/WeekTimeline";
 import { addFloatingDays, formatFloatingDateKey, parseFloatingDate } from "@/lib/floating-date";
 import { Button } from "@/components/ui/button";
-import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  CalendarPlus,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Download,
+  ExternalLink,
+} from "lucide-react";
 
 const MONTHS = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 const CALENDAR_FEED_PATH = "/api/schedule/ical.ics";
+const INITIAL_CALENDAR_LINKS = {
+  feedUrl: CALENDAR_FEED_PATH,
+  googleCalendarUrl: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(CALENDAR_FEED_PATH)}`,
+  subscribeUrl: CALENDAR_FEED_PATH,
+};
+
+function getCalendarLinks(baseUrl: string) {
+  const feedUrl = new URL(CALENDAR_FEED_PATH, baseUrl).toString();
+  const subscribeUrl = feedUrl.replace(/^https?:/, "webcal:");
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(feedUrl)}`;
+
+  return {
+    feedUrl,
+    googleCalendarUrl,
+    subscribeUrl,
+  };
+}
 
 function getWeekStart(dayKey: string): string {
   const date = parseFloatingDate(dayKey);
@@ -49,7 +81,8 @@ interface ScheduleProps {
 
 export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
   const router = useRouter();
-  const [calendarSubscribeHref, setCalendarSubscribeHref] = useState(CALENDAR_FEED_PATH);
+  const [calendarLinks, setCalendarLinks] = useState(INITIAL_CALENDAR_LINKS);
+  const [copyLabel, setCopyLabel] = useState("Kopiera");
   const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
   const allDays = useMemo(() => Object.keys(eventsByDay).sort(), [eventsByDay]);
 
@@ -63,10 +96,28 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
   const canGoNext = weekStart < lastEventWeekStart;
 
   useEffect(() => {
-    const feedUrl = new URL(CALENDAR_FEED_PATH, window.location.href);
-    feedUrl.protocol = "webcal:";
-    setCalendarSubscribeHref(feedUrl.toString());
+    setCalendarLinks(getCalendarLinks(window.location.href));
   }, []);
+
+  function refreshCalendarLinks() {
+    setCalendarLinks(getCalendarLinks(window.location.href));
+  }
+
+  useEffect(() => {
+    if (copyLabel === "Kopiera") return;
+
+    const timeoutId = window.setTimeout(() => setCopyLabel("Kopiera"), 2000);
+    return () => window.clearTimeout(timeoutId);
+  }, [copyLabel]);
+
+  async function handleCopyCalendarUrl() {
+    try {
+      await navigator.clipboard.writeText(calendarLinks.feedUrl);
+      setCopyLabel("Kopierad");
+    } catch {
+      setCopyLabel("Kunde inte kopiera");
+    }
+  }
 
   function handlePrevWeek() {
     const start = parseFloatingDate(weekStart);
@@ -93,12 +144,61 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
             <CardDescription className="hidden md:block">Visa resans schema dag för dag.</CardDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" asChild>
-              <a href={calendarSubscribeHref} type="text/calendar">
-                <CalendarPlus className="size-3.5" />
-                Prenumerera
-              </a>
-            </Button>
+            <Popover
+              onOpenChange={(open) => {
+                if (open) refreshCalendarLinks();
+              }}
+            >
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" type="button">
+                  <CalendarPlus className="size-3.5" />
+                  Prenumerera
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-[calc(100vw-2rem)] max-w-80">
+                <PopoverHeader>
+                  <PopoverTitle>Kalenderfeed</PopoverTitle>
+                </PopoverHeader>
+                <div className="grid gap-2">
+                  <Button asChild className="justify-start" variant="outline">
+                    <a href={calendarLinks.subscribeUrl}>
+                      <CalendarPlus className="size-4" />
+                      Öppna i kalender
+                    </a>
+                  </Button>
+                  <Button asChild className="justify-start" variant="outline">
+                    <a href={calendarLinks.googleCalendarUrl} rel="noreferrer" target="_blank">
+                      <ExternalLink className="size-4" />
+                      Google Kalender
+                    </a>
+                  </Button>
+                  <Button asChild className="justify-start" variant="outline">
+                    <a download="schedule.ics" href={calendarLinks.feedUrl} type="text/calendar">
+                      <Download className="size-4" />
+                      Ladda ner .ics
+                    </a>
+                  </Button>
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    aria-label="Kalenderfeed"
+                    className="font-mono text-xs"
+                    onFocus={(event) => event.currentTarget.select()}
+                    readOnly
+                    value={calendarLinks.feedUrl}
+                  />
+                  <Button
+                    aria-label={copyLabel}
+                    onClick={handleCopyCalendarUrl}
+                    type="button"
+                    variant="outline"
+                  >
+                    <Copy className="size-4" />
+                    {copyLabel}
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
             <Button
               variant="outline"
               size="icon"
