@@ -9,6 +9,7 @@ import { WeekTimeline } from "@/components/schedule/WeekTimeline";
 import { addFloatingDays, formatFloatingDateKey, parseFloatingDate } from "@/lib/floating-date";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const MONTHS = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 
@@ -85,6 +86,9 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
             <CardDescription className="hidden md:block">Visa resans schema dag för dag.</CardDescription>
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/api/schedule/ical">iCal</Link>
+            </Button>
             <Button
               variant="outline"
               size="icon"
