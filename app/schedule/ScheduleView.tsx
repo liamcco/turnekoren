@@ -22,25 +22,30 @@ import {
   ChevronRight,
   Copy,
   Download,
-  ExternalLink,
 } from "lucide-react";
 
 const MONTHS = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
 const CALENDAR_FEED_PATH = "/api/schedule/ical.ics";
 const INITIAL_CALENDAR_LINKS = {
+  canOpenInCalendar: false,
   feedUrl: CALENDAR_FEED_PATH,
-  googleCalendarUrl: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(CALENDAR_FEED_PATH)}`,
   subscribeUrl: CALENDAR_FEED_PATH,
 };
 
+function isLocalHost(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname === "[::1]";
+}
+
 function getCalendarLinks(baseUrl: string) {
-  const feedUrl = new URL(CALENDAR_FEED_PATH, baseUrl).toString();
-  const subscribeUrl = feedUrl.replace(/^https?:/, "webcal:");
-  const googleCalendarUrl = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(feedUrl)}`;
+  const feedUrl = new URL(CALENDAR_FEED_PATH, baseUrl);
+  const canOpenInCalendar = feedUrl.protocol === "https:" && !isLocalHost(feedUrl.hostname);
+  const subscribeUrl = canOpenInCalendar
+    ? feedUrl.toString().replace(/^https:/, "webcal:")
+    : feedUrl.toString();
 
   return {
-    feedUrl,
-    googleCalendarUrl,
+    canOpenInCalendar,
+    feedUrl: feedUrl.toString(),
     subscribeUrl,
   };
 }
@@ -160,18 +165,19 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
                   <PopoverTitle>Kalenderfeed</PopoverTitle>
                 </PopoverHeader>
                 <div className="grid gap-2">
-                  <Button asChild className="justify-start" variant="outline">
-                    <a href={calendarLinks.subscribeUrl}>
+                  {calendarLinks.canOpenInCalendar ? (
+                    <Button asChild className="justify-start" variant="outline">
+                      <a href={calendarLinks.subscribeUrl}>
+                        <CalendarPlus className="size-4" />
+                        Öppna i kalender
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button className="justify-start" disabled type="button" variant="outline">
                       <CalendarPlus className="size-4" />
                       Öppna i kalender
-                    </a>
-                  </Button>
-                  <Button asChild className="justify-start" variant="outline">
-                    <a href={calendarLinks.googleCalendarUrl} rel="noreferrer" target="_blank">
-                      <ExternalLink className="size-4" />
-                      Google Kalender
-                    </a>
-                  </Button>
+                    </Button>
+                  )}
                   <Button asChild className="justify-start" variant="outline">
                     <a download="schedule.ics" href={calendarLinks.feedUrl} type="text/calendar">
                       <Download className="size-4" />
@@ -208,7 +214,7 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
             >
               <ChevronLeft className="size-4" />
             </Button>
-            <span className="min-w-[8rem] text-center text-sm text-muted-foreground">
+            <span className="min-w-32 text-center text-sm text-muted-foreground">
               {formatWeekLabel(weekStart)}
             </span>
             <Button
