@@ -13,6 +13,7 @@ const adminTabs = [
   { value: "quotes", label: "Citat", href: "/admin/quotes" },
   { value: "places", label: "Platser", href: "/admin/places" },
   { value: "links", label: "Länkar", href: "/admin/links" },
+  { value: "audio-tour", label: "Audio Tour", href: "/admin/audio-tour" },
   { value: "files", label: "Filer", href: "/admin/files" },
   { value: "stays", label: "Boenden", href: "/admin/stays" },
 ] as const;
