@@ -21,6 +21,12 @@ const initialErrorState: ScheduleEventActionState = {
   message: "Something went wrong.",
 };
 
+function revalidateSchedule() {
+  revalidatePath("/schedule");
+  revalidatePath("/api/schedule/ical");
+  revalidatePath("/api/schedule/ical.ics");
+}
+
 function getEventFormData(formData: FormData) {
   const title = getStringValue(formData, "title");
   const startTime = getRequiredDateValue(formData, "startTime");
@@ -84,7 +90,7 @@ export async function createScheduleEventAction(
       data: parsed.data,
     });
 
-    revalidatePath("/schedule");
+    revalidateSchedule();
 
     return {
       ok: true,
@@ -123,7 +129,7 @@ export async function updateScheduleEventAction(
       data: parsed.data,
     });
 
-    revalidatePath("/scheudle");
+    revalidateSchedule();
 
     return {
       ok: true,
@@ -152,7 +158,7 @@ export async function deleteScheduleEventAction(
       where: { id },
     });
 
-    revalidatePath("/schedule");
+    revalidateSchedule();
 
     return {
       ok: true,

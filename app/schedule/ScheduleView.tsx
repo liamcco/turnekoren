@@ -3,15 +3,15 @@
 import { ScheduleEvent } from "@/generated/prisma/client";
 import { groupEventsByDay } from "../admin/schedule/utils";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { WeekTimeline } from "@/components/schedule/WeekTimeline";
 import { addFloatingDays, formatFloatingDateKey, parseFloatingDate } from "@/lib/floating-date";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";
 
 const MONTHS = ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"];
+const CALENDAR_FEED_PATH = "/api/schedule/ical.ics";
 
 function getWeekStart(dayKey: string): string {
   const date = parseFloatingDate(dayKey);
@@ -49,6 +49,7 @@ interface ScheduleProps {
 
 export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
   const router = useRouter();
+  const [calendarSubscribeHref, setCalendarSubscribeHref] = useState(CALENDAR_FEED_PATH);
   const eventsByDay = useMemo(() => groupEventsByDay(events), [events]);
   const allDays = useMemo(() => Object.keys(eventsByDay).sort(), [eventsByDay]);
 
@@ -60,6 +61,12 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
 
   const canGoPrev = weekStart > firstEventWeekStart;
   const canGoNext = weekStart < lastEventWeekStart;
+
+  useEffect(() => {
+    const feedUrl = new URL(CALENDAR_FEED_PATH, window.location.href);
+    feedUrl.protocol = "webcal:";
+    setCalendarSubscribeHref(feedUrl.toString());
+  }, []);
 
   function handlePrevWeek() {
     const start = parseFloatingDate(weekStart);
@@ -87,7 +94,10 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" asChild>
-              <Link href="/api/schedule/ical">iCal</Link>
+              <a href={calendarSubscribeHref} type="text/calendar">
+                <CalendarPlus className="size-3.5" />
+                Prenumerera
+              </a>
             </Button>
             <Button
               variant="outline"
