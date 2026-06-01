@@ -144,10 +144,6 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
     <div className="grid gap-6 max-md:flex max-md:flex-col max-md:h-full">
       <Card className="max-md:flex-1 max-md:min-h-0">
         <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
-          <div>
-            <CardTitle>Schema</CardTitle>
-            <CardDescription className="hidden md:block">Visa resans schema dag för dag.</CardDescription>
-          </div>
           <div className="flex items-center gap-2">
             <Popover
               onOpenChange={(open) => {
@@ -214,7 +210,7 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
             >
               <ChevronLeft className="size-4" />
             </Button>
-            <span className="min-w-32 text-center text-sm text-muted-foreground">
+            <span className="min-w-8 text-center text-sm text-muted-foreground">
               {formatWeekLabel(weekStart)}
             </span>
             <Button
