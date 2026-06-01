@@ -169,13 +169,13 @@ export function ScheduleView({ events, initialSelectedDay }: ScheduleProps) {
                     <Button asChild className="justify-start" variant="outline">
                       <a href={calendarLinks.subscribeUrl}>
                         <CalendarPlus className="size-4" />
-                        Öppna i kalender
+                        Prenumerera i kalender
                       </a>
                     </Button>
                   ) : (
                     <Button className="justify-start" disabled type="button" variant="outline">
                       <CalendarPlus className="size-4" />
-                      Öppna i kalender
+                      Prenumerera i kalender
                     </Button>
                   )}
                   <Button asChild className="justify-start" variant="outline">
