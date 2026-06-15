@@ -25,7 +25,7 @@ export const MENU_ITEMS: MenuItem[] = [
 		icon: Coins,
 	},
 	{
-		href: '/rooms',
+		href: '/rooms?stayId=2',
 		title: 'Rumsfördelning',
 		description:
 			'Rumsfördelning för alla deltagare på resan',
